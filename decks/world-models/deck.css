@@ -1,0 +1,152 @@
+/* make-slides 簡報樣式：暖色紙本風格，與 Wiki（assets/style.css）同色系。
+   每頁是固定 16:9 的框，字級以框寬（cqw）計算，所以溢出與否不受螢幕大小影響。
+   純 CSS，不用 JavaScript；頁與頁之間以捲動切換（scroll-snap）。 */
+
+:root {
+  --paper: #FAF7F2;
+  --card: #FFFDF9;
+  --ink: #2B2A27;
+  --muted: #6B665E;
+  --rule: #E4DCCF;
+  --source: #B45309;
+  --concept: #0F766E;
+  --topic: #4338CA;
+  --analogy-bg: #F3EEE4;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-snap-type: y mandatory; }
+
+body {
+  margin: 0;
+  background: #EDE6DA;
+  color: var(--ink);
+  font-family: "Noto Sans TC", "Microsoft JhengHei", "PingFang TC", system-ui, sans-serif;
+}
+
+.deck {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2vh;
+  padding: 2vh 0;
+}
+
+.slide {
+  scroll-snap-align: center;
+  container-type: inline-size;
+  position: relative;
+  width: min(96vw, calc(96vh * 16 / 9));
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 0.6vw;
+  box-shadow: 0 0.4vh 1.6vh rgba(60, 45, 20, 0.12);
+  padding: 4.2cqw 5.5cqw 3.6cqw;
+  display: flex;
+  flex-direction: column;
+}
+
+.slide .num {
+  position: absolute;
+  right: 3cqw;
+  bottom: 1.8cqw;
+  margin: 0;
+  font-size: 1.3cqw;
+  color: var(--muted);
+}
+
+.slide h2 {
+  margin: 0 0 2.2cqw;
+  font-size: 3.4cqw;
+  line-height: 1.25;
+  color: var(--topic);
+  border-bottom: 0.25cqw solid var(--rule);
+  padding-bottom: 1cqw;
+}
+
+.slide .body {
+  font-size: 2.1cqw;
+  line-height: 1.55;
+}
+
+.slide .body p { margin: 0 0 1.2cqw; }
+
+.slide .body ul,
+.slide .body ol {
+  margin: 0 0 1.2cqw;
+  padding-left: 2.4cqw;
+}
+
+.slide .body li { margin-bottom: 0.9cqw; }
+
+.slide .body li::marker { color: var(--source); }
+
+.slide .body strong { color: var(--ink); }
+
+.slide .body a {
+  color: var(--source);
+  text-decoration: none;
+  border-bottom: 0.1cqw solid currentColor;
+  font-size: 0.82em;
+}
+
+.slide .body a[href*="/concepts/"] { color: var(--concept); }
+.slide .body a[href*="/topics/"] { color: var(--topic); }
+
+.slide .body blockquote {
+  margin: 1.4cqw 0 0;
+  padding: 1.2cqw 1.8cqw;
+  background: var(--analogy-bg);
+  border-left: 0.5cqw solid var(--concept);
+  border-radius: 0.4cqw;
+  font-size: 0.92em;
+}
+
+.slide .body blockquote p { margin: 0; }
+
+.slide .body .tag {
+  display: inline-block;
+  margin-right: 0.8cqw;
+  padding: 0.1cqw 0.8cqw;
+  border-radius: 0.4cqw;
+  background: var(--concept);
+  color: #fff;
+  font-size: 0.8em;
+  font-weight: 600;
+}
+
+.slide .body blockquote.transition { border-left-color: var(--topic); }
+.slide .body blockquote.transition .tag { background: var(--topic); }
+
+.slide .body table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 1.6cqw;
+  font-size: 0.85em;
+}
+
+.slide .body th,
+.slide .body td {
+  border-bottom: 0.1cqw solid var(--rule);
+  padding: 0.6cqw 0.8cqw;
+  text-align: left;
+  vertical-align: top;
+}
+
+.slide .body th { color: var(--muted); font-weight: 600; }
+
+/* 封面頁 */
+.slide-title { justify-content: center; }
+.slide-title h2 {
+  font-size: 5cqw;
+  border-bottom: none;
+  color: var(--ink);
+}
+.slide-title .body { font-size: 2.1cqw; color: var(--muted); }
+
+@media (prefers-color-scheme: dark) {
+  body { background: #1F1C18; }
+}

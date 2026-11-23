@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>世界模型是什麼？</title>
+<link rel="stylesheet" href="deck.css">
+</head>
+<body>
+<main class="deck">
+<section class="slide slide-title" id="s01">
+<p class="num">1 / 14</p>
+<h2>世界模型是什麼？</h2>
+<div class="body">
+<p>What is a World Model？給懂 AI、但沒學過強化學習的人。</p>
+<p>路線圖：動機 → 核心概念 → 第一個完整例子 → 從 2018 到 2025 的發展 → 比較 → 限制 → 總結</p>
+<p>所有內容都來自本專案的 LLM Wiki；每個事實都附上 Wiki 頁面連結，來自論文的主張另附論文頁碼。</p>
+</div>
+</section>
+<section class="slide slide-content" id="s02">
+<p class="num">2 / 14</p>
+<h2>先備知識：強化學習與試誤的代價</h2>
+<div class="body">
+<ul>
+<li>強化學習（reinforcement learning）：代理人（agent）在環境裡行動、得到獎勵（reward），透過試誤學出策略（policy），也就是選動作的規則，讓長期獎勵越多越好 <a href="../../zh/concepts/model-based-reinforcement-learning.html">基於模型的強化學習</a></li>
+<li>但在真實環境試誤可能很慢、不安全，對真實機器人或昂貴的系統甚至不可行 <a href="../../zh/concepts/offline-reinforcement-learning.html">離線強化學習</a></li>
+<li>無模型（model-free）方法直接從試誤學習；基於模型（model-based）的方法先學一個動態模型，再拿來規劃或產生額外的經驗 <a href="../../zh/concepts/model-based-reinforcement-learning.html">基於模型的強化學習</a></li>
+<li>好的模型能讓學習大幅提高資料效率 <a href="../../zh/concepts/model-based-reinforcement-learning.html">基於模型的強化學習</a></li>
+</ul>
+<blockquote class="analogy"><p><span class="tag">比喻</span>學開車時，先在腦中想清楚方向盤打下去車子會怎麼走，比每次都真的撞一下便宜得多。</p>
+</blockquote>
+</div>
+</section>
+<section class="slide slide-content" id="s03">
+<p class="num">3 / 14</p>
+<h2>世界模型：學出來的模擬器</h2>
+<div class="body">
+<ul>
+<li>定義：從經驗中學到的環境模型，用來預測接下來會發生什麼，通常以目前的狀態與動作為條件 <a href="../../zh/concepts/world-model.html">世界模型</a></li>
+<li>能預測行動後果的代理人，不必在真實世界把每件事都試一遍；預測通常在壓縮過的潛在空間（latent space）中進行 <a href="../../zh/concepts/world-model.html">世界模型</a></li>
+<li>三種用法：當作特徵來源；當作讓代理人練習的模擬器（包括只能用錄下來的資料時）；產生可能的未來讓人探索 <a href="../../zh/concepts/world-model.html">世界模型</a></li>
+<li>它是學出來的，永遠不會完美，依賴它的代理人可能被它的錯誤誤導 <a href="../../zh/concepts/world-model.html">世界模型</a></li>
+</ul>
+<blockquote class="analogy"><p><span class="tag">比喻</span>就像你腦中的物理直覺：推杯子之前，你已經大概知道它會滑出去還是倒下來。</p>
+</blockquote>
+</div>
+</section>
+<section class="slide slide-content" id="s04">
+<p class="num">4 / 14</p>
+<h2>第一個完整例子：World Models 的 V、M、C（2018）</h2>
+<div class="body">
+<ul>
+<li>代理人拆成兩部分：大型世界模型不靠獎勵學會壓縮並預測畫面，很小的控制器根據它的特徵行動 <a href="../../zh/sources/2018-world-models.html">World Models</a> (p.1)</li>
+<li>V（視覺）：用變分自編碼器（VAE）把每張畫面壓縮成小的潛在向量 z <a href="../../zh/sources/2018-world-models.html">World Models</a> (p.3)；VAE 學著把這個向量解碼回原圖 <a href="../../zh/concepts/variational-autoencoder.html">變分自編碼器</a></li>
+<li>M（記憶）：MDN-RNN 預測下一個潛在向量的機率分布，而不是單一數值 <a href="../../zh/sources/2018-world-models.html">World Models</a> (p.3)</li>
+<li>C（控制器）：刻意做得很小，複雜度幾乎都放在 V 與 M <a href="../../zh/sources/2018-world-models.html">World Models</a> (p.3)</li>
+<li>控制器只有 867 個參數；VAE 有 4,348,547 個、MDN-RNN 有 422,368 個 <a href="../../zh/sources/2018-world-models.html">World Models</a> (p.5)</li>
+</ul>
+</div>
+</section>
+<section class="slide slide-content" id="s05">
+<p class="num">5 / 14</p>
+<h2>在夢裡練習，到現實比賽</h2>
+<div class="body">
+<ul>
+<li>V 與 M 只用隨機動作收集的資料訓練，完全不用獎勵；只有 C 看得到獎勵 <a href="../../zh/sources/2018-world-models.html">World Models</a> (p.5)</li>
+<li>Car Racing：同時用 V 與 M，100 次試驗得到 906 ± 21 分，是第一個被回報的解；先前方法介於 591 到 652 分 <a href="../../zh/sources/2018-world-models.html">World Models</a> (p.6, Table 1)</li>
+<li>只用 V、沒有 M 時，車子在急彎搖晃，只有 632 ± 251 分 <a href="../../zh/sources/2018-world-models.html">World Models</a> (p.5)</li>
+<li>VizDoom：C 只在世界模型構成的夢境裡訓練，再放到真實遊戲執行 <a href="../../zh/sources/2018-world-models.html">World Models</a> (p.7)</li>
+<li>過關標準是平均存活超過 750 個時間步 (p.7)；只在夢裡訓練的代理人，到真實遊戲約存活 1100 步 <a href="../../zh/sources/2018-world-models.html">World Models</a> (p.8)</li>
+</ul>
+<blockquote class="analogy"><p><span class="tag">比喻</span>像運動員只在腦中排練整場比賽，上場後照樣能發揮。</p>
+</blockquote>
+</div>
+</section>
+<section class="slide slide-content" id="s06">
+<p class="num">6 / 14</p>
+<h2>夢境會被鑽漏洞</h2>
+<div class="body">
+<ul>
+<li>控制器會作弊：早期實驗中，它找到一種移動方式，讓夢裡的怪物永遠不發射火球，但真實遊戲沒有這個漏洞 <a href="../../zh/sources/2018-world-models.html">World Models</a> (p.8)</li>
+<li>夢境太決定性（溫度 τ = 0.1）時，策略在夢裡得 2086 ± 140 分，在真實環境只有 193 ± 58 分 <a href="../../zh/sources/2018-world-models.html">World Models</a> (p.10, Table 2)</li>
+<li>讓 M 更隨機、溫度更高，漏洞較難被利用；但太隨機的夢境會難到學不到東西 <a href="../../zh/sources/2018-world-models.html">World Models</a> (p.10)</li>
+<li>這個風險叫模型被利用（model exploitation）：代理人找到只因模型出錯才得高分的行為，到真實環境就失敗 <a href="../../zh/concepts/learning-in-imagination.html">在想像中學習</a></li>
+</ul>
+<blockquote class="analogy"><p><span class="tag">比喻</span>在有 bug 的模擬器裡練習，學到的可能是怎麼利用 bug，而不是怎麼把遊戲玩好。</p>
+</blockquote>
+</div>
+</section>
+<section class="slide slide-content" id="s07">
+<p class="num">7 / 14</p>
+<h2>用模型規劃：PlaNet（2019）</h2>
+<div class="body">
+<ul>
+<li>純粹基於模型的代理人：從影像學出潛在世界模型，每個動作都靠在潛在空間線上規劃決定，不用策略網路 <a href="../../zh/sources/2019-planet.html">PlaNet</a> (p.1)</li>
+<li>每一步用交叉熵方法（CEM）搜尋最佳動作序列，只執行第一個動作 <a href="../../zh/sources/2019-planet.html">PlaNet</a> (p.3)；看到下一個觀測後再重新搜尋，這叫模型預測控制 <a href="../../zh/concepts/latent-space-planning.html">潛在空間規劃</a></li>
+<li>規劃時在潛在空間推演並加總預測的獎勵，完全不產生影像 <a href="../../zh/sources/2019-planet.html">PlaNet</a> (p.3)</li>
+<li>潛在狀態分成由 RNN 傳遞的確定性部分與從高斯分布抽樣的隨機部分 (p.4, Eq. 4)；兩條路徑對規劃都不可或缺 <a href="../../zh/sources/2019-planet.html">PlaNet</a> (p.3)</li>
+<li>相較 D4PG，平均約少用 200 倍的回合 <a href="../../zh/sources/2019-planet.html">PlaNet</a> (p.2)</li>
+</ul>
+<blockquote class="analogy"><p><span class="tag">比喻</span>像棋手每走一步前先往後想幾步，看到對手回應後再重新思考。</p>
+</blockquote>
+</div>
+</section>
+<section class="slide slide-content" id="s08">
+<p class="num">8 / 14</p>
+<h2>在想像中學習策略：Dreamer（2020）</h2>
+<div class="body">
+<ul>
+<li>只在固定視野內最大化獎勵的規劃器會很短視 <a href="../../zh/sources/2020-dreamer.html">Dreamer</a> (p.1)</li>
+<li>Dreamer 改成在想像的軌跡上訓練 actor-critic，並把價值梯度沿著學到的模型反向傳播來改進 actor <a href="../../zh/sources/2020-dreamer.html">Dreamer</a> (p.1)</li>
+<li>Actor 負責選動作，critic 估計未來獎勵；有了 critic，actor 不必等遙遠的獎勵真的發生 <a href="../../zh/concepts/actor-critic.html">Actor-critic</a></li>
+<li>價值模型會估計想像視野之外的獎勵 <a href="../../zh/sources/2020-dreamer.html">Dreamer</a> (p.4, Eq. 2)</li>
+<li>500 萬環境步後，Dreamer 平均 823 分、PlaNet 332 分；D4PG 在 1 億步後為 786 分 <a href="../../zh/sources/2020-dreamer.html">Dreamer</a> (p.6, Fig. 6)</li>
+</ul>
+<blockquote class="analogy"><p><span class="tag">比喻</span>PlaNet 像每一步都停下來想；Dreamer 像先在腦中反覆練習，上場時憑練好的直覺出手。</p>
+</blockquote>
+</div>
+</section>
+<section class="slide slide-content" id="s09">
+<p class="num">9 / 14</p>
+<h2>證明可行並通用化：DreamerV2 與 DreamerV3</h2>
+<div class="body">
+<ul>
+<li>過去世界模型不夠準，在 Atari 上比不過最好的無模型方法 <a href="../../zh/sources/2021-dreamerv2.html">DreamerV2</a> (pp.1-2)</li>
+<li>DreamerV2（2021）是第一個只在另外訓練的世界模型裡學習行為、就在 Atari 達到人類水準的代理人 <a href="../../zh/sources/2021-dreamerv2.html">DreamerV2</a> (p.1)</li>
+<li>2 億環境步中，策略從 4680 億個想像的狀態學習，約為 5000 萬個真實輸入的 10,000 倍 <a href="../../zh/sources/2021-dreamerv2.html">DreamerV2</a> (p.6)</li>
+<li>強化學習換到新領域通常要專家調整 (p.2)；DreamerV3（2023）用一組固定設定在 150 多個任務勝過專門方法，並從零在 Minecraft 挖到鑽石 <a href="../../zh/sources/2023-dreamerv3.html">DreamerV3</a> (p.1)</li>
+<li>Minecraft 上 DreamerV3 用 1 張 GPU 跑 9 天；依賴人類資料的 VPT 用 720 張 GPU 跑 9 天 <a href="../../zh/sources/2023-dreamerv3.html">DreamerV3</a> (p.11)</li>
+</ul>
+</div>
+</section>
+<section class="slide slide-content" id="s10">
+<p class="num">10 / 14</p>
+<h2>不必真的去玩：Dreamer 4（2025）</h2>
+<div class="body">
+<ul>
+<li>離線強化學習（offline RL）只用事先收集的固定資料學習，不與環境互動；世界模型讓代理人在模型裡練習、產生新經驗 <a href="../../zh/concepts/offline-reinforcement-learning.html">離線強化學習</a></li>
+<li>三個階段：在影片上預訓練世界模型 → 微調以預測動作與獎勵 → 在想像中改進策略 <a href="../../zh/sources/2025-dreamer4.html">Dreamer 4</a> (p.4)</li>
+<li>第一個只靠離線資料、不與環境互動就在 Minecraft 拿到鑽石的代理人 <a href="../../zh/sources/2025-dreamer4.html">Dreamer 4</a> (p.1)</li>
+<li>鐵鎬成功率 29%，並有 0.7% 的回合拿到鑽石 (p.12)；勝過 VPT 的離線代理人，資料卻少 100 倍 <a href="../../zh/sources/2025-dreamer4.html">Dreamer 4</a> (p.9, Fig. 3)</li>
+<li>大部分外觀與物理從無標註影片學，只用少量有動作標註的資料學動作與結果的關係 <a href="../../zh/concepts/action-conditioning.html">動作條件</a></li>
+</ul>
+</div>
+</section>
+<section class="slide slide-content" id="s11">
+<p class="num">11 / 14</p>
+<h2>不只給代理人用：WHAM（2025）</h2>
+<div class="body">
+<ul>
+<li>對遊戲開發者的使用者研究歸納出：要支援創作發想，生成模型需要一致性、多樣性與持續性 <a href="../../zh/sources/2025-wham.html">WHAM</a> (p.1)</li>
+<li>一致性：隨時間符合遊戲機制；多樣性：多個有意義的不同發展；持續性：使用者的修改會保留下去 <a href="../../zh/sources/2025-wham.html">WHAM</a> (p.3)</li>
+<li>WHAM 同時生成遊戲 Bleeding Edge 的畫面與玩家手把動作 (p.1)；逐個 token 生成，途中可以修改，這正是持續性的來源 <a href="../../zh/sources/2025-wham.html">WHAM</a> (p.3)</li>
+<li>用一張編輯過的畫面提示時，插入元素的留存率都低於 60%；用五張時達到 85% 以上 <a href="../../zh/sources/2025-wham.html">WHAM</a> (p.7, Table 1)</li>
+<li>創作支援（creativity support）：以多能幫人想出並修改點子來評估 AI，而不是它自己能完成多少任務 <a href="../../zh/concepts/creativity-support.html">創作支援</a></li>
+</ul>
+</div>
+</section>
+<section class="slide slide-content" id="s12">
+<p class="num">12 / 14</p>
+<h2>比較：同一個想法，五種用法</h2>
+<div class="body">
+<table>
+<thead>
+<tr>
+<th>來源</th>
+<th>世界模型怎麼用</th>
+<th>出處</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>World Models（2018）</td>
+<td>控制器完全在夢境裡訓練，再搬回真實環境</td>
+<td><a href="../../zh/sources/2018-world-models.html">World Models</a> (p.1)</td>
+</tr>
+<tr>
+<td>PlaNet（2019）</td>
+<td>每一步都在潛在空間裡規劃動作</td>
+<td><a href="../../zh/sources/2019-planet.html">PlaNet</a> (p.1)</td>
+</tr>
+<tr>
+<td>Dreamer（2020）</td>
+<td>在想像的軌跡上訓練 actor-critic</td>
+<td><a href="../../zh/sources/2020-dreamer.html">Dreamer</a> (p.1)</td>
+</tr>
+<tr>
+<td>Dreamer 4（2025）</td>
+<td>只靠離線資料，在模型裡練習</td>
+<td><a href="../../zh/sources/2025-dreamer4.html">Dreamer 4</a> (p.1)</td>
+</tr>
+<tr>
+<td>WHAM（2025）</td>
+<td>給探索遊戲點子的人用，不給代理人行動</td>
+<td><a href="../../zh/concepts/world-model.html">世界模型</a> (p.3)</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Dreamer 4 與 WHAM 都是以人類遊玩資料訓練的大型 3D 遊戲 transformer 世界模型，一個給代理人、一個給人發想；這個配對是 Wiki 的觀察 <a href="../../zh/concepts/world-model.html">世界模型</a></li>
+</ul>
+</div>
+</section>
+<section class="slide slide-content" id="s13">
+<p class="num">13 / 14</p>
+<h2>限制與未解問題</h2>
+<div class="body">
+<ul>
+<li>World Models 的 V 單獨訓練且不看獎勵，可能把容量花在無關細節 <a href="../../zh/sources/2018-world-models.html">World Models</a> (p.12)；DreamerV2 在 Video Pinball 表現很差，作者推測是重建損失忽略了只佔一個像素的球 <a href="../../zh/sources/2021-dreamerv2.html">DreamerV2</a> (p.8)</li>
+<li>挖鑽石仍然很難：DreamerV3 在訓練預算結束時只有 0.4% 的回合拿到 <a href="../../zh/sources/2023-dreamerv3.html">DreamerV3</a> (p.24, Fig. 9)</li>
+<li>Dreamer 4 的世界模型離完整複製遊戲還很遠：記憶短，物品欄預測也不精確 <a href="../../zh/sources/2025-dreamer4.html">Dreamer 4</a> (p.18)</li>
+<li>WHAM 只在單一遊戲上展示 (p.12)，脈絡只有 1 秒 <a href="../../zh/sources/2025-wham.html">WHAM</a> (p.10)</li>
+<li>未來方向：在網路影片上預訓練世界模型，以及學一個跨領域的世界模型 <a href="../../zh/sources/2023-dreamerv3.html">DreamerV3</a> (p.11)</li>
+</ul>
+</div>
+</section>
+<section class="slide slide-content" id="s14">
+<p class="num">14 / 14</p>
+<h2>總結：世界模型是什麼？</h2>
+<div class="body">
+<ul>
+<li>世界模型是從經驗中學到、能預測接下來會發生什麼的環境模型 <a href="../../zh/concepts/world-model.html">世界模型</a></li>
+<li>它可以提供特徵、當作代理人的練習場（甚至只用錄下來的資料），也可以產生可能的未來讓人探索 <a href="../../zh/concepts/world-model.html">世界模型</a></li>
+<li>它是學出來的，永遠不會完美；依賴它的代理人可能被它的錯誤誤導 <a href="../../zh/concepts/world-model.html">世界模型</a></li>
+</ul>
+<blockquote class="transition"><p><span class="tag">過場</span>帶走三件事：學一個模擬器、在模擬器裡練習、小心模擬器的錯誤。</p>
+</blockquote>
+</div>
+</section>
+</main>
+</body>
+</html>
