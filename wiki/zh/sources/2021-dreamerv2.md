@@ -10,9 +10,9 @@ added: 2026-11-24
 updated: 2026-11-24
 areas: [world-model, reinforcement-learning]
 status: to-read
-concepts: [categorical-latents, kl-balancing, world-model, recurrent-state-space-model, actor-critic, learning-in-imagination, model-based-reinforcement-learning, variational-autoencoder]
+concepts: [categorical-latents, kl-balancing, world-model, recurrent-state-space-model, actor-critic, learning-in-imagination, model-based-reinforcement-learning, variational-autoencoder, free-bits]
 topics: [world-models]
-translated_from: "16f198dc6afc"
+translated_from: "9a6b39f5c4d8"
 ---
 
 ## 一句話總結
@@ -73,6 +73,7 @@ DreamerV2 對 Dreamer 做了幾項小修改，主要是[類別潛在變數](../c
 - [在想像中學習](../concepts/learning-in-imagination.md)：行為完全從想像的軌跡學習。
 - [基於模型的強化學習](../concepts/model-based-reinforcement-learning.md)：與 SimPLe、MuZero 比較。
 - [變分自編碼器](../concepts/variational-autoencoder.md)：世界模型是序列 VAE。
+- [自由位元（Free bits）](../concepts/free-bits.md)：KL 平衡所取代的技巧。
 
 ## 與其他來源的關係
 

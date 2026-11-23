@@ -58,6 +58,7 @@ If a world model can predict observations, rewards and the end of an episode, it
 - [Actor-critic](actor-critic.md): the method Dreamer uses to learn inside imagination.
 - [Latent space planning](latent-space-planning.md): the alternative that uses the model at decision time instead of training a policy.
 - [Offline reinforcement learning](offline-reinforcement-learning.md): Dreamer 4 uses imagination to learn without environment interaction.
+- [Model-based reinforcement learning](model-based-reinforcement-learning.md): the broader family that learning in imagination belongs to.
 
 ## Background
 

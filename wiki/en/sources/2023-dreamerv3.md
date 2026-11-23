@@ -10,7 +10,7 @@ added: 2026-11-24
 updated: 2026-11-24
 areas: [world-model, reinforcement-learning]
 status: to-read
-concepts: [symlog-predictions, return-normalization, kl-balancing, categorical-latents, recurrent-state-space-model, actor-critic, learning-in-imagination, world-model, model-based-reinforcement-learning, variational-autoencoder]
+concepts: [symlog-predictions, return-normalization, kl-balancing, categorical-latents, recurrent-state-space-model, actor-critic, learning-in-imagination, world-model, model-based-reinforcement-learning, variational-autoencoder, free-bits]
 topics: [world-models]
 ---
 
@@ -75,6 +75,7 @@ Implementation details: training uses a uniform replay buffer with an online que
 - [World model](../concepts/world-model.md): the core of the agent.
 - [Model-based reinforcement learning](../concepts/model-based-reinforcement-learning.md): compared with PPO, MuZero and VPT.
 - [Variational autoencoder](../concepts/variational-autoencoder.md): the world model learns representations by autoencoding.
+- [Free bits](../concepts/free-bits.md): brought back and combined with KL balancing.
 
 ## Relation to other sources
 

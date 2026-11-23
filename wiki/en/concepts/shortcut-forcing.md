@@ -27,6 +27,7 @@ Diffusion and flow matching models generate data by starting from noise and remo
 - [World model](world-model.md): shortcut forcing trains the Dreamer 4 world model.
 - [Action conditioning](action-conditioning.md): actions are fed to the same dynamics transformer.
 - [Recurrent state-space model](recurrent-state-space-model.md): the earlier, variational alternative for the dynamics.
+- [Autoregressive transformer](autoregressive-transformer.md): the WHAM alternative, which generates each frame token by token instead of by denoising.
 
 ## Background
 

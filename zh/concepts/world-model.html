@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="source-hash" content="25be37d182f6">
+<meta name="source-hash" content="d8da0399088d">
 <title>世界模型（World model） · 論文 Wiki</title>
 <link rel="stylesheet" href="../../assets/style.css">
 </head>
@@ -20,7 +20,7 @@
 <h2>一句話定義</h2>
 <p>一個從經驗中學到的環境模型，用來預測接下來會發生什麼，通常以目前的狀態與動作為條件。</p>
 <h2>說明</h2>
-<p>能預測自己行動後果的代理人，不必在真實世界裡把每件事都試一遍。世界模型從經驗中學會這些預測，通常在壓縮過的潛在空間（latent space）中進行，而不是直接處理原始像素。它主要有兩種用法：當作特徵來源，概括現在並暗示未來；或當作模擬器，讓代理人在裡面練習。因為它是學出來的，永遠不會完美，依賴它的代理人可能被它的錯誤誤導。</p>
+<p>能預測自己行動後果的代理人，不必在真實世界裡把每件事都試一遍。世界模型從經驗中學會這些預測，通常在壓縮過的潛在空間（latent space）中進行，而不是直接處理原始像素。它可以當作特徵來源，概括現在並暗示未來；可以當作模擬器，讓代理人在裡面練習，包括代理人只能從錄下來的資料學習的情況；也可以產生可能的未來，讓人去探索。因為它是學出來的，永遠不會完美，依賴它的代理人可能被它的錯誤誤導。</p>
 <blockquote class="note note-explainer">
 <p><strong>解說（Explainer）：</strong> 世界模型就像打擊者腦中的畫面：在眼睛跟上快速球之前，就先告訴他球會到哪裡。</p>
 </blockquote>

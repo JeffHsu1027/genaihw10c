@@ -57,6 +57,8 @@ The encoder outputs the mean and spread of a Gaussian distribution, a latent vec
 - [Recurrent state-space model](recurrent-state-space-model.md): extends the VAE idea to sequences.
 - [Categorical latents](categorical-latents.md): a discrete alternative to Gaussian latents.
 - [KL balancing](kl-balancing.md): a change to how the KL term is trained.
+- [Vector quantization](vector-quantization.md): an autoencoder variant whose latents are codebook entries instead of Gaussian samples.
+- [Free bits](free-bits.md): a way to stop the KL term from emptying the latent space.
 
 ## Background
 

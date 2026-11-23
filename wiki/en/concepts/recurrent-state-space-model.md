@@ -55,6 +55,7 @@ A purely deterministic recurrent model remembers well but can only predict a sin
 - [Categorical latents](categorical-latents.md): the discrete stochastic state used in DreamerV2.
 - [KL balancing](kl-balancing.md): a way to train the RSSM prior.
 - [Shortcut forcing](shortcut-forcing.md): the objective of the transformer that replaces the RSSM in Dreamer 4.
+- [Free bits](free-bits.md): the KL clipping used when training the RSSM in PlaNet, Dreamer and DreamerV3.
 
 ## Background
 

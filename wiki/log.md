@@ -212,3 +212,15 @@
 - 依上一筆 lint 的規則缺口，擁有者同意（「Apply all」）。
 - `scripts/check.py` 的 `REF_OK`：圖、表、公式、演算法編號允許「大寫字母＋可選的點」前綴，例如 `(p.7, Fig. A.2)`、`(p.7, Table A1)`。原有寫法不受影響。
 - `AGENTS.md`、範本不變。既有只標頁碼的附錄圖出處不回頭修改。
+
+## [2026-11-24] lint | 依完整檢查結果修正
+
+- 擁有者指示「Apply all」，依同日 lint 紀錄修正；規則缺口已另記一筆 `rules`。
+- 過時說法：主題頁 `world-models` 的 Overview 不再只以代理人為中心，補上「在不接觸真實環境下訓練策略」與「讓人探索可能的未來」兩種用途；`index.md` 的主題頁摘要同步修改。概念頁 `world-model` 的 Explanation 從兩種用途改為四種（特徵、模擬器、只能用錄製資料時的模擬器、供人探索的生成器）。兩處都只寫通用知識，不含數字。
+- 反向交叉連結（Related concepts 新增）：`categorical-latents`、`variational-autoencoder`→`vector-quantization`；`shortcut-forcing`→`autoregressive-transformer`；`model-based-reinforcement-learning`→`actor-critic`；`latent-space-planning`→`latent-overshooting`；`mixture-density-rnn`→`recurrent-state-space-model`；`learning-in-imagination`→`model-based-reinforcement-learning`；`autoregressive-transformer`→`action-conditioning`、`creativity-support`。
+- 主題頁 Key concepts 與 frontmatter 新增：`evolution-strategies`、`offline-reinforcement-learning`、`creativity-support`、`free-bits`。
+- 新增概念頁 `free-bits`（把握度高：PlaNet p.12、Dreamer p.14、DreamerV2 p.18、DreamerV3 p.5 與 p.10 都明確寫到，已回 PDF 核對）。別名含 free nats。`2019-planet`、`2020-dreamer`、`2021-dreamerv2`、`2023-dreamerv3` 的 frontmatter 與 Related concepts、`kl-balancing`、`variational-autoencoder`、`recurrent-state-space-model` 的 Related concepts 連到它；`index.md` 世界模型區加入。Background 列出提出 free bits 的 Kingma et al. (2016)。
+- 別名重疊：`categorical-latents` 移除別名 straight-through gradients（中文版同步移除 straight-through 梯度）；這個名詞仍在該頁 Explanation 與主題頁 Key terms 解釋。
+- 未處理：行為複製、Reinforce／PPO、基準環境不符合建立概念頁的條件（只出現在一篇來源或只是順帶提到），維持在來源頁與 Key terms 中解釋；建議補的論文（Genie、MuZero、IRIS、DIAMOND）需要擁有者先把 PDF 放進 `raw/`；三處論文內部不一致維持「待確認」。
+- 中文版：上述所有頁面同步翻譯並更新 `translated_from`。
+- `build.py` 產生 58 個頁面，`check.py` 全部通過。

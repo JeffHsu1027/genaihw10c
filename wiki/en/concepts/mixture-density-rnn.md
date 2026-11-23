@@ -25,6 +25,7 @@ A recurrent network carries a hidden state that summarizes the past. A mixture d
 - [World model](world-model.md): the MDN-RNN is the prediction half of the world model.
 - [Variational autoencoder](variational-autoencoder.md): defines the latent vectors that the MDN-RNN predicts.
 - [Learning in imagination](learning-in-imagination.md): sampling from the MDN-RNN generates the imagined environment.
+- [Recurrent state-space model](recurrent-state-space-model.md): a later latent dynamics model that adds a deterministic memory path.
 
 ## Background
 

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="source-hash" content="f2bb1ba7011c">
+<meta name="source-hash" content="17111c46b3cc">
 <title>World models · Paper Wiki</title>
 <link rel="stylesheet" href="../../assets/style.css">
 </head>
@@ -18,7 +18,7 @@
   <p class="meta">World models · 7 sources</p>
   <article class="content">
 <h2>Overview</h2>
-<p>World models are learned simulators: models that let an agent predict how its environment will respond to its actions. Research on them asks how to learn such models from raw observations, how to use them to choose actions or to train policies, and how to stop agents from exploiting the model's mistakes. This topic page follows that line of work paper by paper.</p>
+<p>World models are learned simulators: models that predict how an environment will respond to actions. Research on them asks how to learn such models from raw observations; how to use them, whether to choose actions, to train policies without touching the real environment, or to let people explore possible futures; and how to stop agents from exploiting the model's mistakes. This topic page follows that line of work paper by paper.</p>
 <h2>Timeline</h2>
 <ul>
 <li>2018: <a href="../sources/2018-world-models.html">World Models</a> splits an agent into a large unsupervised world model and a tiny controller, and shows that a policy trained entirely inside the model's dream can work in the real game (p.7).</li>
@@ -96,6 +96,7 @@
 <li><a href="../concepts/latent-overshooting.html">Latent overshooting</a>: training a latent model on multi-step predictions.</li>
 <li><a href="../concepts/actor-critic.html">Actor-critic</a>: learning a policy together with a value function that estimates future rewards.</li>
 <li><a href="../concepts/categorical-latents.html">Categorical latents</a>: describing the latent state with discrete choices instead of Gaussians.</li>
+<li><a href="../concepts/free-bits.html">Free bits</a>: not penalizing a KL term while it is below a small threshold.</li>
 <li><a href="../concepts/kl-balancing.html">KL balancing</a>: training the prior of a latent model faster than its posterior.</li>
 <li><a href="../concepts/symlog-predictions.html">Symlog predictions</a>: predicting targets of any scale by compressing them.</li>
 <li><a href="../concepts/return-normalization.html">Return normalization</a>: scaling returns so one exploration setting fits every environment.</li>
@@ -103,6 +104,9 @@
 <li><a href="../concepts/action-conditioning.html">Action conditioning</a>: making predicted futures depend on the agent's actions.</li>
 <li><a href="../concepts/vector-quantization.html">Vector quantization</a>: turning images into discrete tokens.</li>
 <li><a href="../concepts/autoregressive-transformer.html">Autoregressive transformer</a>: generating a sequence one token at a time.</li>
+<li><a href="../concepts/evolution-strategies.html">Evolution strategies</a>: optimizing parameters by sampling candidates and keeping the better ones, without gradients.</li>
+<li><a href="../concepts/offline-reinforcement-learning.html">Offline reinforcement learning</a>: improving a policy from a fixed dataset without new interaction.</li>
+<li><a href="../concepts/creativity-support.html">Creativity support</a>: tools that help people generate and explore ideas, here with a world model.</li>
 </ul>
 <h2>Key terms</h2>
 <ul>

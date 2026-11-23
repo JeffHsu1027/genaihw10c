@@ -4,7 +4,7 @@ aliases: [在潛在空間規劃, 線上規劃, 模型預測控制, MPC, CEM 規�
 updated: 2026-11-24
 areas: [world-model, reinforcement-learning]
 sources: [2019-planet, 2020-dreamer]
-translated_from: "0c6e8b1bbf3a"
+translated_from: "a34b6fbdfbe0"
 ---
 
 ## 一句話定義
@@ -39,6 +39,7 @@ translated_from: "0c6e8b1bbf3a"
 - [遞迴狀態空間模型（Recurrent state-space model）](recurrent-state-space-model.md)：PlaNet 用來規劃的模型。
 - [在想像中學習（Learning in imagination）](learning-in-imagination.md)：使用模型的另一種方式；它事先用想像的經驗訓練策略，規劃則是在做決定的當下搜尋。
 - [Actor-critic（演員－評論家）](actor-critic.md)：Dreamer 用來取代規劃的學習型策略與價值。
+- [潛在超前預測（Latent overshooting）](latent-overshooting.md)：PlaNet 提出的訓練目標，用來改善規劃所依賴的多步預測。
 
 ## 背景資料
 

@@ -3,13 +3,13 @@ title: "世界模型（World models）"
 area: world-model
 updated: 2026-11-24
 sources: [2018-world-models, 2019-planet, 2020-dreamer, 2021-dreamerv2, 2023-dreamerv3, 2025-dreamer4, 2025-wham]
-concepts: [world-model, model-based-reinforcement-learning, variational-autoencoder, mixture-density-rnn, recurrent-state-space-model, learning-in-imagination, latent-space-planning, latent-overshooting, actor-critic, categorical-latents, kl-balancing, symlog-predictions, return-normalization, shortcut-forcing, action-conditioning, vector-quantization, autoregressive-transformer]
-translated_from: "afb5dd0766fc"
+concepts: [world-model, model-based-reinforcement-learning, variational-autoencoder, mixture-density-rnn, recurrent-state-space-model, learning-in-imagination, latent-space-planning, latent-overshooting, actor-critic, categorical-latents, kl-balancing, symlog-predictions, return-normalization, shortcut-forcing, action-conditioning, vector-quantization, autoregressive-transformer, evolution-strategies, offline-reinforcement-learning, creativity-support, free-bits]
+translated_from: "2169a7d8cfea"
 ---
 
 ## 概述
 
-世界模型是學出來的模擬器：讓代理人能預測環境會如何回應自己的行動。相關研究關心的是：如何從原始觀測學到這樣的模型、如何用它來選擇動作或訓練策略，以及如何避免代理人利用模型的錯誤。這個主題頁逐篇整理這條研究脈絡。
+世界模型是學出來的模擬器：預測環境會如何回應各種行動。相關研究關心的是：如何從原始觀測學到這樣的模型；如何使用它，無論是選擇動作、在不接觸真實環境的情況下訓練策略，還是讓人探索可能的未來；以及如何避免代理人利用模型的錯誤。這個主題頁逐篇整理這條研究脈絡。
 
 ## 發展脈絡
 
@@ -45,6 +45,7 @@ translated_from: "afb5dd0766fc"
 - [潛在超前預測（Latent overshooting）](../concepts/latent-overshooting.md)：用多步預測訓練潛在模型。
 - [Actor-critic（演員－評論家）](../concepts/actor-critic.md)：同時學習策略與估計未來獎勵的價值函數。
 - [類別潛在變數（Categorical latents）](../concepts/categorical-latents.md)：用離散選擇而非高斯分布描述潛在狀態。
+- [自由位元（Free bits）](../concepts/free-bits.md)：KL 項低於某個小門檻時就不再懲罰它。
 - [KL 平衡（KL balancing）](../concepts/kl-balancing.md)：訓練潛在模型時，先驗更新得比後驗快。
 - [Symlog 預測（Symlog predictions）](../concepts/symlog-predictions.md)：壓縮目標值，以預測任意量級的數值。
 - [報酬正規化（Return normalization）](../concepts/return-normalization.md)：縮放報酬，讓一組探索設定適用每個環境。
@@ -52,6 +53,9 @@ translated_from: "afb5dd0766fc"
 - [動作條件（Action conditioning）](../concepts/action-conditioning.md)：讓預測的未來取決於代理人的動作。
 - [向量量化（Vector quantization）](../concepts/vector-quantization.md)：把影像轉成離散 token。
 - [自迴歸 transformer（Autoregressive transformer）](../concepts/autoregressive-transformer.md)：一次產生一個 token 來生成序列。
+- [演化策略（Evolution strategies）](../concepts/evolution-strategies.md)：不用梯度，靠取樣候選解並保留較好的來最佳化參數。
+- [離線強化學習（Offline reinforcement learning）](../concepts/offline-reinforcement-learning.md)：不再與環境互動，只從固定資料集改進策略。
+- [創作支援（Creativity support）](../concepts/creativity-support.md)：幫助人發想與探索點子的工具，這裡是用世界模型來做。
 
 ## 術語表
 

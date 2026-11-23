@@ -10,9 +10,9 @@ added: 2026-11-24
 updated: 2026-11-24
 areas: [world-model, reinforcement-learning]
 status: to-read
-concepts: [actor-critic, learning-in-imagination, world-model, model-based-reinforcement-learning, recurrent-state-space-model, latent-overshooting, latent-space-planning, variational-autoencoder]
+concepts: [actor-critic, learning-in-imagination, world-model, model-based-reinforcement-learning, recurrent-state-space-model, latent-overshooting, latent-space-planning, variational-autoencoder, free-bits]
 topics: [world-models]
-translated_from: "b2899a46c569"
+translated_from: "1bc923afd739"
 ---
 
 ## 一句話總結
@@ -76,6 +76,7 @@ Dreamer 先從影像學出[世界模型](../concepts/world-model.md)，再完全
 - [潛在超前預測](../concepts/latent-overshooting.md)：Dreamer 不需要。
 - [潛在空間規劃](../concepts/latent-space-planning.md)：Dreamer 取代的另一種做法。
 - [變分自編碼器](../concepts/variational-autoencoder.md)：重建目標是一個變分下界。
+- [自由位元（Free bits）](../concepts/free-bits.md)：Dreamer 沿用 PlaNet 的 free nats。
 
 ## 與其他來源的關係
 

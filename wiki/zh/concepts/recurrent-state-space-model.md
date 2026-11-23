@@ -4,7 +4,7 @@ aliases: [RSSM]
 updated: 2026-11-24
 areas: [world-model]
 sources: [2019-planet, 2020-dreamer, 2021-dreamerv2, 2023-dreamerv3, 2025-dreamer4]
-translated_from: "5dfb05d66713"
+translated_from: "bbc54087fb9a"
 ---
 
 ## 一句話定義
@@ -56,6 +56,7 @@ translated_from: "5dfb05d66713"
 - [類別潛在變數（Categorical latents）](categorical-latents.md)：DreamerV2 使用的離散隨機狀態。
 - [KL 平衡（KL balancing）](kl-balancing.md)：訓練 RSSM 先驗的一種方式。
 - [Shortcut forcing](shortcut-forcing.md)：Dreamer 4 中取代 RSSM 的 transformer 所用的訓練目標。
+- [自由位元（Free bits）](free-bits.md)：PlaNet、Dreamer 與 DreamerV3 訓練 RSSM 時使用的 KL 截斷。
 
 ## 背景資料
 

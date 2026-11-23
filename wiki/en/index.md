@@ -8,7 +8,7 @@ Catalog of every page, grouped by area (see `wiki/areas.yml`). In each area: the
 
 ## World models
 
-- [World models](topics/world-models.md) — Topic entry: learned simulators that let an agent predict and practise.
+- [World models](topics/world-models.md) — Topic entry: learned simulators that predict how an environment responds to actions.
 - [World Models](sources/2018-world-models.md) — A VAE plus MDN-RNN world model with a tiny evolved controller, trained partly inside its own dream.
 - [Learning Latent Dynamics for Planning from Pixels](sources/2019-planet.md) — PlaNet: a purely model-based agent that plans with CEM inside a recurrent state-space model. (to-read)
 - [Dream to Control: Learning Behaviors by Latent Imagination](sources/2020-dreamer.md) — Dreamer: an actor-critic learned purely in the latent imagination of a world model. (to-read)
@@ -19,6 +19,7 @@ Catalog of every page, grouped by area (see `wiki/areas.yml`). In each area: the
 - [Action conditioning](concepts/action-conditioning.md) — Making a world model's predictions depend on the agent's actions.
 - [Autoregressive transformer](concepts/autoregressive-transformer.md) — A transformer that generates a sequence one token at a time.
 - [Categorical latents](concepts/categorical-latents.md) — Latent states made of discrete categorical variables instead of Gaussians.
+- [Free bits](concepts/free-bits.md) — Clipping a KL term so it is not penalized below a small threshold.
 - [KL balancing](concepts/kl-balancing.md) — Training the prior of a latent model faster than its posterior.
 - [Latent overshooting](concepts/latent-overshooting.md) — Training a latent model on multi-step predictions in latent space.
 - [Latent space planning](concepts/latent-space-planning.md) — Choosing actions by searching action sequences inside a learned latent model.

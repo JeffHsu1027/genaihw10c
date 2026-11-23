@@ -38,6 +38,7 @@ At each step, the agent infers its current latent state, imagines the outcome of
 - [Recurrent state-space model](recurrent-state-space-model.md): the model PlaNet plans with.
 - [Learning in imagination](learning-in-imagination.md): the other way to use a model; it trains a policy on imagined experience ahead of time, while planning searches at decision time.
 - [Actor-critic](actor-critic.md): the learned policy and value that Dreamer uses instead of planning.
+- [Latent overshooting](latent-overshooting.md): a training objective PlaNet proposes to improve the multi-step predictions that planning relies on.
 
 ## Background
 

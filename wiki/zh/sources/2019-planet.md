@@ -10,9 +10,9 @@ added: 2026-11-24
 updated: 2026-11-24
 areas: [world-model, reinforcement-learning]
 status: to-read
-concepts: [model-based-reinforcement-learning, world-model, recurrent-state-space-model, latent-overshooting, latent-space-planning, variational-autoencoder]
+concepts: [model-based-reinforcement-learning, world-model, recurrent-state-space-model, latent-overshooting, latent-space-planning, variational-autoencoder, free-bits]
 topics: [world-models]
-translated_from: "9c2dff69242e"
+translated_from: "9c1b92a0dcba"
 ---
 
 ## 一句話總結
@@ -73,6 +73,7 @@ PlaNet（Deep Planning Network）是一個純粹[基於模型](../concepts/model
 - [潛在超前預測](../concepts/latent-overshooting.md)：本篇提出的多步預測目標。
 - [潛在空間規劃](../concepts/latent-space-planning.md)：PlaNet 選擇動作的方式。
 - [變分自編碼器](../concepts/variational-autoencoder.md)：RSSM 以序列 VAE 的方式訓練。
+- [自由位元（Free bits）](../concepts/free-bits.md)：PlaNet 把 KL 損失在幾個 free nats 以下截斷。
 
 ## 與其他來源的關係
 

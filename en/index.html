@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="source-hash" content="d1e18bd86789">
+<meta name="source-hash" content="a03c9b23c240">
 <title>Paper Wiki</title>
 <link rel="stylesheet" href="../assets/style.css">
 </head>
@@ -18,7 +18,7 @@
 <section class="area" id="world-model">
 <h2>World models</h2>
 <h3>Topics</h3>
-<div class="cards"><a class="card card-topic" href="topics/world-models.html"><span class="tag tag-topic">Topic</span><h4>World models</h4><p class="card-meta">7 sources</p><p>World models are learned simulators: models that let an agent predict how its environment will respond to its actions.</p></a></div>
+<div class="cards"><a class="card card-topic" href="topics/world-models.html"><span class="tag tag-topic">Topic</span><h4>World models</h4><p class="card-meta">7 sources</p><p>World models are learned simulators: models that predict how an environment will respond to actions.</p></a></div>
 <h3>Sources</h3>
 <div class="cards"><a class="card card-source" href="sources/2018-world-models.html"><span class="tag tag-source">Source</span> <span class="status status-read">Read</span><h4>World Models</h4><p class="card-meta">David Ha, Jürgen Schmidhuber · 2018</p><p>The agent is split into a large world model that learns, without rewards, to compress and predict what it sees, and a tiny controller that acts on the world model&#x27;s features; the agent can even be…</p></a>
 <a class="card card-source" href="sources/2019-planet.html"><span class="tag tag-source">Source</span> <span class="status status-to-read">To read</span><h4>Learning Latent Dynamics for Planning from Pixels</h4><p class="card-meta">Danijar Hafner et al. · 2019</p><p>PlaNet (Deep Planning Network) is a purely model-based agent that learns a latent world model from images and chooses every action by fast online planning in latent space, without a policy or value…</p></a>
@@ -31,6 +31,7 @@
 <div class="cards"><a class="card card-concept" href="concepts/action-conditioning.html"><span class="tag tag-concept">Concept</span><h4>Action conditioning</h4><p class="card-meta">2 sources</p><p>Making a world model&#x27;s predictions depend on the actions taken, so that different actions from the same situation lead to correspondingly different predicted futures.</p></a>
 <a class="card card-concept" href="concepts/autoregressive-transformer.html"><span class="tag tag-concept">Concept</span><h4>Autoregressive transformer</h4><p class="card-meta">1 source</p><p>A transformer that generates a sequence one token at a time, each time predicting the next token from all the tokens before it.</p></a>
 <a class="card card-concept" href="concepts/categorical-latents.html"><span class="tag tag-concept">Concept</span><h4>Categorical latents</h4><p class="card-meta">2 sources</p><p>A latent representation made of several categorical variables, each taking one of a fixed set of classes, instead of continuous Gaussian variables.</p></a>
+<a class="card card-concept" href="concepts/free-bits.html"><span class="tag tag-concept">Concept</span><h4>Free bits</h4><p class="card-meta">4 sources</p><p>A training trick for variational models that stops penalizing a KL term while it is already below a small threshold.</p></a>
 <a class="card card-concept" href="concepts/kl-balancing.html"><span class="tag tag-concept">Concept</span><h4>KL balancing</h4><p class="card-meta">2 sources</p><p>A way of training latent dynamics models in which the KL term between posterior and prior updates the prior faster than it updates the posterior.</p></a>
 <a class="card card-concept" href="concepts/latent-overshooting.html"><span class="tag tag-concept">Concept</span><h4>Latent overshooting</h4><p class="card-meta">2 sources</p><p>A training objective for latent sequence models that, besides one-step predictions, also trains multi-step predictions by pulling them toward the states inferred from real observations, entirely in…</p></a>
 <a class="card card-concept" href="concepts/latent-space-planning.html"><span class="tag tag-concept">Concept</span><h4>Latent space planning</h4><p class="card-meta">2 sources</p><p>Choosing actions by searching over candidate action sequences inside a learned latent dynamics model and scoring them by predicted rewards, without generating observations.</p></a>

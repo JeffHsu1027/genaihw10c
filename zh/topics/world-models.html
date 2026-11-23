@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="source-hash" content="880ed8722961">
+<meta name="source-hash" content="77c297fe5b5b">
 <title>世界模型（World models） · 論文 Wiki</title>
 <link rel="stylesheet" href="../../assets/style.css">
 </head>
@@ -18,7 +18,7 @@
   <p class="meta">世界模型 · 7 個來源</p>
   <article class="content">
 <h2>概述</h2>
-<p>世界模型是學出來的模擬器：讓代理人能預測環境會如何回應自己的行動。相關研究關心的是：如何從原始觀測學到這樣的模型、如何用它來選擇動作或訓練策略，以及如何避免代理人利用模型的錯誤。這個主題頁逐篇整理這條研究脈絡。</p>
+<p>世界模型是學出來的模擬器：預測環境會如何回應各種行動。相關研究關心的是：如何從原始觀測學到這樣的模型；如何使用它，無論是選擇動作、在不接觸真實環境的情況下訓練策略，還是讓人探索可能的未來；以及如何避免代理人利用模型的錯誤。這個主題頁逐篇整理這條研究脈絡。</p>
 <h2>發展脈絡</h2>
 <ul>
 <li>2018：<a href="../sources/2018-world-models.html">World Models</a> 把代理人拆成大型非監督式世界模型與小型控制器，並證明完全在模型夢境中訓練的策略可以在真實遊戲中運作 (p.7)。</li>
@@ -96,6 +96,7 @@
 <li><a href="../concepts/latent-overshooting.html">潛在超前預測（Latent overshooting）</a>：用多步預測訓練潛在模型。</li>
 <li><a href="../concepts/actor-critic.html">Actor-critic（演員－評論家）</a>：同時學習策略與估計未來獎勵的價值函數。</li>
 <li><a href="../concepts/categorical-latents.html">類別潛在變數（Categorical latents）</a>：用離散選擇而非高斯分布描述潛在狀態。</li>
+<li><a href="../concepts/free-bits.html">自由位元（Free bits）</a>：KL 項低於某個小門檻時就不再懲罰它。</li>
 <li><a href="../concepts/kl-balancing.html">KL 平衡（KL balancing）</a>：訓練潛在模型時，先驗更新得比後驗快。</li>
 <li><a href="../concepts/symlog-predictions.html">Symlog 預測（Symlog predictions）</a>：壓縮目標值，以預測任意量級的數值。</li>
 <li><a href="../concepts/return-normalization.html">報酬正規化（Return normalization）</a>：縮放報酬，讓一組探索設定適用每個環境。</li>
@@ -103,6 +104,9 @@
 <li><a href="../concepts/action-conditioning.html">動作條件（Action conditioning）</a>：讓預測的未來取決於代理人的動作。</li>
 <li><a href="../concepts/vector-quantization.html">向量量化（Vector quantization）</a>：把影像轉成離散 token。</li>
 <li><a href="../concepts/autoregressive-transformer.html">自迴歸 transformer（Autoregressive transformer）</a>：一次產生一個 token 來生成序列。</li>
+<li><a href="../concepts/evolution-strategies.html">演化策略（Evolution strategies）</a>：不用梯度，靠取樣候選解並保留較好的來最佳化參數。</li>
+<li><a href="../concepts/offline-reinforcement-learning.html">離線強化學習（Offline reinforcement learning）</a>：不再與環境互動，只從固定資料集改進策略。</li>
+<li><a href="../concepts/creativity-support.html">創作支援（Creativity support）</a>：幫助人發想與探索點子的工具，這裡是用世界模型來做。</li>
 </ul>
 <h2>術語表</h2>
 <ul>

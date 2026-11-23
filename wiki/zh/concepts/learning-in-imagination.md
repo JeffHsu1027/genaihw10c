@@ -4,7 +4,7 @@ aliases: [夢境訓練, 在夢裡學習, 幻覺環境, 潛在想像, latent imag
 updated: 2026-11-24
 areas: [world-model, reinforcement-learning]
 sources: [2018-world-models, 2020-dreamer, 2021-dreamerv2, 2023-dreamerv3, 2025-dreamer4]
-translated_from: "beea64d733e4"
+translated_from: "54ae379e7cc8"
 ---
 
 ## 一句話定義
@@ -59,6 +59,7 @@ translated_from: "beea64d733e4"
 - [Actor-critic（演員－評論家）](actor-critic.md)：Dreamer 在想像中學習所用的方法。
 - [潛在空間規劃（Latent space planning）](latent-space-planning.md)：在做決定時使用模型、而不訓練策略的另一種做法。
 - [離線強化學習（Offline reinforcement learning）](offline-reinforcement-learning.md)：Dreamer 4 靠想像在不與環境互動的情況下學習。
+- [基於模型的強化學習（Model-based reinforcement learning）](model-based-reinforcement-learning.md)：在想像中學習所屬的更大方法家族。
 
 ## 背景資料
 

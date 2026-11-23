@@ -10,7 +10,7 @@ added: 2026-11-24
 updated: 2026-11-24
 areas: [world-model, reinforcement-learning]
 status: to-read
-concepts: [model-based-reinforcement-learning, world-model, recurrent-state-space-model, latent-overshooting, latent-space-planning, variational-autoencoder]
+concepts: [model-based-reinforcement-learning, world-model, recurrent-state-space-model, latent-overshooting, latent-space-planning, variational-autoencoder, free-bits]
 topics: [world-models]
 ---
 
@@ -72,6 +72,7 @@ Implementation details from the appendix: the deterministic path is a GRU with 2
 - [Latent overshooting](../concepts/latent-overshooting.md): the multi-step objective proposed here.
 - [Latent space planning](../concepts/latent-space-planning.md): how PlaNet chooses actions.
 - [Variational autoencoder](../concepts/variational-autoencoder.md): the RSSM is trained like a sequential VAE.
+- [Free bits](../concepts/free-bits.md): PlaNet clips its KL loss below a few free nats.
 
 ## Relation to other sources
 

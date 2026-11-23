@@ -4,7 +4,7 @@ aliases: [VAE, ConvVAE, 卷積變分自編碼器]
 updated: 2026-11-24
 areas: [world-model]
 sources: [2018-world-models, 2019-planet, 2020-dreamer, 2021-dreamerv2, 2023-dreamerv3]
-translated_from: "76ee7c659f7f"
+translated_from: "e4b2cd68b4c0"
 ---
 
 ## 一句話定義
@@ -58,6 +58,8 @@ translated_from: "76ee7c659f7f"
 - [遞迴狀態空間模型（Recurrent state-space model）](recurrent-state-space-model.md)：把 VAE 的想法延伸到序列。
 - [類別潛在變數（Categorical latents）](categorical-latents.md)：高斯潛在變數的離散替代方案。
 - [KL 平衡（KL balancing）](kl-balancing.md)：改變 KL 項的訓練方式。
+- [向量量化（Vector quantization）](vector-quantization.md)：一種自編碼器變體，潛在變數是碼本項目而不是高斯樣本。
+- [自由位元（Free bits）](free-bits.md)：避免 KL 項把潛在空間清空的一種方法。
 
 ## 背景資料
 

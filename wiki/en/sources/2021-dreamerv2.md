@@ -10,7 +10,7 @@ added: 2026-11-24
 updated: 2026-11-24
 areas: [world-model, reinforcement-learning]
 status: to-read
-concepts: [categorical-latents, kl-balancing, world-model, recurrent-state-space-model, actor-critic, learning-in-imagination, model-based-reinforcement-learning, variational-autoencoder]
+concepts: [categorical-latents, kl-balancing, world-model, recurrent-state-space-model, actor-critic, learning-in-imagination, model-based-reinforcement-learning, variational-autoencoder, free-bits]
 topics: [world-models]
 ---
 
@@ -72,6 +72,7 @@ Implementation details: the world model has about 20 million trainable parameter
 - [Learning in imagination](../concepts/learning-in-imagination.md): behaviors are learned purely from imagined trajectories.
 - [Model-based reinforcement learning](../concepts/model-based-reinforcement-learning.md): compared with SimPLe and MuZero.
 - [Variational autoencoder](../concepts/variational-autoencoder.md): the world model is a sequential VAE.
+- [Free bits](../concepts/free-bits.md): the trick that KL balancing replaces.
 
 ## Relation to other sources
 

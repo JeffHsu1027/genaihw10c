@@ -10,9 +10,9 @@ added: 2026-11-24
 updated: 2026-11-24
 areas: [world-model, reinforcement-learning]
 status: to-read
-concepts: [symlog-predictions, return-normalization, kl-balancing, categorical-latents, recurrent-state-space-model, actor-critic, learning-in-imagination, world-model, model-based-reinforcement-learning, variational-autoencoder]
+concepts: [symlog-predictions, return-normalization, kl-balancing, categorical-latents, recurrent-state-space-model, actor-critic, learning-in-imagination, world-model, model-based-reinforcement-learning, variational-autoencoder, free-bits]
 topics: [world-models]
-translated_from: "ba58034f2de4"
+translated_from: "b752af52f75e"
 ---
 
 ## 一句話總結
@@ -76,6 +76,7 @@ DreamerV3 加入一組穩定學習的技術，例如 [symlog 預測](../concepts
 - [世界模型](../concepts/world-model.md)：代理人的核心。
 - [基於模型的強化學習](../concepts/model-based-reinforcement-learning.md)：與 PPO、MuZero、VPT 比較。
 - [變分自編碼器](../concepts/variational-autoencoder.md)：世界模型以自編碼學習表示。
+- [自由位元（Free bits）](../concepts/free-bits.md)：重新採用，並與 KL 平衡結合。
 
 ## 與其他來源的關係
 

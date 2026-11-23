@@ -1,10 +1,10 @@
 ---
 title: "類別潛在變數（Categorical latents）"
-aliases: [離散潛在變數, 離散表示, straight-through 梯度, discrete latents]
+aliases: [離散潛在變數, 離散表示, discrete latents]
 updated: 2026-11-24
 areas: [world-model]
 sources: [2021-dreamerv2, 2023-dreamerv3]
-translated_from: "9beb41364b13"
+translated_from: "059629adeb48"
 ---
 
 ## 一句話定義
@@ -37,6 +37,7 @@ translated_from: "9beb41364b13"
 - [遞迴狀態空間模型（Recurrent state-space model）](recurrent-state-space-model.md)：DreamerV2 把類別潛在變數用在 RSSM 的隨機部分。
 - [KL 平衡（KL balancing）](kl-balancing.md)：DreamerV2 世界模型的另一項主要修改。
 - [變分自編碼器（Variational autoencoder）](variational-autoencoder.md)：常見的替代做法，使用高斯潛在變數與重參數化梯度。
+- [向量量化（Vector quantization）](vector-quantization.md)：另一種讓潛在變數離散化的方法，把每個向量對應到最接近的碼本（codebook）項目。
 
 ## 背景資料
 

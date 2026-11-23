@@ -3,12 +3,12 @@ title: "World models"
 area: world-model
 updated: 2026-11-24
 sources: [2018-world-models, 2019-planet, 2020-dreamer, 2021-dreamerv2, 2023-dreamerv3, 2025-dreamer4, 2025-wham]
-concepts: [world-model, model-based-reinforcement-learning, variational-autoencoder, mixture-density-rnn, recurrent-state-space-model, learning-in-imagination, latent-space-planning, latent-overshooting, actor-critic, categorical-latents, kl-balancing, symlog-predictions, return-normalization, shortcut-forcing, action-conditioning, vector-quantization, autoregressive-transformer]
+concepts: [world-model, model-based-reinforcement-learning, variational-autoencoder, mixture-density-rnn, recurrent-state-space-model, learning-in-imagination, latent-space-planning, latent-overshooting, actor-critic, categorical-latents, kl-balancing, symlog-predictions, return-normalization, shortcut-forcing, action-conditioning, vector-quantization, autoregressive-transformer, evolution-strategies, offline-reinforcement-learning, creativity-support, free-bits]
 ---
 
 ## Overview
 
-World models are learned simulators: models that let an agent predict how its environment will respond to its actions. Research on them asks how to learn such models from raw observations, how to use them to choose actions or to train policies, and how to stop agents from exploiting the model's mistakes. This topic page follows that line of work paper by paper.
+World models are learned simulators: models that predict how an environment will respond to actions. Research on them asks how to learn such models from raw observations; how to use them, whether to choose actions, to train policies without touching the real environment, or to let people explore possible futures; and how to stop agents from exploiting the model's mistakes. This topic page follows that line of work paper by paper.
 
 ## Timeline
 
@@ -44,6 +44,7 @@ World models are learned simulators: models that let an agent predict how its en
 - [Latent overshooting](../concepts/latent-overshooting.md): training a latent model on multi-step predictions.
 - [Actor-critic](../concepts/actor-critic.md): learning a policy together with a value function that estimates future rewards.
 - [Categorical latents](../concepts/categorical-latents.md): describing the latent state with discrete choices instead of Gaussians.
+- [Free bits](../concepts/free-bits.md): not penalizing a KL term while it is below a small threshold.
 - [KL balancing](../concepts/kl-balancing.md): training the prior of a latent model faster than its posterior.
 - [Symlog predictions](../concepts/symlog-predictions.md): predicting targets of any scale by compressing them.
 - [Return normalization](../concepts/return-normalization.md): scaling returns so one exploration setting fits every environment.
@@ -51,6 +52,9 @@ World models are learned simulators: models that let an agent predict how its en
 - [Action conditioning](../concepts/action-conditioning.md): making predicted futures depend on the agent's actions.
 - [Vector quantization](../concepts/vector-quantization.md): turning images into discrete tokens.
 - [Autoregressive transformer](../concepts/autoregressive-transformer.md): generating a sequence one token at a time.
+- [Evolution strategies](../concepts/evolution-strategies.md): optimizing parameters by sampling candidates and keeping the better ones, without gradients.
+- [Offline reinforcement learning](../concepts/offline-reinforcement-learning.md): improving a policy from a fixed dataset without new interaction.
+- [Creativity support](../concepts/creativity-support.md): tools that help people generate and explore ideas, here with a world model.
 
 ## Key terms
 

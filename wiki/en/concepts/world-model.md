@@ -12,7 +12,7 @@ A learned model of an environment that predicts what will happen next, usually g
 
 ## Explanation
 
-An agent that can predict the consequences of its actions does not have to try everything in the real world. A world model learns those predictions from experience, often in a compressed latent space instead of raw pixels. It can be used in two main ways: as a source of features that summarize the present and hint at the future, or as a simulator in which an agent can practise. Because it is learned, it is never perfect, and an agent that relies on it can be misled by its errors.
+An agent that can predict the consequences of its actions does not have to try everything in the real world. A world model learns those predictions from experience, often in a compressed latent space instead of raw pixels. It can be used as a source of features that summarize the present and hint at the future, as a simulator in which an agent can practise, including when the agent may only learn from recorded data, or as a generator of possible futures for people to explore. Because it is learned, it is never perfect, and an agent that relies on it can be misled by its errors.
 
 > **Explainer:** A world model is like the picture in a batter's head that tells them where a fastball will be before their eyes can follow it.
 

@@ -58,6 +58,7 @@ Model-free methods learn a policy or a value function directly from trial and er
 - [Latent space planning](latent-space-planning.md): using the model at decision time.
 - [Learning in imagination](learning-in-imagination.md): using the model to train a policy.
 - [Offline reinforcement learning](offline-reinforcement-learning.md): learning without environment interaction, as in Dreamer 4.
+- [Actor-critic](actor-critic.md): the policy learner that the Dreamer agents train inside their world models.
 
 ## Background
 

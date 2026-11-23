@@ -4,7 +4,7 @@ aliases: [model-based RL, MBRL, 模型式強化學習]
 updated: 2026-11-24
 areas: [reinforcement-learning, world-model]
 sources: [2018-world-models, 2019-planet, 2020-dreamer, 2021-dreamerv2, 2023-dreamerv3, 2025-dreamer4]
-translated_from: "f4104370158d"
+translated_from: "faae057c2373"
 ---
 
 ## 一句話定義
@@ -59,6 +59,7 @@ translated_from: "f4104370158d"
 - [潛在空間規劃（Latent space planning）](latent-space-planning.md)：在做決定時使用模型。
 - [在想像中學習（Learning in imagination）](learning-in-imagination.md)：用模型訓練策略。
 - [離線強化學習（Offline reinforcement learning）](offline-reinforcement-learning.md)：像 Dreamer 4 一樣，不與環境互動地學習。
+- [Actor-critic（演員－評論家）](actor-critic.md)：Dreamer 系列代理人在世界模型裡訓練的策略學習方法。
 
 ## 背景資料
 

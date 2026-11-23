@@ -34,6 +34,7 @@ In a sequential variational model, the KL term does two jobs: it trains the prio
 - [Categorical latents](categorical-latents.md): the other main change to the DreamerV2 world model.
 - [Variational autoencoder](variational-autoencoder.md): KL balancing changes the KL term of the variational bound.
 - [Recurrent state-space model](recurrent-state-space-model.md): the model whose prior is trained this way.
+- [Free bits](free-bits.md): the KL clipping that DreamerV2 replaces and DreamerV3 combines with balancing.
 
 ## Background
 

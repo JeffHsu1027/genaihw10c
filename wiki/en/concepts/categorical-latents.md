@@ -1,6 +1,6 @@
 ---
 title: "Categorical latents"
-aliases: [discrete latents, categorical latent variables, discrete representations, straight-through gradients]
+aliases: [discrete latents, categorical latent variables, discrete representations]
 updated: 2026-11-24
 areas: [world-model]
 sources: [2021-dreamerv2, 2023-dreamerv3]
@@ -36,6 +36,7 @@ A Gaussian latent describes a state with continuous numbers and one smooth bump 
 - [Recurrent state-space model](recurrent-state-space-model.md): DreamerV2 uses categorical latents for the stochastic part of the RSSM.
 - [KL balancing](kl-balancing.md): the other main change to the DreamerV2 world model.
 - [Variational autoencoder](variational-autoencoder.md): the usual alternative with Gaussian latents and reparameterization gradients.
+- [Vector quantization](vector-quantization.md): another way to make latents discrete, by snapping each vector to its nearest codebook entry.
 
 ## Background
 

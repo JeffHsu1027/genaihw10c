@@ -4,7 +4,7 @@ aliases: [MDN-RNN, 混合密度網路, MDN]
 updated: 2026-11-24
 areas: [world-model]
 sources: [2018-world-models]
-translated_from: "2f7ae3a4e368"
+translated_from: "a00ce5e88d95"
 ---
 
 ## 一句話定義
@@ -26,6 +26,7 @@ translated_from: "2f7ae3a4e368"
 - [世界模型（World model）](world-model.md)：MDN-RNN 是世界模型中負責預測的一半。
 - [變分自編碼器（Variational autoencoder）](variational-autoencoder.md)：定義了 MDN-RNN 要預測的潛在向量。
 - [在想像中學習（Learning in imagination）](learning-in-imagination.md)：從 MDN-RNN 抽樣就能產生想像中的環境。
+- [遞迴狀態空間模型（Recurrent state-space model）](recurrent-state-space-model.md)：較晚出現的潛在動態模型，多了一條確定性的記憶路徑。
 
 ## 背景資料
 

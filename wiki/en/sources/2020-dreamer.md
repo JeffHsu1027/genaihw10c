@@ -10,7 +10,7 @@ added: 2026-11-24
 updated: 2026-11-24
 areas: [world-model, reinforcement-learning]
 status: to-read
-concepts: [actor-critic, learning-in-imagination, world-model, model-based-reinforcement-learning, recurrent-state-space-model, latent-overshooting, latent-space-planning, variational-autoencoder]
+concepts: [actor-critic, learning-in-imagination, world-model, model-based-reinforcement-learning, recurrent-state-space-model, latent-overshooting, latent-space-planning, variational-autoencoder, free-bits]
 topics: [world-models]
 ---
 
@@ -75,6 +75,7 @@ Implementation details from the appendix: Dreamer reuses the convolutional encod
 - [Latent overshooting](../concepts/latent-overshooting.md): not needed by Dreamer.
 - [Latent space planning](../concepts/latent-space-planning.md): the alternative Dreamer replaces.
 - [Variational autoencoder](../concepts/variational-autoencoder.md): the reconstruction objective is a variational bound.
+- [Free bits](../concepts/free-bits.md): Dreamer keeps the free nats of PlaNet.
 
 ## Relation to other sources
 

@@ -4,7 +4,7 @@ aliases: [shortcut model, diffusion forcing, flow matching, x-prediction, 捷徑
 updated: 2026-11-24
 areas: [world-model]
 sources: [2025-dreamer4]
-translated_from: "94c84a8c71a1"
+translated_from: "acadd7ad3484"
 ---
 
 ## 一句話定義
@@ -28,6 +28,7 @@ translated_from: "94c84a8c71a1"
 - [世界模型（World model）](world-model.md)：shortcut forcing 用來訓練 Dreamer 4 的世界模型。
 - [動作條件（Action conditioning）](action-conditioning.md)：動作也輸入同一個動態 transformer。
 - [遞迴狀態空間模型（Recurrent state-space model）](recurrent-state-space-model.md)：較早、以變分目標訓練的動態模型。
+- [自迴歸 transformer（Autoregressive transformer）](autoregressive-transformer.md)：WHAM 採用的替代設計，逐個 token 產生每一格畫面，而不是靠去噪。
 
 ## 背景資料
 

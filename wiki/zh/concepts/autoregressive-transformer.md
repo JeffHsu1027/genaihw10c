@@ -4,7 +4,7 @@ aliases: [decoder-only transformer, 因果 transformer, 下一個 token 預測, 
 updated: 2026-11-24
 areas: [world-model]
 sources: [2025-wham]
-translated_from: "3e7ce235c0c0"
+translated_from: "ca3142dbf593"
 ---
 
 ## 一句話定義
@@ -26,6 +26,8 @@ translated_from: "3e7ce235c0c0"
 - [向量量化（Vector quantization）](vector-quantization.md)：產生 transformer 要預測的影像 token。
 - [世界模型（World model）](world-model.md)：WHAM 以這種架構作為世界模型。
 - [Shortcut forcing](shortcut-forcing.md)：另一種 transformer 世界模型設計，每格畫面用幾個去噪步驟生成，而不是逐個 token 生成。
+- [動作條件（Action conditioning）](action-conditioning.md)：WHAM 把動作 token 與影像 token 交錯排列，讓預測取決於玩家的動作。
+- [創作支援（Creativity support）](creativity-support.md)：WHAM 打造這個 transformer 世界模型的目的。
 
 ## 背景資料
 

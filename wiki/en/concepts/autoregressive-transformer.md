@@ -25,6 +25,8 @@ A causal attention mask lets each position see only earlier positions, so the mo
 - [Vector quantization](vector-quantization.md): produces the image tokens the transformer predicts.
 - [World model](world-model.md): WHAM uses this architecture as its world model.
 - [Shortcut forcing](shortcut-forcing.md): a different transformer world model design, which generates each frame with a few denoising steps instead of token by token.
+- [Action conditioning](action-conditioning.md): WHAM interleaves action tokens with image tokens so that predictions depend on the player's actions.
+- [Creativity support](creativity-support.md): the purpose WHAM builds its transformer world model for.
 
 ## Background
 

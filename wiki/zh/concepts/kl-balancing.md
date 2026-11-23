@@ -4,7 +4,7 @@ aliases: [KL balance, 平衡 KL 損失]
 updated: 2026-11-24
 areas: [world-model]
 sources: [2021-dreamerv2, 2023-dreamerv3]
-translated_from: "a4b1397c4f4a"
+translated_from: "37615db39317"
 ---
 
 ## 一句話定義
@@ -35,6 +35,7 @@ translated_from: "a4b1397c4f4a"
 - [類別潛在變數（Categorical latents）](categorical-latents.md)：DreamerV2 世界模型的另一項主要修改。
 - [變分自編碼器（Variational autoencoder）](variational-autoencoder.md)：KL 平衡改變了變分下界中的 KL 項。
 - [遞迴狀態空間模型（Recurrent state-space model）](recurrent-state-space-model.md)：以這種方式訓練先驗的模型。
+- [自由位元（Free bits）](free-bits.md)：DreamerV2 取代、DreamerV3 再與平衡結合的 KL 截斷技巧。
 
 ## 背景資料
 
