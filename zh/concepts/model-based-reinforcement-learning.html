@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="source-hash" content="846935fc55a6">
+<meta name="source-hash" content="6fdcdb5f1e03">
 <title>基於模型的強化學習（Model-based reinforcement learning） · 論文 Wiki</title>
 <link rel="stylesheet" href="../../assets/style.css">
 </head>
@@ -20,7 +20,7 @@
 <h2>一句話定義</h2>
 <p>會學習或使用「環境如何回應動作」的模型，並用這個模型來決定如何行動或學習如何行動的強化學習。</p>
 <h2>說明</h2>
-<p>無模型（model-free）方法直接從試誤中學習策略或價值函數。基於模型的方法先學一個動態模型，再加以利用：在做決定的當下拿來規劃，或拿來產生額外的經驗訓練策略。好的模型能讓學習大幅提高資料效率，也可能轉移到同一環境中的新任務。不過模型的錯誤可能誤導代理人，而從影像學到準確的模型並不容易。</p>
+<p>在強化學習（reinforcement learning）中，代理人（agent）在環境裡行動、得到獎勵（reward），並透過試誤學出一套策略（policy），也就是選擇動作的規則，讓長期累積的獎勵越多越好。無模型（model-free）方法直接從試誤中學習策略或價值函數。基於模型的方法先學一個動態模型，再加以利用：在做決定的當下拿來規劃，或拿來產生額外的經驗訓練策略。好的模型能讓學習大幅提高資料效率，也可能轉移到同一環境中的新任務。不過模型的錯誤可能誤導代理人，而從影像學到準確的模型並不容易。</p>
 <h2>各來源怎麼說</h2>
 <h3>World Models（2018）</h3>
 <p><a href="../sources/2018-world-models.html">World Models</a> 不使用獎勵學習世界模型，再訓練一個利用模型的小型控制器：先把模型當作特徵來源 (p.5)，接著完全取代真實環境 (p.7)。論文把自己定位為簡化版的示範，展示 1990 到 2015 年間一系列論文中「以 RNN 為基礎的世界模型加控制器」的想法 (p.2)。</p>

@@ -224,3 +224,9 @@
 - 未處理：行為複製、Reinforce／PPO、基準環境不符合建立概念頁的條件（只出現在一篇來源或只是順帶提到），維持在來源頁與 Key terms 中解釋；建議補的論文（Genie、MuZero、IRIS、DIAMOND）需要擁有者先把 PDF 放進 `raw/`；三處論文內部不一致維持「待確認」。
 - 中文版：上述所有頁面同步翻譯並更新 `translated_from`。
 - `build.py` 產生 58 個頁面，`check.py` 全部通過。
+
+## [2026-11-24] query | 簡報退回：補上強化學習的基本定義
+
+- 起因：做簡報（`decks/world-models/`）的節點 2 發現，Wiki 沒有任何一頁解釋強化學習本身（代理人、獎勵、策略），而簡報讀者沒學過強化學習。依 `docs/slides-plan.md` 第 6 節「跨階段退回」，回到 Wiki 補頁面，不在簡報裡補。
+- 修改：概念頁 `model-based-reinforcement-learning` 的 Explanation 開頭新增一句強化學習的通用定義（中英版同步，更新 `translated_from`）。只寫通用知識，不含數字。選這頁是因為它被 6 篇來源頁連到，證據卡可以引用。
+- 沒有新增頁面。`build.py`、`check.py` 全部通過。

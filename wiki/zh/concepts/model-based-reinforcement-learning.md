@@ -4,7 +4,7 @@ aliases: [model-based RL, MBRL, 模型式強化學習]
 updated: 2026-11-24
 areas: [reinforcement-learning, world-model]
 sources: [2018-world-models, 2019-planet, 2020-dreamer, 2021-dreamerv2, 2023-dreamerv3, 2025-dreamer4]
-translated_from: "faae057c2373"
+translated_from: "3ff9aa86063f"
 ---
 
 ## 一句話定義
@@ -13,7 +13,7 @@ translated_from: "faae057c2373"
 
 ## 說明
 
-無模型（model-free）方法直接從試誤中學習策略或價值函數。基於模型的方法先學一個動態模型，再加以利用：在做決定的當下拿來規劃，或拿來產生額外的經驗訓練策略。好的模型能讓學習大幅提高資料效率，也可能轉移到同一環境中的新任務。不過模型的錯誤可能誤導代理人，而從影像學到準確的模型並不容易。
+在強化學習（reinforcement learning）中，代理人（agent）在環境裡行動、得到獎勵（reward），並透過試誤學出一套策略（policy），也就是選擇動作的規則，讓長期累積的獎勵越多越好。無模型（model-free）方法直接從試誤中學習策略或價值函數。基於模型的方法先學一個動態模型，再加以利用：在做決定的當下拿來規劃，或拿來產生額外的經驗訓練策略。好的模型能讓學習大幅提高資料效率，也可能轉移到同一環境中的新任務。不過模型的錯誤可能誤導代理人，而從影像學到準確的模型並不容易。
 
 ## 各來源怎麼說
 

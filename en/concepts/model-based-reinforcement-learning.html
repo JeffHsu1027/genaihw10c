@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="source-hash" content="547bc4516aa9">
+<meta name="source-hash" content="0a92c351c44a">
 <title>Model-based reinforcement learning · Paper Wiki</title>
 <link rel="stylesheet" href="../../assets/style.css">
 </head>
@@ -20,7 +20,7 @@
 <h2>One-line definition</h2>
 <p>Reinforcement learning that learns or uses a model of how the environment responds to actions, and uses that model to decide how to act or to learn how to act.</p>
 <h2>Explanation</h2>
-<p>Model-free methods learn a policy or a value function directly from trial and error. Model-based methods first learn a dynamics model and then use it, either to plan at decision time or to generate extra experience for training a policy. A good model can make learning much more data efficient and may transfer to new tasks in the same environment. Errors in the model, however, can mislead the agent, and learning accurate models from images is difficult.</p>
+<p>In reinforcement learning, an agent acts in an environment, receives rewards, and learns by trial and error a policy, a rule for choosing actions, that collects as much reward as possible over time. Model-free methods learn a policy or a value function directly from trial and error. Model-based methods first learn a dynamics model and then use it, either to plan at decision time or to generate extra experience for training a policy. A good model can make learning much more data efficient and may transfer to new tasks in the same environment. Errors in the model, however, can mislead the agent, and learning accurate models from images is difficult.</p>
 <h2>What each source says</h2>
 <h3>World Models (2018)</h3>
 <p><a href="../sources/2018-world-models.html">World Models</a> learns a world model without rewards and then trains a small controller that uses the model, first as a source of features (p.5) and then as a complete replacement for the environment (p.7). The paper presents itself as a simplified demonstration of RNN-based world model and controller ideas from a series of papers between 1990 and 2015 (p.2).</p>

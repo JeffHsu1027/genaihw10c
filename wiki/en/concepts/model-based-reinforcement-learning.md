@@ -12,7 +12,7 @@ Reinforcement learning that learns or uses a model of how the environment respon
 
 ## Explanation
 
-Model-free methods learn a policy or a value function directly from trial and error. Model-based methods first learn a dynamics model and then use it, either to plan at decision time or to generate extra experience for training a policy. A good model can make learning much more data efficient and may transfer to new tasks in the same environment. Errors in the model, however, can mislead the agent, and learning accurate models from images is difficult.
+In reinforcement learning, an agent acts in an environment, receives rewards, and learns by trial and error a policy, a rule for choosing actions, that collects as much reward as possible over time. Model-free methods learn a policy or a value function directly from trial and error. Model-based methods first learn a dynamics model and then use it, either to plan at decision time or to generate extra experience for training a policy. A good model can make learning much more data efficient and may transfer to new tasks in the same environment. Errors in the model, however, can mislead the agent, and learning accurate models from images is difficult.
 
 ## What each source says
 
