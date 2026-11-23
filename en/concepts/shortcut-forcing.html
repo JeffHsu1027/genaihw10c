@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="source-hash" content="40e27821ef25">
+<title>Shortcut forcing · Paper Wiki</title>
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="site-name" href="../index.html">Paper Wiki</a>
+  <a class="lang-switch" href="../../zh/concepts/shortcut-forcing.html" hreflang="zh-Hant">中文</a>
+</header>
+<main class="page page-concept">
+  <p class="page-kind"><span class="tag tag-concept">Concept</span></p>
+  <h1>Shortcut forcing</h1>
+  <p class="meta">shortcut models, diffusion forcing, flow matching, x-prediction · 1 source</p>
+  <article class="content">
+<h2>One-line definition</h2>
+<p>A training objective for video world models that combines diffusion forcing, which lets every frame of a sequence have its own noise level, with shortcut models, which learn to take large denoising steps, so each new frame can be generated in only a few network passes.</p>
+<h2>Explanation</h2>
+<p>Diffusion and flow matching models generate data by starting from noise and removing it step by step, which usually takes many network passes. Shortcut models also tell the network how large a step to take and train large steps to match two smaller ones, so a few steps can replace many. Diffusion forcing applies noise to each frame of a sequence separately, so a model can generate the next frame from a clean or lightly noised history, which is what an interactive world model needs. Predicting the clean frame directly, rather than the direction from noise to data, tends to produce smoother outputs that accumulate fewer errors when frames are generated one after another.</p>
+<blockquote class="note note-explainer">
+<p><strong>Explainer:</strong> A usual diffusion model walks from fog to a clear picture in many tiny steps. A shortcut model learns to take a few long strides, and diffusion forcing lets it do this one frame at a time while looking back at frames it has already drawn.</p>
+</blockquote>
+<h2>What each source says</h2>
+<h3>Training Agents Inside of Scalable World Models (2025)</h3>
+<p><a href="../sources/2025-dreamer4.html">Dreamer 4</a> introduces shortcut forcing to train its dynamics model, building on diffusion forcing and shortcut models (p.5). It predicts clean representations instead of velocities, because velocity prediction produces high-frequency outputs that cause errors to accumulate in long frame-by-frame rollouts (p.6). A ramp weight that grows linearly with the signal level focuses the loss on less noisy inputs, which carry more learning signal (p.6). Generation uses 4 sampling steps per frame (p.6). Shortcut forcing with 4 steps approaches the quality of diffusion forcing with 64 steps, making generation 16 times faster (p.16, Fig. 8). Predicting clean representations, computing the loss in that space, and adding the ramp weight substantially improve quality, especially for long generations (p.16).</p>
+<h2>Related concepts</h2>
+<ul>
+<li><a href="world-model.html">World model</a>: shortcut forcing trains the Dreamer 4 world model.</li>
+<li><a href="action-conditioning.html">Action conditioning</a>: actions are fed to the same dynamics transformer.</li>
+<li><a href="recurrent-state-space-model.html">Recurrent state-space model</a>: the earlier, variational alternative for the dynamics.</li>
+</ul>
+<h2>Background</h2>
+<p>(None yet)</p>
+  </article>
+</main>
+<footer class="site-footer"><a href="../index.html">Back to home</a></footer>
+</body>
+</html>

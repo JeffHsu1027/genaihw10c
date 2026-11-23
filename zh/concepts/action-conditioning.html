@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="source-hash" content="21e77799d443">
+<title>動作條件（Action conditioning） · 論文 Wiki</title>
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="site-name" href="../index.html">論文 Wiki</a>
+  <a class="lang-switch" href="../../en/concepts/action-conditioning.html" hreflang="en">English</a>
+</header>
+<main class="page page-concept">
+  <p class="page-kind"><span class="tag tag-concept">概念</span></p>
+  <h1>動作條件（Action conditioning）</h1>
+  <p class="meta">以動作為條件的影片預測, 動作接地, 從無標註影片學習 · 1 個來源</p>
+  <article class="content">
+<h2>一句話定義</h2>
+<p>讓世界模型的預測取決於所採取的動作，使得從同一個情境出發的不同動作，會導向相應不同的預測未來。</p>
+<h2>說明</h2>
+<p>沒有動作的影片模型只能預測接下來通常會發生什麼。要當作代理人的世界模型，它還必須預測未來如何隨代理人的選擇而改變。學這件事需要搭配產生該影片的動作，而這類資料遠比大量沒有標註的影片稀少。因此一個很有用的性質是：從無標註影片學到世界大部分的外觀與物理，只從少量有標註的資料學「動作與結果之間的關係」。</p>
+<blockquote class="note note-explainer">
+<p><strong>解說（Explainer）：</strong> 就像大部分靠看別人玩來學一個遊戲，最後只需要拿手把玩一小段時間，就知道哪個按鈕做什麼。</p>
+</blockquote>
+<h2>各來源怎麼說</h2>
+<h3>Training Agents Inside of Scalable World Models（2025）</h3>
+<p><a href="../sources/2025-dreamer4.html">Dreamer 4</a> 把滑鼠、鍵盤等每個動作成分各自編碼成 token，影片沒有動作時只使用一個學到的嵌入，因此能混合使用有標註與無標註的影片 (p.5)。用 VPT 全部 2541 小時的影片訓練、但只有 100 小時附動作時，它達到全部附動作模型 85% 的 PSNR 與 100% 的 SSIM (p.14)。只提供 Overworld 的動作時，動作條件能轉移到只出現在無標註影片中的 Nether 與 End，達到 76% 的 PSNR 與 80% 的 SSIM (p.15)。作者的結論是，世界模型的知識大部分可以從無標註影片吸收，這指向從網路影片學習的方向 (p.14)。</p>
+<h2>相關概念</h2>
+<ul>
+<li><a href="world-model.html">世界模型（World model）</a>：動作條件把影片模型變成世界模型。</li>
+<li><a href="shortcut-forcing.html">Shortcut forcing</a>：Dreamer 4 中以動作為條件的動態模型所用的訓練目標。</li>
+<li><a href="offline-reinforcement-learning.html">離線強化學習（Offline reinforcement learning）</a>：世界模型只用記錄下來的動作訓練。</li>
+</ul>
+<h2>背景資料</h2>
+<p>（尚無）</p>
+  </article>
+</main>
+<footer class="site-footer"><a href="../index.html">回首頁</a></footer>
+</body>
+</html>

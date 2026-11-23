@@ -71,6 +71,7 @@ Training details from the appendix: the VAE is trained for one epoch with an L2 
 
 - [Learning Latent Dynamics for Planning from Pixels](2019-planet.md) (PlaNet, 2019) cites this paper, reuses its convolutional encoder and decoder, and counts it among hybrid agents that learn a policy from imagined experience. Instead of training a controller inside a dream, PlaNet plans with its learned model at every step. David Ha is an author of both papers.
 - [Dream to Control: Learning Behaviors by Latent Imagination](2020-dreamer.md) (Dreamer, 2020) also cites this paper, describing it as evolving linear controllers in imagination, and reuses its convolutional encoder and decoder. Like this paper, Dreamer trains its behavior inside the learned model, but with gradients and a value model instead of evolution strategies.
+- [Training Agents Inside of Scalable World Models](2025-dreamer4.md) (Dreamer 4, 2025) cites this paper as one of the first world models accurate enough for planning from pixels. Like this paper's VizDoom agent, Dreamer 4 trains its policy without touching the real game, but from a large human dataset rather than random play.
 
 ## Background
 

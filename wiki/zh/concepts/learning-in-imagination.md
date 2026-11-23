@@ -3,8 +3,8 @@ title: "在想像中學習（Learning in imagination）"
 aliases: [夢境訓練, 在夢裡學習, 幻覺環境, 潛在想像, latent imagination]
 updated: 2026-11-24
 areas: [world-model, reinforcement-learning]
-sources: [2018-world-models, 2020-dreamer, 2021-dreamerv2, 2023-dreamerv3]
-translated_from: "c9f6ebf54385"
+sources: [2018-world-models, 2020-dreamer, 2021-dreamerv2, 2023-dreamerv3, 2025-dreamer4]
+translated_from: "beea64d733e4"
 ---
 
 ## 一句話定義
@@ -35,6 +35,10 @@ translated_from: "c9f6ebf54385"
 
 [DreamerV3](../sources/2023-dreamerv3.md) 完全從世界模型預測的抽象軌跡學習行為，在環境中選擇動作時不做往前規劃 (p.5)。想像軌跡從回放輸入的表示出發 (p.5)。以這種方式加上一組固定設定，它成為第一個從零開始在 Minecraft 挖到鑽石的演算法 (p.10)。
 
+### Training Agents Inside of Scalable World Models（2025）
+
+[Dreamer 4](../sources/2025-dreamer4.md) 稱之為想像訓練：在行為克隆之後，策略繼續在世界模型從資料片段生成的 rollout 上做強化學習 (p.7)。和早期 Dreamer 不同，它每個片段只展開一次 rollout，重視資料多樣性並減少記憶體用量 (p.7)。因為完全不使用真實環境，這裡的想像訓練是完全離線的 (p.11)。和只做行為克隆相比，它同時提升成功率與速度，里程碑越難提升越多 (p.12)。
+
 ### 來源之間的比較
 
 - [World Models](../sources/2018-world-models.md) 在想像中用 CMA-ES 訓練控制器，只需要每次 rollout 的最終獎勵 (p.12)。
@@ -43,7 +47,9 @@ translated_from: "c9f6ebf54385"
 - [Dreamer](../sources/2020-dreamer.md) 則持續交替：在想像中訓練行為，以及在真實環境中行動、擴充用來訓練世界模型的資料 (p.2)。
 - [DreamerV2](../sources/2021-dreamerv2.md) 顯示只在想像中學習，也能在過去世界模型沒有競爭力的 Atari 上達到人類水準 (p.2)。
 - [DreamerV3](../sources/2023-dreamerv3.md) 把這種做法延伸到 8 個領域、150 多個任務，而且不改超參數 (p.8)。
-- 只有 World Models 明確討論模型被利用的問題；Dreamer、DreamerV2 與 DreamerV3 都沒有回報類似的失敗。這個差異是本 Wiki 的觀察，不是任何一篇論文的主張。
+- [Dreamer 4](../sources/2025-dreamer4.md) 拿掉了剩下的線上互動：世界模型從固定資料集學習，代理人只在其中改進 (p.10)。
+- [World Models](../sources/2018-world-models.md) 的 VizDoom 代理人也只在夢境中訓練，但它的夢境是在簡單遊戲中用隨機策略資料建成的 (p.7)。
+- 只有 World Models 明確討論模型被利用的問題；Dreamer、DreamerV2、DreamerV3 與 Dreamer 4 都沒有回報類似的失敗，不過 Dreamer 4 讓策略保持接近行為克隆的先驗。這個差異是本 Wiki 的觀察，不是任何一篇論文的主張。
 
 ## 相關概念
 
@@ -52,6 +58,7 @@ translated_from: "c9f6ebf54385"
 - [演化策略（Evolution strategies）](evolution-strategies.md)：World Models 在夢境中訓練控制器的最佳化方法。
 - [Actor-critic（演員－評論家）](actor-critic.md)：Dreamer 在想像中學習所用的方法。
 - [潛在空間規劃（Latent space planning）](latent-space-planning.md)：在做決定時使用模型、而不訓練策略的另一種做法。
+- [離線強化學習（Offline reinforcement learning）](offline-reinforcement-learning.md)：Dreamer 4 靠想像在不與環境互動的情況下學習。
 
 ## 背景資料
 

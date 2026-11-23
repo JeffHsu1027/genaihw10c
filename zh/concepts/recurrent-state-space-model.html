@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="source-hash" content="17be54ba2b03">
+<meta name="source-hash" content="3f1be936d38c">
 <title>遞迴狀態空間模型（Recurrent state-space model） · 論文 Wiki</title>
 <link rel="stylesheet" href="../../assets/style.css">
 </head>
@@ -15,7 +15,7 @@
 <main class="page page-concept">
   <p class="page-kind"><span class="tag tag-concept">概念</span></p>
   <h1>遞迴狀態空間模型（Recurrent state-space model）</h1>
-  <p class="meta">RSSM · 4 個來源</p>
+  <p class="meta">RSSM · 5 個來源</p>
   <article class="content">
 <h2>一句話定義</h2>
 <p>一種潛在動態模型，狀態分成兩部分：由遞迴網路往前傳遞的確定性部分，以及每一步抽樣的隨機部分。</p>
@@ -33,12 +33,15 @@
 <p><a href="../sources/2021-dreamerv2.html">DreamerV2</a> 保留 RSSM 的結構：GRU 計算確定性的遞迴狀態，後驗隨機狀態看得到目前的影像，先驗隨機狀態則在看不到影像時預測它 (pp.2-3)。不過隨機狀態改成 32 個各有 32 類的類別變數向量，不再是高斯分布 (p.3, Fig. 2)。RSSM 使用 600 個單元 (p.19)，在它的 GRU 中加入層正規化幾乎沒有幫助 (p.18)。</p>
 <h3>Mastering Diverse Domains through World Models（2023）</h3>
 <p><a href="../sources/2023-dreamerv3.html">DreamerV3</a> 仍以 RSSM 實作世界模型，包含序列模型、編碼器、動態預測器，以及獎勵、是否繼續與重建的輸出頭 (pp.3-4)。序列模型是遞迴權重為 8 個區塊對角的 GRU，能有大量記憶單元而參數不會呈平方成長 (p.18)。給定 5 張脈絡畫面與動作後，模型能在 DMLab 與機器人場景中往後預測 45 格畫面 (p.4, Fig. 4)，在 Minecraft 中也一樣 (p.23, Fig. 7)。</p>
+<h3>Training Agents Inside of Scalable World Models（2025）</h3>
+<p><a href="../sources/2025-dreamer4.html">Dreamer 4</a> 把 DreamerV3 的 RSSM 描述為以遞迴網路與變分目標建成、推論非常有效率的輕量世界模型，但很難擴展到多樣的資料分布 (p.29)。它改用以 shortcut forcing 訓練的 transformer tokenizer 與動態模型取代 RSSM (p.29)。</p>
 <h3>來源之間的比較</h3>
 <ul>
 <li><a href="../sources/2019-planet.html">PlaNet</a> 提出 RSSM 並用於規劃 (p.4)。</li>
 <li><a href="../sources/2020-dreamer.html">Dreamer</a> 原封不動地沿用它來學習策略 (p.6)。因此同一個模型支援兩種不同的動作選擇方式；Dreamer 直接建立在 PlaNet 之上，這段整理是本 Wiki 的。</li>
 <li><a href="../sources/2021-dreamerv2.html">DreamerV2</a> 保留確定性與隨機兩條路徑，但把高斯隨機狀態換成類別變數，在多數 Atari 遊戲上有幫助 (p.9)。</li>
 <li><a href="../sources/2023-dreamerv3.html">DreamerV3</a> 在 150 多個任務上保留這個結構，主要只改了遞迴單元與訓練損失 (p.18)。</li>
+<li><a href="../sources/2025-dreamer4.html">Dreamer 4</a> 為了可擴展性改用 transformer，結束了 Dreamer 系列中的這條路線 (p.29)。這是為了規模而替換，並不是說 RSSM 在它先前使用的較小領域中是錯的。</li>
 </ul>
 <h2>相關概念</h2>
 <ul>
@@ -48,6 +51,7 @@
 <li><a href="mixture-density-rnn.html">混合密度遞迴神經網路（Mixture density RNN）</a>：另一種讓遞迴模型帶有隨機性的方法；它對輸出抽樣，RSSM 則對狀態的一部分抽樣。</li>
 <li><a href="categorical-latents.html">類別潛在變數（Categorical latents）</a>：DreamerV2 使用的離散隨機狀態。</li>
 <li><a href="kl-balancing.html">KL 平衡（KL balancing）</a>：訓練 RSSM 先驗的一種方式。</li>
+<li><a href="shortcut-forcing.html">Shortcut forcing</a>：Dreamer 4 中取代 RSSM 的 transformer 所用的訓練目標。</li>
 </ul>
 <h2>背景資料</h2>
 <p>（尚無）</p>

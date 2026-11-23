@@ -2,8 +2,8 @@
 title: "World models"
 area: world-model
 updated: 2026-11-24
-sources: [2018-world-models, 2019-planet, 2020-dreamer, 2021-dreamerv2, 2023-dreamerv3]
-concepts: [world-model, model-based-reinforcement-learning, variational-autoencoder, mixture-density-rnn, recurrent-state-space-model, learning-in-imagination, latent-space-planning, latent-overshooting, actor-critic, categorical-latents, kl-balancing, symlog-predictions, return-normalization]
+sources: [2018-world-models, 2019-planet, 2020-dreamer, 2021-dreamerv2, 2023-dreamerv3, 2025-dreamer4]
+concepts: [world-model, model-based-reinforcement-learning, variational-autoencoder, mixture-density-rnn, recurrent-state-space-model, learning-in-imagination, latent-space-planning, latent-overshooting, actor-critic, categorical-latents, kl-balancing, symlog-predictions, return-normalization, shortcut-forcing, action-conditioning]
 ---
 
 ## Overview
@@ -17,6 +17,7 @@ World models are learned simulators: models that let an agent predict how its en
 - 2020: [Dreamer](../sources/2020-dreamer.md) keeps PlaNet's world model but learns behavior purely in imagination with an actor-critic whose value model looks beyond the horizon, beating PlaNet and the model-free D4PG on average across 20 tasks (p.6, Fig. 6).
 - 2021: [DreamerV2](../sources/2021-dreamerv2.md) switches to categorical latents and KL balancing and becomes the first agent to reach human-level Atari performance by learning purely inside a separately trained world model (p.1).
 - 2023: [DreamerV3](../sources/2023-dreamerv3.md) adds robustness techniques so that one fixed configuration outperforms specialized methods on more than 150 tasks, and becomes the first algorithm to collect diamonds in Minecraft from scratch (p.1).
+- 2025: [Dreamer 4](../sources/2025-dreamer4.md) switches to a scalable transformer world model trained by shortcut forcing and becomes the first agent to obtain diamonds in Minecraft purely from offline data (p.1).
 
 ## Sources
 
@@ -27,6 +28,7 @@ World models are learned simulators: models that let an agent predict how its en
 | 2020 | [Dream to Control (Dreamer)](../sources/2020-dreamer.md) | to-read | Learns an actor-critic purely in the latent imagination of PlaNet's world model, using value gradients through the dynamics. |
 | 2021 | [Mastering Atari with Discrete World Models (DreamerV2)](../sources/2021-dreamerv2.md) | to-read | Dreamer with categorical latents and KL balancing; human-level Atari from learning only inside the world model. |
 | 2023 | [Mastering Diverse Domains through World Models (DreamerV3)](../sources/2023-dreamerv3.md) | to-read | Robustness techniques let one fixed configuration master many domains, including diamonds in Minecraft. |
+| 2025 | [Training Agents Inside of Scalable World Models (Dreamer 4)](../sources/2025-dreamer4.md) | to-read | A fast transformer world model; diamonds in Minecraft learned purely offline by training in imagination. |
 
 ## Key concepts
 
@@ -43,6 +45,8 @@ World models are learned simulators: models that let an agent predict how its en
 - [KL balancing](../concepts/kl-balancing.md): training the prior of a latent model faster than its posterior.
 - [Symlog predictions](../concepts/symlog-predictions.md): predicting targets of any scale by compressing them.
 - [Return normalization](../concepts/return-normalization.md): scaling returns so one exploration setting fits every environment.
+- [Shortcut forcing](../concepts/shortcut-forcing.md): generating each video frame in a few denoising steps.
+- [Action conditioning](../concepts/action-conditioning.md): making predicted futures depend on the agent's actions.
 
 ## Key terms
 
@@ -69,6 +73,11 @@ World models are learned simulators: models that let an agent predict how its en
 - **Replay ratio**: how many training steps an agent takes per step of new experience collected.
 - **PPO**: a widely used model-free policy gradient algorithm, often taken as a robust baseline.
 - **Minecraft Diamond**: a benchmark task in which an agent must collect a sequence of items in Minecraft, ending with a diamond, from sparse rewards.
+- **Diffusion model**: a generative model that creates data by gradually removing noise from a random starting point.
+- **Tokenizer**: a network that compresses raw inputs such as video frames into a shorter sequence of representations for another model to process.
+- **Behavior cloning**: training a policy to imitate the actions recorded in a dataset.
+- **Offline reinforcement learning**: improving a policy from a fixed dataset without interacting with the environment.
+- **FVD (Fréchet Video Distance)**: a measure of how close generated videos are to real ones; lower is better.
 
 ## Open questions
 
@@ -87,6 +96,8 @@ World models are learned simulators: models that let an agent predict how its en
 - How can a reconstruction-based world model capture small but important objects? [DreamerV2](../sources/2021-dreamerv2.md) fails on Video Pinball, where the ball is a single pixel (p.8).
 - Can a world-model agent find diamonds in Minecraft reliably, not only occasionally? [DreamerV3](../sources/2023-dreamerv3.md) gets one in 0.4% of episodes at its budget (p.24, Fig. 9).
 - Can world models be pretrained on unlabeled data such as internet videos, or shared across domains? [DreamerV3](../sources/2023-dreamerv3.md) names these as future directions (p.11).
+- How much memory does a world model need? [Dreamer 4](../sources/2025-dreamer4.md) keeps 9.6 seconds of context, much more than earlier Minecraft models, but still forgets beyond that and blurs inventory items (p.13).
+- Can action conditioning learned from a little labeled data scale to general web videos? [Dreamer 4](../sources/2025-dreamer4.md) shows transfer to unseen parts of Minecraft and names web videos as the next step (p.15).
 
 ## Background
 

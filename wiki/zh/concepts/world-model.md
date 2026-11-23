@@ -3,8 +3,8 @@ title: "世界模型（World model）"
 aliases: [動態模型, 環境模型, dynamics model, environment model]
 updated: 2026-11-24
 areas: [world-model, reinforcement-learning]
-sources: [2018-world-models, 2019-planet, 2020-dreamer, 2021-dreamerv2, 2023-dreamerv3]
-translated_from: "a49a501e0faf"
+sources: [2018-world-models, 2019-planet, 2020-dreamer, 2021-dreamerv2, 2023-dreamerv3, 2025-dreamer4]
+translated_from: "3908e370b644"
 ---
 
 ## 一句話定義
@@ -39,6 +39,10 @@ translated_from: "a49a501e0faf"
 
 [DreamerV3](../sources/2023-dreamerv3.md) 把世界模型描述為賦予代理人豐富的感知與想像未來的能力，並指出穩健地學習與使用世界模型過去一直是未解的問題 (p.2)。它的表現主要來自世界模型的非監督重建損失，而不是獎勵與價值的梯度，作者認為這為在無標記資料上預訓練開了一扇門 (p.10)。從 1200 萬到 4 億個參數，較大的世界模型分數更高，需要的環境互動也更少 (p.10, Fig. 6)。
 
+### Training Agents Inside of Scalable World Models（2025）
+
+[Dreamer 4](../sources/2025-dreamer4.md) 把世界模型描述為從影片學習一般知識、並模擬經驗以便在想像中訓練行為 (p.1)。它認為早期的世界模型代理人只在範圍窄的環境中準確，而大型可控影片模型仍抓不準物體互動、速度也太慢 (p.2)。它的 transformer 世界模型有 2B 個參數，在一張 GPU 上即時執行 (p.9)。玩家在其中完成 16 個 Minecraft 任務中的 14 個，大型 Oasis 模型只有 5 個 (p.13)。它的記憶仍然很短，物品欄的預測也不精確 (p.18)。
+
 ### 來源之間的比較
 
 - 兩篇都從像素學出壓縮的潛在狀態與其上的轉移模型：[World Models](../sources/2018-world-models.md) 用 VAE 加 MDN-RNN (p.2, Fig. 4)，[PlaNet](../sources/2019-planet.md) 用遞迴狀態空間模型 (p.4, Eq. 4)。
@@ -48,7 +52,8 @@ translated_from: "a49a501e0faf"
 - [Dreamer](../sources/2020-dreamer.md) 保留 PlaNet 的世界模型，只改變從模型得出行為的方式，顯示同一個模型既能用於規劃，也能用於學習策略 (p.8)。
 - [DreamerV2](../sources/2021-dreamerv2.md) 保留相同的整體設計，只改變潛在變數與 KL 項，就足以從簡單的控制任務進展到 Atari 上的人類水準 (p.2)。
 - [DreamerV2](../sources/2021-dreamerv2.md) 與 [DreamerV3](../sources/2023-dreamerv3.md) 都認為世界模型主要的學習訊號是影像重建，而不是獎勵預測 (p.10)。
-- PlaNet、Dreamer、DreamerV2 與 DreamerV3 都引用了 World Models（見各自的來源頁）；這段並列比較是本 Wiki 的整理。
+- [Dreamer 4](../sources/2025-dreamer4.md) 把從 PlaNet 到 DreamerV3 使用的遞迴世界模型換成 transformer，因為遞迴設計雖然有效率，卻很難擴展到多樣的資料 (p.29)。
+- PlaNet、Dreamer、DreamerV2、DreamerV3 與 Dreamer 4 都引用了 World Models（見各自的來源頁）；這段並列比較是本 Wiki 的整理。
 
 ## 相關概念
 
@@ -56,6 +61,8 @@ translated_from: "a49a501e0faf"
 - [混合密度遞迴神經網路（Mixture density RNN）](mixture-density-rnn.md)：以機率分布預測下一個狀態。
 - [遞迴狀態空間模型（Recurrent state-space model）](recurrent-state-space-model.md)：同時具有確定性與隨機狀態的世界模型設計。
 - [類別潛在變數（Categorical latents）](categorical-latents.md)：DreamerV2 世界模型使用的離散潛在狀態。
+- [Shortcut forcing](shortcut-forcing.md)：Dreamer 4 的 transformer 世界模型所用的訓練目標。
+- [動作條件（Action conditioning）](action-conditioning.md)：讓預測取決於代理人的動作。
 - [基於模型的強化學習（Model-based reinforcement learning）](model-based-reinforcement-learning.md)：使用世界模型的強化學習。
 - [在想像中學習（Learning in imagination）](learning-in-imagination.md)：在世界模型裡訓練代理人。
 

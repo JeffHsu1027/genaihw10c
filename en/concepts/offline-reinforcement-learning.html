@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="source-hash" content="bd299d5074e6">
+<title>Offline reinforcement learning · Paper Wiki</title>
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="site-name" href="../index.html">Paper Wiki</a>
+  <a class="lang-switch" href="../../zh/concepts/offline-reinforcement-learning.html" hreflang="zh-Hant">中文</a>
+</header>
+<main class="page page-concept">
+  <p class="page-kind"><span class="tag tag-concept">Concept</span></p>
+  <h1>Offline reinforcement learning</h1>
+  <p class="meta">offline RL, batch reinforcement learning, learning from fixed datasets · 1 source</p>
+  <article class="content">
+<h2>One-line definition</h2>
+<p>Reinforcement learning from a fixed, previously collected dataset, without letting the agent interact with the environment while it learns.</p>
+<h2>Explanation</h2>
+<p>Online reinforcement learning improves a policy by trying it out, which can be slow, unsafe or impossible for real robots and other costly systems. Offline reinforcement learning instead learns only from logged experience, such as recordings of people or earlier agents. The difficulty is that the agent cannot check what happens when it does something the data never shows, so naive methods become overconfident about unseen actions. A world model trained on the dataset offers one way out: the agent can practise inside the model, which generates new experience without touching the real environment, while staying close to behavior seen in the data.</p>
+<h2>What each source says</h2>
+<h3>Training Agents Inside of Scalable World Models (2025)</h3>
+<p><a href="../sources/2025-dreamer4.html">Dreamer 4</a> argues that learning offline matters for applications such as physical robots, where deploying partially trained policies is unsafe and resetting scenes and providing rewards is hard (p.10). It learns only from the 2.5K hours of the VPT contractor dataset, with no environment interaction (p.10). Its reinforcement learning happens inside the world model, so it counts as offline even though it is on-policy within imagination (p.11). A KL term toward the behavior-cloned policy keeps the learned policy within the space of reasonable behaviors (p.8). Dreamer 4 is the first agent to obtain diamonds in Minecraft purely from offline data (p.1).</p>
+<h2>Related concepts</h2>
+<ul>
+<li><a href="learning-in-imagination.html">Learning in imagination</a>: practising inside a world model is how Dreamer 4 improves offline.</li>
+<li><a href="model-based-reinforcement-learning.html">Model-based reinforcement learning</a>: the learned model is what makes offline improvement possible here.</li>
+<li><a href="action-conditioning.html">Action conditioning</a>: the world model must learn how actions in the logged data change the world.</li>
+</ul>
+<h2>Background</h2>
+<p>(None yet)</p>
+  </article>
+</main>
+<footer class="site-footer"><a href="../index.html">Back to home</a></footer>
+</body>
+</html>

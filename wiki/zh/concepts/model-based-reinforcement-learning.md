@@ -3,8 +3,8 @@ title: "基於模型的強化學習（Model-based reinforcement learning）"
 aliases: [model-based RL, MBRL, 模型式強化學習]
 updated: 2026-11-24
 areas: [reinforcement-learning, world-model]
-sources: [2018-world-models, 2019-planet, 2020-dreamer, 2021-dreamerv2, 2023-dreamerv3]
-translated_from: "05779132c8ac"
+sources: [2018-world-models, 2019-planet, 2020-dreamer, 2021-dreamerv2, 2023-dreamerv3, 2025-dreamer4]
+translated_from: "f4104370158d"
 ---
 
 ## 一句話定義
@@ -37,6 +37,10 @@ translated_from: "05779132c8ac"
 
 [DreamerV3](../sources/2023-dreamerv3.md) 把自己定位為通用演算法，並與 PPO（穩健但很耗資料）以及 MuZero（強大但複雜且未公開）比較 (p.11)。它在所有測試領域都勝過 PPO，並以一小部分的計算量在 Atari 上勝過 MuZero (p.8)。在 Minecraft 中，它用 1 張 GPU 跑 9 天就從零開始挖到鑽石；VPT 則需要人類示範資料與 720 張 GPU 跑 9 天 (p.11)。
 
+### Training Agents Inside of Scalable World Models（2025）
+
+[Dreamer 4](../sources/2025-dreamer4.md) 主張世界模型原則上可以從固定資料集學習，讓代理人完全在想像中訓練、不需要線上互動 (p.2)。在離線的 Minecraft 設定中，它以少 100 倍的資料勝過 VPT 的離線代理人，也勝過從 Gemma 3 微調的 VLA 代理人 (p.9, Fig. 3)。在世界模型的表示上做行為克隆也勝過在 Gemma 3 上做，顯示影片預測學到了對決策有用的世界理解 (p.12)。
+
 ### 來源之間的比較
 
 - [World Models](../sources/2018-world-models.md) 事先用模型訓練策略；做決定時，控制器根據模型的隱藏狀態直接反應，不往前規劃 (p.6)。
@@ -46,13 +50,15 @@ translated_from: "05779132c8ac"
 - Dreamer 指出像 PlaNet 那樣只在固定視野內規劃，在需要長期功勞分配的任務上很短視 (p.7, Fig. 7)。PlaNet 自己也把缺少價值函數列為限制（見 PlaNet 頁），所以這是說法一致，不是衝突。
 - [DreamerV2](../sources/2021-dreamerv2.md) 保留 Dreamer 在想像中學習策略的方式，並證明它能在先前來源未達到的 Atari 上勝出 (p.2)。
 - [DreamerV3](../sources/2023-dreamerv3.md) 把主張從「在單一評測上勝過無模型方法」轉為「不必重新調整就能在許多領域運作」(p.2)。
-- PlaNet、Dreamer、DreamerV2 與 DreamerV3 都引用 World Models，每一篇也都建立在前一篇之上；這段並列比較是本 Wiki 的整理。
+- [Dreamer 4](../sources/2025-dreamer4.md) 從線上學習轉為完全離線學習，模型成了代理人唯一能練習的地方 (p.10)。
+- PlaNet、Dreamer、DreamerV2、DreamerV3 與 Dreamer 4 都引用 World Models，每一篇也都建立在前一篇之上；這段並列比較是本 Wiki 的整理。
 
 ## 相關概念
 
 - [世界模型（World model）](world-model.md)：基於模型的方法所學的模型。
 - [潛在空間規劃（Latent space planning）](latent-space-planning.md)：在做決定時使用模型。
 - [在想像中學習（Learning in imagination）](learning-in-imagination.md)：用模型訓練策略。
+- [離線強化學習（Offline reinforcement learning）](offline-reinforcement-learning.md)：像 Dreamer 4 一樣，不與環境互動地學習。
 
 ## 背景資料
 

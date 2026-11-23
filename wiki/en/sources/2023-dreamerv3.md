@@ -32,6 +32,12 @@ Reinforcement learning algorithms usually need expert tuning to work in a new do
 - **Actor**: it uses the Reinforce estimator for both discrete and continuous actions, with a fixed entropy scale of `3e-4` made possible by return normalization (p.6).
 - **Robust predictions**: vector observations, rewards and values are handled with the symlog transform and a symexp twohot loss, so the size of the gradients does not depend on the size of the targets (p.7).
 
+> **Superseded:** [Dreamer 4](2025-dreamer4.md) replaces the RSSM with a transformer tokenizer and dynamics model trained by shortcut forcing, because the RSSM is hard to scale to diverse data (p.29).
+
+> **Superseded:** [Dreamer 4](2025-dreamer4.md) replaces return normalization and the entropy regularizer with the PMPO policy loss and a KL term toward a behavior-cloned prior (p.29).
+
+> **Superseded:** [Dreamer 4](2025-dreamer4.md) freezes the world model transformer during imagination training and trains only the policy and value heads, starting one rollout per dataset context (p.7).
+
 > **Explainer:** Earlier Dreamers were like a car that needed its mirrors and seat adjusted for every new driver. DreamerV3 adds automatic adjustments, so the same settings work whether the rewards are tiny or huge, frequent or rare.
 
 Implementation details: training uses a uniform replay buffer with an online queue, and the amount of training is set by the replay ratio (p.18). Gradients are clipped adaptively per tensor and applied with the LaProp optimizer instead of Adam, which avoided occasional instabilities (p.18). The sequence model is a GRU with block-diagonal recurrent weights of 8 blocks (p.18). Model sizes range from 12 million to 400 million parameters, and the default model has 200 million (p.19). The text gives a prediction horizon of 16 (p.5), while the hyperparameter table lists an imagination horizon of 15 (p.21); the exact value is (to be verified). Every agent was trained on a single A100 GPU (p.19).
@@ -72,6 +78,7 @@ Implementation details: training uses a uniform replay buffer with an online que
 
 ## Relation to other sources
 
+- [Training Agents Inside of Scalable World Models](2025-dreamer4.md) (Dreamer 4, 2025) is the next generation. It keeps the symexp twohot heads but replaces the recurrent world model with a scalable transformer, and moves Minecraft from online learning with abstract crafting actions to purely offline learning with mouse and keyboard.
 - [Mastering Atari with Discrete World Models](2021-dreamerv2.md): DreamerV3 is the next generation after DreamerV2, which surpassed human performance on Atari; DreamerV3 adds the robustness techniques, a new network architecture, a new optimizer and a larger replay buffer (p.20).
 - [Dream to Control: Learning Behaviors by Latent Imagination](2020-dreamer.md): the paper describes DreamerV1 as limited to continuous control (p.20).
 - [Learning Latent Dynamics for Planning from Pixels](2019-planet.md): the world model is still the RSSM introduced by PlaNet (p.3).

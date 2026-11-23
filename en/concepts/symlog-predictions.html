@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="source-hash" content="04c5d164fa46">
+<meta name="source-hash" content="e2b019d49682">
 <title>Symlog predictions · Paper Wiki</title>
 <link rel="stylesheet" href="../../assets/style.css">
 </head>
@@ -15,7 +15,7 @@
 <main class="page page-concept">
   <p class="page-kind"><span class="tag tag-concept">Concept</span></p>
   <h1>Symlog predictions</h1>
-  <p class="meta">symlog, symexp, symlog squared error, symexp twohot loss, twohot encoding · 1 source</p>
+  <p class="meta">symlog, symexp, symlog squared error, symexp twohot loss, twohot encoding · 2 sources</p>
   <article class="content">
 <h2>One-line definition</h2>
 <p>A way to predict quantities whose scale is unknown by training a network on a log-like compressed version of the target, or on a classification over exponentially spaced bins, instead of on the raw value.</p>
@@ -27,6 +27,13 @@
 <h2>What each source says</h2>
 <h3>Mastering Diverse Domains through World Models (2023)</h3>
 <p><a href="../sources/2023-dreamerv3.html">DreamerV3</a> introduces the symlog squared error and the symexp twohot loss as a simple answer to targets of unknown scale (p.7). It applies symlog to vector observations for the encoder and decoder, and uses the symexp twohot loss for the reward predictor and the critic (p.7). The bins span symexp of the range from minus 20 to plus 20, and the output weights of twohot heads are initialized to zero so that the agent does not hallucinate rewards and values at the start (p.18). In the ablations, removing the symexp twohot loss and falling back to a Huber loss hurts performance on average, and removing observation symlog also hurts (p.10, Fig. 6).</p>
+<h3>Training Agents Inside of Scalable World Models (2025)</h3>
+<p><a href="../sources/2025-dreamer4.html">Dreamer 4</a> parameterizes both its reward head and its value head as symexp twohot outputs, following DreamerV3, to learn rewards and values robustly across orders of magnitude (p.7).</p>
+<h3>Comparing the sources</h3>
+<ul>
+<li><a href="../sources/2023-dreamerv3.html">DreamerV3</a> introduces the technique for observations, rewards and values (p.7).</li>
+<li><a href="../sources/2025-dreamer4.html">Dreamer 4</a> keeps it for rewards and values even though most other parts of the agent change (p.7). Dreamer 4 builds on DreamerV3; this summary is this Wiki's own.</li>
+</ul>
 <h2>Related concepts</h2>
 <ul>
 <li><a href="return-normalization.html">Return normalization</a>: the other DreamerV3 technique for handling reward scale.</li>

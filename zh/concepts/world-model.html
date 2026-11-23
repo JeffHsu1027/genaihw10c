@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="source-hash" content="b9ad82b2ba69">
+<meta name="source-hash" content="50a0a289ffca">
 <title>世界模型（World model） · 論文 Wiki</title>
 <link rel="stylesheet" href="../../assets/style.css">
 </head>
@@ -15,7 +15,7 @@
 <main class="page page-concept">
   <p class="page-kind"><span class="tag tag-concept">概念</span></p>
   <h1>世界模型（World model）</h1>
-  <p class="meta">動態模型, 環境模型, dynamics model, environment model · 5 個來源</p>
+  <p class="meta">動態模型, 環境模型, dynamics model, environment model · 6 個來源</p>
   <article class="content">
 <h2>一句話定義</h2>
 <p>一個從經驗中學到的環境模型，用來預測接下來會發生什麼，通常以目前的狀態與動作為條件。</p>
@@ -35,6 +35,8 @@
 <p><a href="../sources/2021-dreamerv2.html">DreamerV2</a> 把世界模型描述為把代理人的經驗濃縮成一個預測模型，可以代替環境來學習行為 (p.2)。它的世界模型多了折扣預測器，讓想像軌跡能考慮回合結束，並使用類別潛在變數與 KL 平衡 (pp.3-4)。世界模型約有 2000 萬個參數 (p.4)，準確到只在其中學習的代理人就能在 Atari 上達到人類水準 (p.2)。世界模型依賴影像梯度：拿掉後表現崩潰，截斷獎勵梯度則影響不大 (p.9)。</p>
 <h3>Mastering Diverse Domains through World Models（2023）</h3>
 <p><a href="../sources/2023-dreamerv3.html">DreamerV3</a> 把世界模型描述為賦予代理人豐富的感知與想像未來的能力，並指出穩健地學習與使用世界模型過去一直是未解的問題 (p.2)。它的表現主要來自世界模型的非監督重建損失，而不是獎勵與價值的梯度，作者認為這為在無標記資料上預訓練開了一扇門 (p.10)。從 1200 萬到 4 億個參數，較大的世界模型分數更高，需要的環境互動也更少 (p.10, Fig. 6)。</p>
+<h3>Training Agents Inside of Scalable World Models（2025）</h3>
+<p><a href="../sources/2025-dreamer4.html">Dreamer 4</a> 把世界模型描述為從影片學習一般知識、並模擬經驗以便在想像中訓練行為 (p.1)。它認為早期的世界模型代理人只在範圍窄的環境中準確，而大型可控影片模型仍抓不準物體互動、速度也太慢 (p.2)。它的 transformer 世界模型有 2B 個參數，在一張 GPU 上即時執行 (p.9)。玩家在其中完成 16 個 Minecraft 任務中的 14 個，大型 Oasis 模型只有 5 個 (p.13)。它的記憶仍然很短，物品欄的預測也不精確 (p.18)。</p>
 <h3>來源之間的比較</h3>
 <ul>
 <li>兩篇都從像素學出壓縮的潛在狀態與其上的轉移模型：<a href="../sources/2018-world-models.html">World Models</a> 用 VAE 加 MDN-RNN (p.2, Fig. 4)，<a href="../sources/2019-planet.html">PlaNet</a> 用遞迴狀態空間模型 (p.4, Eq. 4)。</li>
@@ -44,7 +46,8 @@
 <li><a href="../sources/2020-dreamer.html">Dreamer</a> 保留 PlaNet 的世界模型，只改變從模型得出行為的方式，顯示同一個模型既能用於規劃，也能用於學習策略 (p.8)。</li>
 <li><a href="../sources/2021-dreamerv2.html">DreamerV2</a> 保留相同的整體設計，只改變潛在變數與 KL 項，就足以從簡單的控制任務進展到 Atari 上的人類水準 (p.2)。</li>
 <li><a href="../sources/2021-dreamerv2.html">DreamerV2</a> 與 <a href="../sources/2023-dreamerv3.html">DreamerV3</a> 都認為世界模型主要的學習訊號是影像重建，而不是獎勵預測 (p.10)。</li>
-<li>PlaNet、Dreamer、DreamerV2 與 DreamerV3 都引用了 World Models（見各自的來源頁）；這段並列比較是本 Wiki 的整理。</li>
+<li><a href="../sources/2025-dreamer4.html">Dreamer 4</a> 把從 PlaNet 到 DreamerV3 使用的遞迴世界模型換成 transformer，因為遞迴設計雖然有效率，卻很難擴展到多樣的資料 (p.29)。</li>
+<li>PlaNet、Dreamer、DreamerV2、DreamerV3 與 Dreamer 4 都引用了 World Models（見各自的來源頁）；這段並列比較是本 Wiki 的整理。</li>
 </ul>
 <h2>相關概念</h2>
 <ul>
@@ -52,6 +55,8 @@
 <li><a href="mixture-density-rnn.html">混合密度遞迴神經網路（Mixture density RNN）</a>：以機率分布預測下一個狀態。</li>
 <li><a href="recurrent-state-space-model.html">遞迴狀態空間模型（Recurrent state-space model）</a>：同時具有確定性與隨機狀態的世界模型設計。</li>
 <li><a href="categorical-latents.html">類別潛在變數（Categorical latents）</a>：DreamerV2 世界模型使用的離散潛在狀態。</li>
+<li><a href="shortcut-forcing.html">Shortcut forcing</a>：Dreamer 4 的 transformer 世界模型所用的訓練目標。</li>
+<li><a href="action-conditioning.html">動作條件（Action conditioning）</a>：讓預測取決於代理人的動作。</li>
 <li><a href="model-based-reinforcement-learning.html">基於模型的強化學習（Model-based reinforcement learning）</a>：使用世界模型的強化學習。</li>
 <li><a href="learning-in-imagination.html">在想像中學習（Learning in imagination）</a>：在世界模型裡訓練代理人。</li>
 </ul>

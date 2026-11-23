@@ -3,8 +3,8 @@ title: "遞迴狀態空間模型（Recurrent state-space model）"
 aliases: [RSSM]
 updated: 2026-11-24
 areas: [world-model]
-sources: [2019-planet, 2020-dreamer, 2021-dreamerv2, 2023-dreamerv3]
-translated_from: "ab266a73e7a5"
+sources: [2019-planet, 2020-dreamer, 2021-dreamerv2, 2023-dreamerv3, 2025-dreamer4]
+translated_from: "5dfb05d66713"
 ---
 
 ## 一句話定義
@@ -35,12 +35,17 @@ translated_from: "ab266a73e7a5"
 
 [DreamerV3](../sources/2023-dreamerv3.md) 仍以 RSSM 實作世界模型，包含序列模型、編碼器、動態預測器，以及獎勵、是否繼續與重建的輸出頭 (pp.3-4)。序列模型是遞迴權重為 8 個區塊對角的 GRU，能有大量記憶單元而參數不會呈平方成長 (p.18)。給定 5 張脈絡畫面與動作後，模型能在 DMLab 與機器人場景中往後預測 45 格畫面 (p.4, Fig. 4)，在 Minecraft 中也一樣 (p.23, Fig. 7)。
 
+### Training Agents Inside of Scalable World Models（2025）
+
+[Dreamer 4](../sources/2025-dreamer4.md) 把 DreamerV3 的 RSSM 描述為以遞迴網路與變分目標建成、推論非常有效率的輕量世界模型，但很難擴展到多樣的資料分布 (p.29)。它改用以 shortcut forcing 訓練的 transformer tokenizer 與動態模型取代 RSSM (p.29)。
+
 ### 來源之間的比較
 
 - [PlaNet](../sources/2019-planet.md) 提出 RSSM 並用於規劃 (p.4)。
 - [Dreamer](../sources/2020-dreamer.md) 原封不動地沿用它來學習策略 (p.6)。因此同一個模型支援兩種不同的動作選擇方式；Dreamer 直接建立在 PlaNet 之上，這段整理是本 Wiki 的。
 - [DreamerV2](../sources/2021-dreamerv2.md) 保留確定性與隨機兩條路徑，但把高斯隨機狀態換成類別變數，在多數 Atari 遊戲上有幫助 (p.9)。
 - [DreamerV3](../sources/2023-dreamerv3.md) 在 150 多個任務上保留這個結構，主要只改了遞迴單元與訓練損失 (p.18)。
+- [Dreamer 4](../sources/2025-dreamer4.md) 為了可擴展性改用 transformer，結束了 Dreamer 系列中的這條路線 (p.29)。這是為了規模而替換，並不是說 RSSM 在它先前使用的較小領域中是錯的。
 
 ## 相關概念
 
@@ -50,6 +55,7 @@ translated_from: "ab266a73e7a5"
 - [混合密度遞迴神經網路（Mixture density RNN）](mixture-density-rnn.md)：另一種讓遞迴模型帶有隨機性的方法；它對輸出抽樣，RSSM 則對狀態的一部分抽樣。
 - [類別潛在變數（Categorical latents）](categorical-latents.md)：DreamerV2 使用的離散隨機狀態。
 - [KL 平衡（KL balancing）](kl-balancing.md)：訓練 RSSM 先驗的一種方式。
+- [Shortcut forcing](shortcut-forcing.md)：Dreamer 4 中取代 RSSM 的 transformer 所用的訓練目標。
 
 ## 背景資料
 

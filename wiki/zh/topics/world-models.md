@@ -2,9 +2,9 @@
 title: "世界模型（World models）"
 area: world-model
 updated: 2026-11-24
-sources: [2018-world-models, 2019-planet, 2020-dreamer, 2021-dreamerv2, 2023-dreamerv3]
-concepts: [world-model, model-based-reinforcement-learning, variational-autoencoder, mixture-density-rnn, recurrent-state-space-model, learning-in-imagination, latent-space-planning, latent-overshooting, actor-critic, categorical-latents, kl-balancing, symlog-predictions, return-normalization]
-translated_from: "ad1f6f792f76"
+sources: [2018-world-models, 2019-planet, 2020-dreamer, 2021-dreamerv2, 2023-dreamerv3, 2025-dreamer4]
+concepts: [world-model, model-based-reinforcement-learning, variational-autoencoder, mixture-density-rnn, recurrent-state-space-model, learning-in-imagination, latent-space-planning, latent-overshooting, actor-critic, categorical-latents, kl-balancing, symlog-predictions, return-normalization, shortcut-forcing, action-conditioning]
+translated_from: "7de4af9756a8"
 ---
 
 ## 概述
@@ -18,6 +18,7 @@ translated_from: "ad1f6f792f76"
 - 2020：[Dreamer](../sources/2020-dreamer.md) 保留 PlaNet 的世界模型，但完全在想像中用 actor-critic 學習行為，價值模型能看見視野之外，在 20 個任務的平均上勝過 PlaNet 與無模型的 D4PG (p.6, Fig. 6)。
 - 2021：[DreamerV2](../sources/2021-dreamerv2.md) 改用類別潛在變數與 KL 平衡，成為第一個完全在另外訓練的世界模型裡學習、就在 Atari 達到人類水準的代理人 (p.1)。
 - 2023：[DreamerV3](../sources/2023-dreamerv3.md) 加入穩定技術，讓一組固定設定在 150 多個任務上勝過專門的方法，並成為第一個從零開始在 Minecraft 挖到鑽石的演算法 (p.1)。
+- 2025：[Dreamer 4](../sources/2025-dreamer4.md) 改用以 shortcut forcing 訓練、可擴展的 transformer 世界模型，成為第一個完全只靠離線資料就在 Minecraft 拿到鑽石的代理人 (p.1)。
 
 ## 來源
 
@@ -28,6 +29,7 @@ translated_from: "ad1f6f792f76"
 | 2020 | [Dream to Control (Dreamer)](../sources/2020-dreamer.md) | 未讀 | 完全在 PlaNet 世界模型的潛在想像中學習 actor-critic，並把價值梯度穿過動態模型。 |
 | 2021 | [Mastering Atari with Discrete World Models (DreamerV2)](../sources/2021-dreamerv2.md) | 未讀 | 加上類別潛在變數與 KL 平衡的 Dreamer；只在世界模型裡學習就達到 Atari 人類水準。 |
 | 2023 | [Mastering Diverse Domains through World Models (DreamerV3)](../sources/2023-dreamerv3.md) | 未讀 | 穩定技術讓一組固定設定精通許多領域，包括在 Minecraft 挖到鑽石。 |
+| 2025 | [Training Agents Inside of Scalable World Models (Dreamer 4)](../sources/2025-dreamer4.md) | 未讀 | 快速的 transformer 世界模型；只靠離線資料在想像中訓練，就在 Minecraft 拿到鑽石。 |
 
 ## 關鍵概念
 
@@ -44,6 +46,8 @@ translated_from: "ad1f6f792f76"
 - [KL 平衡（KL balancing）](../concepts/kl-balancing.md)：訓練潛在模型時，先驗更新得比後驗快。
 - [Symlog 預測（Symlog predictions）](../concepts/symlog-predictions.md)：壓縮目標值，以預測任意量級的數值。
 - [報酬正規化（Return normalization）](../concepts/return-normalization.md)：縮放報酬，讓一組探索設定適用每個環境。
+- [Shortcut forcing](../concepts/shortcut-forcing.md)：只用幾個去噪步驟生成每一格影片畫面。
+- [動作條件（Action conditioning）](../concepts/action-conditioning.md)：讓預測的未來取決於代理人的動作。
 
 ## 術語表
 
@@ -70,6 +74,11 @@ translated_from: "ad1f6f792f76"
 - **Replay ratio**：每收集一步新經驗，代理人要做多少訓練步。
 - **PPO**：廣泛使用的無模型策略梯度演算法，常被當作穩健的基準。
 - **Minecraft Diamond**：一個評測任務，代理人要在 Minecraft 中依序收集一連串物品，最後拿到鑽石，而且獎勵很稀少。
+- **擴散模型（diffusion model）**：從隨機雜訊出發、逐步去除雜訊來產生資料的生成模型。
+- **Tokenizer**：把影片畫面等原始輸入壓縮成較短表示序列、供另一個模型處理的網路。
+- **行為克隆（behavior cloning）**：訓練策略去模仿資料集中記錄的動作。
+- **離線強化學習（offline reinforcement learning）**：只用固定資料集改進策略，不與環境互動。
+- **FVD（Fréchet Video Distance）**：衡量生成影片與真實影片有多接近的指標，越低越好。
 
 ## 未解問題
 
@@ -88,6 +97,8 @@ translated_from: "ad1f6f792f76"
 - 以重建為基礎的世界模型，要如何掌握小而重要的物體？[DreamerV2](../sources/2021-dreamerv2.md) 在 Video Pinball 上失敗，因為球只有一個像素 (p.8)。
 - 以世界模型為基礎的代理人，能不能穩定地在 Minecraft 找到鑽石，而不只是偶爾找到？[DreamerV3](../sources/2023-dreamerv3.md) 在預算結束時只有 0.4% 的回合拿到 (p.24, Fig. 9)。
 - 世界模型能不能在網路影片這類無標記資料上預訓練，或在不同領域之間共用？[DreamerV3](../sources/2023-dreamerv3.md) 把這些列為未來方向 (p.11)。
+- 世界模型需要多長的記憶？[Dreamer 4](../sources/2025-dreamer4.md) 保留 9.6 秒的脈絡，遠多於先前的 Minecraft 模型，但超過這個長度仍會遺忘，物品欄也會模糊 (p.13)。
+- 從少量標註資料學到的動作條件，能否擴展到一般的網路影片？[Dreamer 4](../sources/2025-dreamer4.md) 顯示它能轉移到 Minecraft 中沒見過的部分，並把網路影片列為下一步 (p.15)。
 
 ## 背景資料
 

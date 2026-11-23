@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="source-hash" content="cabf1f24b855">
+<meta name="source-hash" content="d67ba6e6e32c">
 <title>基於模型的強化學習（Model-based reinforcement learning） · 論文 Wiki</title>
 <link rel="stylesheet" href="../../assets/style.css">
 </head>
@@ -15,7 +15,7 @@
 <main class="page page-concept">
   <p class="page-kind"><span class="tag tag-concept">概念</span></p>
   <h1>基於模型的強化學習（Model-based reinforcement learning）</h1>
-  <p class="meta">model-based RL, MBRL, 模型式強化學習 · 5 個來源</p>
+  <p class="meta">model-based RL, MBRL, 模型式強化學習 · 6 個來源</p>
   <article class="content">
 <h2>一句話定義</h2>
 <p>會學習或使用「環境如何回應動作」的模型，並用這個模型來決定如何行動或學習如何行動的強化學習。</p>
@@ -32,6 +32,8 @@
 <p><a href="../sources/2021-dreamerv2.html">DreamerV2</a> 指出 Atari 向來需要無模型演算法才能達到人類水準，過去的 Atari 世界模型都沒有競爭力 (p.2)。它與兩個基於模型的 Atari 代理人比較：在像素空間預測畫面再用來訓練 PPO 的 SimPLe，以及學習任務專屬的獎勵與價值預測、用於樹搜尋而不建模影像的 MuZero (pp.10-11, Table 3)。MuZero 很強，但用一張 GPU 訓練一個 Atari 代理人需要超過 2 個月，DreamerV2 只需 10 天 (p.11)。作者把 DreamerV2 視為基於模型的強化學習能在最具競爭性的評測上勝過頂尖無模型演算法的證明 (p.11)。</p>
 <h3>Mastering Diverse Domains through World Models（2023）</h3>
 <p><a href="../sources/2023-dreamerv3.html">DreamerV3</a> 把自己定位為通用演算法，並與 PPO（穩健但很耗資料）以及 MuZero（強大但複雜且未公開）比較 (p.11)。它在所有測試領域都勝過 PPO，並以一小部分的計算量在 Atari 上勝過 MuZero (p.8)。在 Minecraft 中，它用 1 張 GPU 跑 9 天就從零開始挖到鑽石；VPT 則需要人類示範資料與 720 張 GPU 跑 9 天 (p.11)。</p>
+<h3>Training Agents Inside of Scalable World Models（2025）</h3>
+<p><a href="../sources/2025-dreamer4.html">Dreamer 4</a> 主張世界模型原則上可以從固定資料集學習，讓代理人完全在想像中訓練、不需要線上互動 (p.2)。在離線的 Minecraft 設定中，它以少 100 倍的資料勝過 VPT 的離線代理人，也勝過從 Gemma 3 微調的 VLA 代理人 (p.9, Fig. 3)。在世界模型的表示上做行為克隆也勝過在 Gemma 3 上做，顯示影片預測學到了對決策有用的世界理解 (p.12)。</p>
 <h3>來源之間的比較</h3>
 <ul>
 <li><a href="../sources/2018-world-models.html">World Models</a> 事先用模型訓練策略；做決定時，控制器根據模型的隱藏狀態直接反應，不往前規劃 (p.6)。</li>
@@ -41,13 +43,15 @@
 <li>Dreamer 指出像 PlaNet 那樣只在固定視野內規劃，在需要長期功勞分配的任務上很短視 (p.7, Fig. 7)。PlaNet 自己也把缺少價值函數列為限制（見 PlaNet 頁），所以這是說法一致，不是衝突。</li>
 <li><a href="../sources/2021-dreamerv2.html">DreamerV2</a> 保留 Dreamer 在想像中學習策略的方式，並證明它能在先前來源未達到的 Atari 上勝出 (p.2)。</li>
 <li><a href="../sources/2023-dreamerv3.html">DreamerV3</a> 把主張從「在單一評測上勝過無模型方法」轉為「不必重新調整就能在許多領域運作」(p.2)。</li>
-<li>PlaNet、Dreamer、DreamerV2 與 DreamerV3 都引用 World Models，每一篇也都建立在前一篇之上；這段並列比較是本 Wiki 的整理。</li>
+<li><a href="../sources/2025-dreamer4.html">Dreamer 4</a> 從線上學習轉為完全離線學習，模型成了代理人唯一能練習的地方 (p.10)。</li>
+<li>PlaNet、Dreamer、DreamerV2、DreamerV3 與 Dreamer 4 都引用 World Models，每一篇也都建立在前一篇之上；這段並列比較是本 Wiki 的整理。</li>
 </ul>
 <h2>相關概念</h2>
 <ul>
 <li><a href="world-model.html">世界模型（World model）</a>：基於模型的方法所學的模型。</li>
 <li><a href="latent-space-planning.html">潛在空間規劃（Latent space planning）</a>：在做決定時使用模型。</li>
 <li><a href="learning-in-imagination.html">在想像中學習（Learning in imagination）</a>：用模型訓練策略。</li>
+<li><a href="offline-reinforcement-learning.html">離線強化學習（Offline reinforcement learning）</a>：像 Dreamer 4 一樣，不與環境互動地學習。</li>
 </ul>
 <h2>背景資料</h2>
 <p>（尚無）</p>

@@ -12,7 +12,7 @@ areas: [world-model, reinforcement-learning]
 status: to-read
 concepts: [symlog-predictions, return-normalization, kl-balancing, categorical-latents, recurrent-state-space-model, actor-critic, learning-in-imagination, world-model, model-based-reinforcement-learning, variational-autoencoder]
 topics: [world-models]
-translated_from: "c23e42bb74ab"
+translated_from: "ba58034f2de4"
 ---
 
 ## 一句話總結
@@ -32,6 +32,12 @@ DreamerV3 加入一組穩定學習的技術，例如 [symlog 預測](../concepts
 - **Critic**：預測 λ-return 的分布，以指數間隔分箱上的類別分布表示；它也在回放的軌跡上訓練（損失權重 0.3），並被拉向自己參數的指數移動平均 (pp.5-6)。
 - **Actor**：離散與連續動作都使用 Reinforce 估計，熵係數固定為 `3e-4`，這要靠報酬正規化才可行 (p.6)。
 - **穩健的預測**：向量觀測、獎勵與價值都以 symlog 轉換與 symexp twohot 損失處理，讓梯度大小不隨目標值大小而變 (p.7)。
+
+> **後續變更：** [Dreamer 4](2025-dreamer4.md) 以 shortcut forcing 訓練的 transformer tokenizer 與動態模型取代 RSSM，因為 RSSM 很難擴展到多樣的資料 (p.29)。
+
+> **後續變更：** [Dreamer 4](2025-dreamer4.md) 以 PMPO 策略損失加上朝行為克隆先驗的 KL 項，取代報酬正規化與熵正則項 (p.29)。
+
+> **後續變更：** [Dreamer 4](2025-dreamer4.md) 在想像訓練時凍結世界模型 transformer，只訓練 policy 頭與 value 頭，並且每個資料片段只展開一次 rollout (p.7)。
 
 > **解說（Explainer）：** 早期的 Dreamer 像一台每換一個駕駛就要重調座椅和後照鏡的車。DreamerV3 加上自動調整，不論獎勵很小或很大、頻繁或稀少，同一組設定都能用。
 
@@ -73,6 +79,7 @@ DreamerV3 加入一組穩定學習的技術，例如 [symlog 預測](../concepts
 
 ## 與其他來源的關係
 
+- [Training Agents Inside of Scalable World Models](2025-dreamer4.md)（Dreamer 4，2025）是下一代。它保留 symexp twohot 輸出頭，但把遞迴世界模型換成可擴展的 transformer，並把 Minecraft 從「以抽象合成動作線上學習」改為「以滑鼠鍵盤完全離線學習」。
 - [Mastering Atari with Discrete World Models](2021-dreamerv2.md)：DreamerV3 是 DreamerV2 之後的下一代；DreamerV2 在 Atari 上超越人類，DreamerV3 則加入穩定技術、新的網路架構、新的優化器與更大的回放緩衝區 (p.20)。
 - [Dream to Control: Learning Behaviors by Latent Imagination](2020-dreamer.md)：論文把 DreamerV1 描述為只限於連續控制 (p.20)。
 - [Learning Latent Dynamics for Planning from Pixels](2019-planet.md)：世界模型仍是 PlaNet 提出的 RSSM (p.3)。

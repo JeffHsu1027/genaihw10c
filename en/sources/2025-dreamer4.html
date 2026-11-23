@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="source-hash" content="071e78a021a6">
+<title>Training Agents Inside of Scalable World Models · Paper Wiki</title>
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="site-name" href="../index.html">Paper Wiki</a>
+  <a class="lang-switch" href="../../zh/sources/2025-dreamer4.html" hreflang="zh-Hant">中文</a>
+</header>
+<main class="page page-source">
+  <p class="page-kind"><span class="tag tag-source">Source</span></p>
+  <h1>Training Agents Inside of Scalable World Models</h1>
+  <p class="meta">Danijar Hafner, Wilson Yan, Timothy Lillicrap · 2025 · arXiv:2509.24527 · <a href="https://arxiv.org/abs/2509.24527">Paper</a></p>
+  <p class="meta"><span class="status status-to-read">To read</span> · <a href="../topics/world-models.html">World models</a></p>
+  <p class="meta"><span class="status-note">The owner has not read this paper yet. This page was written by the AI from the full PDF.</span></p>
+  <article class="content">
+<h2>One-line summary</h2>
+<p>Dreamer 4 replaces the recurrent world model of earlier Dreamers with a scalable transformer world model trained by <a href="../concepts/shortcut-forcing.html">shortcut forcing</a>, and becomes the first agent to obtain diamonds in Minecraft purely from offline data, by <a href="../concepts/learning-in-imagination.html">reinforcement learning inside the world model</a> without any environment interaction (p.1).</p>
+<h2>Research question</h2>
+<p>Earlier world-model agents such as DreamerV3 are fast and accurate in narrow environments but cannot fit complex, diverse data, while large controllable video models handle diverse scenes but still miss precise object interactions and need many GPUs to run in real time (p.2). Can one world model be both accurate enough and fast enough to train a capable agent purely in imagination, from a fixed <a href="../concepts/offline-reinforcement-learning.html">offline</a> dataset (p.2)?</p>
+<h2>Method</h2>
+<ul>
+<li><strong>Three phases</strong>: first pretrain a tokenizer and a dynamics model on videos and, optionally, actions; then finetune the world model with task inputs to predict actions and rewards; finally improve the policy by imagination training (p.4).</li>
+<li><strong>Causal tokenizer</strong>: a transformer encoder and decoder compress each frame into continuous representations through a low-dimensional bottleneck with a tanh activation, trained by masked autoencoding with a mean squared error plus perceptual loss (p.5).</li>
+<li><strong>Interactive dynamics</strong>: a transformer predicts the next representations from interleaved actions and noisy representations, using <a href="../concepts/shortcut-forcing.html">shortcut forcing</a> so that each frame needs only 4 forward passes (p.5). The network predicts clean representations instead of velocities, which avoids error accumulation over long rollouts, and the loss is weighted by a ramp that favors signal levels with more learning signal (p.6).</li>
+<li><strong><a href="../concepts/action-conditioning.html">Action conditioning</a></strong>: each action component, such as mouse and keyboard, is encoded into tokens; for unlabeled videos only a learned placeholder embedding is used, so the model can train on videos without actions (p.5).</li>
+<li><strong>Agent finetuning</strong>: agent tokens with task embeddings are inserted into the transformer to predict the policy and the reward; other tokens cannot attend to the agent tokens, which prevents the world model from being influenced by the current task (pp.6-7). The reward head uses a <a href="../concepts/symlog-predictions.html">symexp twohot</a> output, following DreamerV3 (p.7).</li>
+<li><strong>Imagination training</strong>: the transformer is frozen, and a policy head and a value head are trained on rollouts that the world model generates from dataset contexts, with one rollout per context (p.7). The value head learns λ-returns with a discount of 0.997 (p.7). The policy is trained with PMPO, which averages separate likelihood losses over states with positive and negative advantages and adds a KL term toward the behavior-cloned policy, so no return normalization is needed (pp.7-8). See <a href="../concepts/actor-critic.html">actor-critic</a>.</li>
+<li><strong>Efficient transformer</strong>: separate space and time attention, temporal attention only every 4 layers, grouped-query attention, and alternating short and long training batches make inference fast (p.8).</li>
+</ul>
+<blockquote class="note note-explainer">
+<p><strong>Explainer:</strong> First the agent watches thousands of hours of other people playing and learns how the game reacts to mouse and keyboard; then it copies what players do; finally it practises on its own inside its learned copy of the game, where mistakes cost nothing.</p>
+</blockquote>
+<p>Implementation details: the model has 2B parameters, 400M for the tokenizer and 1.6B for the dynamics, trained on 256 to 1024 TPU-v5p chips (p.9). Minecraft uses 256 spatial tokens and a context of 192 frames (p.9). The main dataset is the VPT contractor dataset with 2541 hours of gameplay recorded at 20 FPS (p.9). Past inputs are slightly corrupted to a signal level of 0.1 during generation so the model tolerates its own small errors (p.6).</p>
+<h2>Key results</h2>
+<ul>
+<li>On the offline diamond challenge, evaluated over 1000 episodes of 60 minutes each, Dreamer 4 reaches success rates above 90% up to the stone pickaxe, 29% for the iron pickaxe, and obtains diamonds in 0.7% of episodes (p.12).</li>
+<li>The finetuned VPT agent progresses only up to sticks, which it reaches 53% of the time, and the VLA agent built on Gemma 3 reaches the iron pickaxe in 11% of episodes (p.12).</li>
+<li>Dreamer 4 outperforms the VPT offline agent while using 100 times less data (p.9, Fig. 3).</li>
+<li>Imagination training improves both success rates and the time needed to reach milestones, and helps more the harder the milestone is (p.12).</li>
+<li>Behavior cloning on top of the world model's representations outperforms behavior cloning on Gemma 3 or from scratch (p.12).</li>
+<li>In human interaction tests, players complete 14 of 16 Minecraft tasks inside the Dreamer 4 world model, compared with 5 of 16 for the large Oasis model (p.13).</li>
+<li>The world model runs faster than 20 FPS on a single H100 GPU, with a context of 9.6 seconds compared with 0.8 to 1.6 seconds for earlier Minecraft world models (p.13).</li>
+<li>With actions for only 100 of the 2541 hours of video, action-conditioned generation reaches 85% of the PSNR and 100% of the SSIM of training with all actions (p.14).</li>
+<li>When actions are given only for the Overworld, action conditioning still transfers to the Nether and End, reaching 76% of the PSNR and 80% of the SSIM of the fully labeled model (p.15).</li>
+<li>Shortcut forcing with 4 sampling steps approaches the quality of diffusion forcing with 64 steps, 16 times faster (p.16, Fig. 8); the full design reaches an FVD of 57, compared with 306 for a naive diffusion forcing transformer (p.16).</li>
+</ul>
+<h2>Limitations and open questions</h2>
+<ul>
+<li>The world model is far from a full clone of the game: its memory is short and its inventory predictions are imprecise (p.18).</li>
+<li>Temporal consistency is limited to the 9.6-second context, and inventory items are sometimes unclear or change over time (p.13).</li>
+<li>Diamonds are obtained in under 1% of evaluation episodes (p.12).</li>
+<li>Only the policy and value heads are trained during imagination training; finetuning the whole transformer helps slightly but costs more (p.7).</li>
+<li>Future directions named by the authors include pretraining on general internet videos, long-term memory, language understanding, small amounts of corrective online data, and automatic goal discovery (p.18).</li>
+</ul>
+<h2>Related concepts</h2>
+<ul>
+<li><a href="../concepts/shortcut-forcing.html">Shortcut forcing</a>: the training objective of the dynamics model.</li>
+<li><a href="../concepts/offline-reinforcement-learning.html">Offline reinforcement learning</a>: the setting of the diamond challenge.</li>
+<li><a href="../concepts/action-conditioning.html">Action conditioning</a>: learned from a small amount of labeled video.</li>
+<li><a href="../concepts/world-model.html">World model</a>: now a scalable transformer.</li>
+<li><a href="../concepts/learning-in-imagination.html">Learning in imagination</a>: the final training phase.</li>
+<li><a href="../concepts/actor-critic.html">Actor-critic</a>: policy and value heads trained with PMPO and λ-returns.</li>
+<li><a href="../concepts/recurrent-state-space-model.html">Recurrent state-space model</a>: the earlier architecture that this paper replaces.</li>
+<li><a href="../concepts/symlog-predictions.html">Symlog predictions</a>: used for the reward and value heads.</li>
+<li><a href="../concepts/return-normalization.html">Return normalization</a>: no longer needed with PMPO.</li>
+<li><a href="../concepts/model-based-reinforcement-learning.html">Model-based reinforcement learning</a>: compared with VPT and VLA agents.</li>
+</ul>
+<h2>Relation to other sources</h2>
+<ul>
+<li><a href="2023-dreamerv3.html">Mastering Diverse Domains through World Models</a>: DreamerV3 collected diamonds online from scratch with low-resolution inputs and abstract crafting actions; Dreamer 4 does it offline from high-resolution images with low-level mouse and keyboard actions (p.29). It keeps the symexp twohot heads but replaces the RSSM, return normalization and entropy regularizer (p.29).</li>
+<li><a href="2019-planet.html">Learning Latent Dynamics for Planning from Pixels</a> and <a href="2018-world-models.html">World Models</a>: Dreamer 4 cites both as early world models accurate enough for planning from pixels (p.17).</li>
+</ul>
+<h2>Background</h2>
+<ul>
+<li><a href="https://danijar.com/dreamer4">Dreamer 4 project page</a>: linked from the paper.</li>
+</ul>
+  </article>
+</main>
+<footer class="site-footer"><a href="../index.html">Back to home</a></footer>
+</body>
+</html>

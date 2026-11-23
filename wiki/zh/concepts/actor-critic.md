@@ -3,8 +3,8 @@ title: "Actor-critic（演員－評論家）"
 aliases: [演員評論家, 動作模型與價值模型, 策略與價值函數, λ-return, lambda-return]
 updated: 2026-11-24
 areas: [reinforcement-learning]
-sources: [2020-dreamer, 2021-dreamerv2, 2023-dreamerv3]
-translated_from: "dc538463b6c6"
+sources: [2020-dreamer, 2021-dreamerv2, 2023-dreamerv3, 2025-dreamer4]
+translated_from: "c8b81886b836"
 ---
 
 ## 一句話定義
@@ -31,6 +31,10 @@ Critic 學習預測從某個狀態出發的期望報酬，actor 則被更新成�
 
 [DreamerV3](../sources/2023-dreamerv3.md) 讓 critic 預測 λ-return 的分布，以指數間隔分箱上的類別分布表示，因為報酬可能是多峰的，而且在不同環境相差好幾個數量級 (p.5)。Critic 也在回放的軌跡上訓練，並被拉向自己參數的指數移動平均，扮演目標網路的角色 (p.6)。Actor 對離散與連續動作都使用 Reinforce 估計，並以百分位數範圍正規化報酬，讓一個熵係數到處都適用 (p.6)。
 
+### Training Agents Inside of Scalable World Models（2025）
+
+[Dreamer 4](../sources/2025-dreamer4.md) 在世界模型 transformer 上加入一個 value 頭，以及行為克隆策略的凍結副本，想像訓練時只訓練 policy 頭與 value 頭 (p.7)。Value 頭以折扣 0.997 與 symexp twohot 輸出學習 λ-return (p.7)。策略使用 PMPO，對優勢為正與為負的狀態分別平均似然損失，因此只有優勢的正負號有影響，不需要報酬正規化 (pp.7-8)。一個權重 0.3、朝行為克隆先驗的反向 KL 項，讓策略保持在合理行為的範圍內 (p.8)。
+
 ### 來源之間的比較
 
 - [Dreamer](../sources/2020-dreamer.md) 只靠把價值梯度穿過學到的動態模型反向傳播來訓練 actor，任務都是連續控制 (p.5)。
@@ -38,6 +42,7 @@ Critic 學習預測從某個狀態出發的期望報酬，actor 則被更新成�
 - [Dreamer](../sources/2020-dreamer.md) 不需要目標網路或熵獎勵 (p.14)。
 - [DreamerV2](../sources/2021-dreamerv2.md) 兩者都用，並以策略熵取代外加的動作雜訊來探索 (p.18)。這是版本之間的設計差異，不是互相矛盾的主張；DreamerV2 建立在 Dreamer 之上，這段整理是本 Wiki 的。
 - [DreamerV3](../sources/2023-dreamerv3.md) 取消依領域選擇的做法，連續控制也改用 Reinforce 梯度，並搭配分布式 critic 與報酬正規化 (p.6)。這是取代先前的設計，而不是否定先前在各領域分別設定下得到的結果。
+- [Dreamer 4](../sources/2025-dreamer4.md) 以 PMPO 加上朝行為克隆先驗的 KL 項，取代報酬正規化與熵正則項，因為它是離線學習，必須保持接近資料中出現過的行為 (p.29)。
 
 ## 相關概念
 

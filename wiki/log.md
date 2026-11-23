@@ -149,3 +149,20 @@
 - `raw/README.md`：填入公開連結（arXiv 2301.04104）與來源頁。
 - `build.py` 產生 40 個頁面，`check.py` 全部通過。
 
+## [2026-11-24] ingest | Training Agents Inside of Scalable World Models
+
+- 閱讀範圍：PDF 第 1–32 頁全文（正文 pp.1-18、參考文獻 pp.19-24、附錄 A–H pp.25-32）。`status: to-read`（依擁有者原則）。
+- 新增來源頁：`2025-dreamer4`（arXiv 2025；areas：world-model、reinforcement-learning；pages: 32）。
+- 新增概念頁（3 個）：
+  - `shortcut-forcing`（把握度高：核心技術，pp.5-6、16；擴散與 flow matching 背景寫在本頁）
+  - `offline-reinforcement-learning`（高：本篇核心設定，pp.2、10）
+  - `action-conditioning`（中：重要發現，pp.14-15；名稱由本 Wiki 取，預計 WHAM 也會用到）
+- 更新既有頁面（新增 Dreamer 4 小節，比較段擴充）：`world-model`、`learning-in-imagination`、`actor-critic`、`recurrent-state-space-model`、`symlog-predictions`、`return-normalization`（後兩頁首次有兩個來源，新增比較段）、`model-based-reinforcement-learning`（皆高）。
+- 取代（Superseded）：`2023-dreamerv3` 三處（RSSM → transformer＋shortcut forcing；報酬正規化與熵正則 → PMPO＋行為先驗；想像訓練凍結 transformer、每片段一次 rollout，pp.7、29）。
+- 一致而非衝突：`recurrent-state-space-model` 比較段註明換掉 RSSM 是為了規模，不代表它在先前較小的領域中是錯的；`return-normalization` 比較段註明 Dreamer 4 改變的是策略損失。
+- 來源關係：`2023-dreamerv3`、`2019-planet`、`2018-world-models` 補上 Dreamer 4（p.17 引用 World Models 與 PlaNet 為早期可從像素規劃的世界模型）。
+- 刻意不連結：`categorical-latents`（Dreamer 4 用 tanh 連續表示，論文未說明是取代）；`variational-autoencoder`（tokenizer 是遮罩自編碼器，非變分）；`kl-balancing`、`latent-overshooting`、`latent-space-planning`。
+- 寫法：論文中的「Dreamer 3」在 Wiki 一律寫成 `DreamerV3`，不必修改 `NUMBERED_NAMES`。
+- `raw/README.md`：填入公開連結（arXiv 2509.24527）與來源頁。
+- `build.py` 產生 48 個頁面，`check.py` 全部通過。
+

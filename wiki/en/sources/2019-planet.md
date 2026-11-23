@@ -79,6 +79,7 @@ Implementation details from the appendix: the deterministic path is a GRU with 2
 - [Dream to Control: Learning Behaviors by Latent Imagination](2020-dreamer.md) (Dreamer, 2020) learns the same world model but replaces online planning with an action model and a value model trained in imagination. It re-runs PlaNet with a fixed action repeat as a baseline, so its PlaNet scores differ from the ones above (see the Dreamer page).
 - [Mastering Atari with Discrete World Models](2021-dreamerv2.md) (DreamerV2, 2021) builds on the world model introduced here and replaces its Gaussian latents with categorical variables.
 - [Mastering Diverse Domains through World Models](2023-dreamerv3.md) (DreamerV3, 2023) still implements its world model as the RSSM introduced here.
+- [Training Agents Inside of Scalable World Models](2025-dreamer4.md) (Dreamer 4, 2025) cites this paper as one of the first world models accurate enough for planning from pixels, and replaces the RSSM with a transformer.
 
 ## Background
 

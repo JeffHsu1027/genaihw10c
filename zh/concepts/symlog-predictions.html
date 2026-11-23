@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="source-hash" content="5a219479f17e">
+<meta name="source-hash" content="4bcb21392dae">
 <title>Symlog 預測（Symlog predictions） · 論文 Wiki</title>
 <link rel="stylesheet" href="../../assets/style.css">
 </head>
@@ -15,7 +15,7 @@
 <main class="page page-concept">
   <p class="page-kind"><span class="tag tag-concept">概念</span></p>
   <h1>Symlog 預測（Symlog predictions）</h1>
-  <p class="meta">symlog, symexp, symlog 平方誤差, symexp twohot 損失, twohot 編碼 · 1 個來源</p>
+  <p class="meta">symlog, symexp, symlog 平方誤差, symexp twohot 損失, twohot 編碼 · 2 個來源</p>
   <article class="content">
 <h2>一句話定義</h2>
 <p>預測量級未知的數值的一種方法：讓網路學習目標值經過類似對數壓縮後的版本，或改成在指數間隔的分箱上做分類，而不是直接學原始數值。</p>
@@ -27,6 +27,13 @@
 <h2>各來源怎麼說</h2>
 <h3>Mastering Diverse Domains through World Models（2023）</h3>
 <p><a href="../sources/2023-dreamerv3.html">DreamerV3</a> 提出 symlog 平方誤差與 symexp twohot 損失，作為處理未知量級目標的簡單解法 (p.7)。它對編碼器與解碼器的向量觀測使用 symlog，並在獎勵預測器與 critic 使用 symexp twohot 損失 (p.7)。分箱涵蓋從負 20 到正 20 的 symexp 範圍，twohot 輸出頭的權重初始化為零，讓代理人在一開始不會幻想出獎勵與價值 (p.18)。消融實驗中，拿掉 symexp twohot 損失改用 Huber 損失會讓平均表現變差，拿掉觀測的 symlog 也會變差 (p.10, Fig. 6)。</p>
+<h3>Training Agents Inside of Scalable World Models（2025）</h3>
+<p><a href="../sources/2025-dreamer4.html">Dreamer 4</a> 沿用 DreamerV3，把獎勵頭與價值頭都設計成 symexp twohot 輸出，以便穩健地學習跨越多個數量級的獎勵與價值 (p.7)。</p>
+<h3>來源之間的比較</h3>
+<ul>
+<li><a href="../sources/2023-dreamerv3.html">DreamerV3</a> 提出這項技術，用於觀測、獎勵與價值 (p.7)。</li>
+<li><a href="../sources/2025-dreamer4.html">Dreamer 4</a> 雖然改動了代理人大部分的部分，仍保留它用於獎勵與價值 (p.7)。Dreamer 4 建立在 DreamerV3 之上；這段整理是本 Wiki 的。</li>
+</ul>
 <h2>相關概念</h2>
 <ul>
 <li><a href="return-normalization.html">報酬正規化（Return normalization）</a>：DreamerV3 處理獎勵尺度的另一項技術。</li>

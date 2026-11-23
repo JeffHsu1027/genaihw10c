@@ -3,7 +3,7 @@ title: "Actor-critic"
 aliases: [actor critic, action model and value model, policy and value function, lambda-return, λ-return]
 updated: 2026-11-24
 areas: [reinforcement-learning]
-sources: [2020-dreamer, 2021-dreamerv2, 2023-dreamerv3]
+sources: [2020-dreamer, 2021-dreamerv2, 2023-dreamerv3, 2025-dreamer4]
 ---
 
 ## One-line definition
@@ -30,6 +30,10 @@ The critic learns to predict the return expected from a state, and the actor is 
 
 [DreamerV3](../sources/2023-dreamerv3.md) trains its critic to predict a distribution over λ-returns, as a categorical distribution over exponentially spaced bins, because returns can be multi-modal and vary by orders of magnitude (p.5). The critic is also trained on replayed trajectories and is regularized toward an exponential moving average of its own parameters, which plays the role of a target network (p.6). The actor uses the Reinforce estimator for both discrete and continuous actions, with returns normalized by their percentile range so that one entropy scale works everywhere (p.6).
 
+### Training Agents Inside of Scalable World Models (2025)
+
+[Dreamer 4](../sources/2025-dreamer4.md) adds a value head and a frozen copy of the behavior-cloned policy to its world model transformer and trains only the policy and value heads during imagination training (p.7). The value head learns λ-returns with a discount of 0.997 and a symexp twohot output (p.7). The policy uses PMPO, which averages likelihood losses separately over states with positive and negative advantages, so only the sign of the advantage matters and no return normalization is needed (pp.7-8). A reverse KL term toward the behavior-cloned prior, with a scale of 0.3, keeps the policy within reasonable behaviors (p.8).
+
 ### Comparing the sources
 
 - [Dreamer](../sources/2020-dreamer.md) trains the actor only by backpropagating value gradients through the learned dynamics, on continuous control tasks (p.5).
@@ -37,6 +41,7 @@ The critic learns to predict the return expected from a state, and the actor is 
 - [Dreamer](../sources/2020-dreamer.md) did not need a target network or an entropy bonus (p.14).
 - [DreamerV2](../sources/2021-dreamerv2.md) uses both, with policy entropy replacing external action noise for exploration (p.18). This is a design difference between versions, not a contradictory claim; DreamerV2 builds on Dreamer, and this summary is this Wiki's own.
 - [DreamerV3](../sources/2023-dreamerv3.md) drops the domain-specific choice and uses Reinforce gradients for continuous control as well, together with a distributional critic and return normalization (p.6). This replaces the earlier design rather than contradicting the earlier results, which were obtained under per-domain settings.
+- [Dreamer 4](../sources/2025-dreamer4.md) replaces return normalization and the entropy regularizer with PMPO and a KL term toward a behavior-cloned prior, because it learns offline and must stay close to behavior seen in the data (p.29).
 
 ## Related concepts
 

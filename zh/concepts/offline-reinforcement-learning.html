@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="source-hash" content="c331f3a1871e">
+<title>離線強化學習（Offline reinforcement learning） · 論文 Wiki</title>
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="site-name" href="../index.html">論文 Wiki</a>
+  <a class="lang-switch" href="../../en/concepts/offline-reinforcement-learning.html" hreflang="en">English</a>
+</header>
+<main class="page page-concept">
+  <p class="page-kind"><span class="tag tag-concept">概念</span></p>
+  <h1>離線強化學習（Offline reinforcement learning）</h1>
+  <p class="meta">offline RL, 批次強化學習, 從固定資料集學習 · 1 個來源</p>
+  <article class="content">
+<h2>一句話定義</h2>
+<p>只從事先收集好的固定資料集做強化學習，學習期間不讓代理人與環境互動。</p>
+<h2>說明</h2>
+<p>線上強化學習靠實際嘗試來改進策略，這可能很慢、不安全，對真實機器人或其他昂貴的系統甚至不可行。離線強化學習則只從記錄下來的經驗學習，例如人類或早期代理人的錄影。困難在於代理人無法驗證資料中從未出現的動作會帶來什麼結果，因此天真的方法會對沒看過的動作過度自信。在資料集上訓練出的世界模型提供了一條出路：代理人可以在模型裡練習，產生新的經驗而不碰觸真實環境，同時保持接近資料中出現過的行為。</p>
+<h2>各來源怎麼說</h2>
+<h3>Training Agents Inside of Scalable World Models（2025）</h3>
+<p><a href="../sources/2025-dreamer4.html">Dreamer 4</a> 主張離線學習對實體機器人這類應用很重要，因為部署訓練到一半的策略並不安全，而重置場景與即時給予獎勵也很困難 (p.10)。它只從 VPT 承包商資料集的 2.5K 小時資料學習，完全不與環境互動 (p.10)。它的強化學習發生在世界模型內部，所以即使在想像中是 on-policy，仍算是離線方法 (p.11)。朝行為克隆策略的 KL 項讓學到的策略保持在合理行為的範圍內 (p.8)。Dreamer 4 是第一個完全只靠離線資料在 Minecraft 拿到鑽石的代理人 (p.1)。</p>
+<h2>相關概念</h2>
+<ul>
+<li><a href="learning-in-imagination.html">在想像中學習（Learning in imagination）</a>：在世界模型裡練習，是 Dreamer 4 離線改進的方式。</li>
+<li><a href="model-based-reinforcement-learning.html">基於模型的強化學習（Model-based reinforcement learning）</a>：在這裡，學到的模型讓離線改進成為可能。</li>
+<li><a href="action-conditioning.html">動作條件（Action conditioning）</a>：世界模型必須學會資料中的動作如何改變世界。</li>
+</ul>
+<h2>背景資料</h2>
+<p>（尚無）</p>
+  </article>
+</main>
+<footer class="site-footer"><a href="../index.html">回首頁</a></footer>
+</body>
+</html>

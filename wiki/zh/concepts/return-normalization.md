@@ -3,8 +3,8 @@ title: "報酬正規化（Return normalization）"
 aliases: [百分位數報酬正規化, retnorm]
 updated: 2026-11-24
 areas: [reinforcement-learning]
-sources: [2023-dreamerv3]
-translated_from: "d99770f9ad59"
+sources: [2023-dreamerv3, 2025-dreamer4]
+translated_from: "ff690f6f5d32"
 ---
 
 ## 一句話定義
@@ -20,6 +20,15 @@ translated_from: "d99770f9ad59"
 ### Mastering Diverse Domains through World Models（2023）
 
 [DreamerV3](../sources/2023-dreamerv3.md) 正規化報酬，讓它大致落在 0 到 1 之間，因此能在各領域使用固定的熵係數 `3e-4` (p.6)。縮放尺度是第 5 到第 95 百分位數報酬的範圍，再以指數移動平均平滑；只有這個尺度大於 1 時才除以它，以免在獎勵稀少時放大雜訊 (p.6)。論文主張，優勢值正規化、以標準差正規化，以及限制熵的目標，都無法在各領域找到穩定的超參數 (p.6)。消融實驗中，報酬正規化是重要性僅次於 KL 目標的穩定技術 (p.10)。
+
+### Training Agents Inside of Scalable World Models（2025）
+
+[Dreamer 4](../sources/2025-dreamer4.md) 不再使用報酬正規化：它的 PMPO 策略損失只取決於優勢的正負號，因此不需要正規化報酬或優勢，也能平等看待報酬尺度不同的任務 (p.7)。論文明確把這點與 DreamerV3 的報酬正規化及熵正則項對照 (p.29)。
+
+### 來源之間的比較
+
+- [DreamerV3](../sources/2023-dreamerv3.md) 需要報酬正規化，才能讓固定的熵係數適用各領域 (p.6)。
+- [Dreamer 4](../sources/2025-dreamer4.md) 改變策略損失，而不是重新縮放報酬，從而避開這個問題 (p.7)。兩者並不衝突；Dreamer 4 建立在 DreamerV3 之上，這段整理是本 Wiki 的。
 
 ## 相關概念
 

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="source-hash" content="ba9a2e83f665">
+<meta name="source-hash" content="12fcf5170708">
 <title>Actor-critic · Paper Wiki</title>
 <link rel="stylesheet" href="../../assets/style.css">
 </head>
@@ -15,7 +15,7 @@
 <main class="page page-concept">
   <p class="page-kind"><span class="tag tag-concept">Concept</span></p>
   <h1>Actor-critic</h1>
-  <p class="meta">actor critic, action model and value model, policy and value function, lambda-return, λ-return · 3 sources</p>
+  <p class="meta">actor critic, action model and value model, policy and value function, lambda-return, λ-return · 4 sources</p>
   <article class="content">
 <h2>One-line definition</h2>
 <p>A reinforcement learning method with two learned parts: an actor (policy) that chooses actions and a critic (value function) that estimates how much future reward the actor will collect from each state.</p>
@@ -31,6 +31,8 @@
 <p><a href="../sources/2021-dreamerv2.html">DreamerV2</a> also trains its actor and critic purely on imagined trajectories, with a horizon of 15 and λ-targets (p.5, Eq. 4). The critic uses a target network that is updated every 100 gradient steps (p.6). The actor loss mixes Reinforce gradients, which are unbiased but noisy, with straight-through gradients through the dynamics, which are biased but low-variance, and adds an entropy regularizer (p.6, Eq. 6). Reinforce gradients work substantially better for Atari, while backpropagating through the dynamics works substantially better for continuous control (p.6). Using only straight-through gradients is worse on 44 of 55 Atari games (p.10).</p>
 <h3>Mastering Diverse Domains through World Models (2023)</h3>
 <p><a href="../sources/2023-dreamerv3.html">DreamerV3</a> trains its critic to predict a distribution over λ-returns, as a categorical distribution over exponentially spaced bins, because returns can be multi-modal and vary by orders of magnitude (p.5). The critic is also trained on replayed trajectories and is regularized toward an exponential moving average of its own parameters, which plays the role of a target network (p.6). The actor uses the Reinforce estimator for both discrete and continuous actions, with returns normalized by their percentile range so that one entropy scale works everywhere (p.6).</p>
+<h3>Training Agents Inside of Scalable World Models (2025)</h3>
+<p><a href="../sources/2025-dreamer4.html">Dreamer 4</a> adds a value head and a frozen copy of the behavior-cloned policy to its world model transformer and trains only the policy and value heads during imagination training (p.7). The value head learns λ-returns with a discount of 0.997 and a symexp twohot output (p.7). The policy uses PMPO, which averages likelihood losses separately over states with positive and negative advantages, so only the sign of the advantage matters and no return normalization is needed (pp.7-8). A reverse KL term toward the behavior-cloned prior, with a scale of 0.3, keeps the policy within reasonable behaviors (p.8).</p>
 <h3>Comparing the sources</h3>
 <ul>
 <li><a href="../sources/2020-dreamer.html">Dreamer</a> trains the actor only by backpropagating value gradients through the learned dynamics, on continuous control tasks (p.5).</li>
@@ -38,6 +40,7 @@
 <li><a href="../sources/2020-dreamer.html">Dreamer</a> did not need a target network or an entropy bonus (p.14).</li>
 <li><a href="../sources/2021-dreamerv2.html">DreamerV2</a> uses both, with policy entropy replacing external action noise for exploration (p.18). This is a design difference between versions, not a contradictory claim; DreamerV2 builds on Dreamer, and this summary is this Wiki's own.</li>
 <li><a href="../sources/2023-dreamerv3.html">DreamerV3</a> drops the domain-specific choice and uses Reinforce gradients for continuous control as well, together with a distributional critic and return normalization (p.6). This replaces the earlier design rather than contradicting the earlier results, which were obtained under per-domain settings.</li>
+<li><a href="../sources/2025-dreamer4.html">Dreamer 4</a> replaces return normalization and the entropy regularizer with PMPO and a KL term toward a behavior-cloned prior, because it learns offline and must stay close to behavior seen in the data (p.29).</li>
 </ul>
 <h2>Related concepts</h2>
 <ul>

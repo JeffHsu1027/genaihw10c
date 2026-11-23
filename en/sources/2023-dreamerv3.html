@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="source-hash" content="9471be68501c">
+<meta name="source-hash" content="a1fc8c3f376c">
 <title>Mastering Diverse Domains through World Models · Paper Wiki</title>
 <link rel="stylesheet" href="../../assets/style.css">
 </head>
@@ -33,7 +33,10 @@
 <li><strong>Actor</strong>: it uses the Reinforce estimator for both discrete and continuous actions, with a fixed entropy scale of <code>3e-4</code> made possible by return normalization (p.6).</li>
 <li><strong>Robust predictions</strong>: vector observations, rewards and values are handled with the symlog transform and a symexp twohot loss, so the size of the gradients does not depend on the size of the targets (p.7).</li>
 </ul>
-<blockquote class="note note-explainer">
+<blockquote class="note note-superseded">
+<p><strong>Superseded:</strong> <a href="2025-dreamer4.html">Dreamer 4</a> replaces the RSSM with a transformer tokenizer and dynamics model trained by shortcut forcing, because the RSSM is hard to scale to diverse data (p.29).</p>
+<p><strong>Superseded:</strong> <a href="2025-dreamer4.html">Dreamer 4</a> replaces return normalization and the entropy regularizer with the PMPO policy loss and a KL term toward a behavior-cloned prior (p.29).</p>
+<p><strong>Superseded:</strong> <a href="2025-dreamer4.html">Dreamer 4</a> freezes the world model transformer during imagination training and trains only the policy and value heads, starting one rollout per dataset context (p.7).</p>
 <p><strong>Explainer:</strong> Earlier Dreamers were like a car that needed its mirrors and seat adjusted for every new driver. DreamerV3 adds automatic adjustments, so the same settings work whether the rewards are tiny or huge, frequent or rare.</p>
 </blockquote>
 <p>Implementation details: training uses a uniform replay buffer with an online queue, and the amount of training is set by the replay ratio (p.18). Gradients are clipped adaptively per tensor and applied with the LaProp optimizer instead of Adam, which avoided occasional instabilities (p.18). The sequence model is a GRU with block-diagonal recurrent weights of 8 blocks (p.18). Model sizes range from 12 million to 400 million parameters, and the default model has 200 million (p.19). The text gives a prediction horizon of 16 (p.5), while the hyperparameter table lists an imagination horizon of 15 (p.21); the exact value is (to be verified). Every agent was trained on a single A100 GPU (p.19).</p>
@@ -73,6 +76,7 @@
 </ul>
 <h2>Relation to other sources</h2>
 <ul>
+<li><a href="2025-dreamer4.html">Training Agents Inside of Scalable World Models</a> (Dreamer 4, 2025) is the next generation. It keeps the symexp twohot heads but replaces the recurrent world model with a scalable transformer, and moves Minecraft from online learning with abstract crafting actions to purely offline learning with mouse and keyboard.</li>
 <li><a href="2021-dreamerv2.html">Mastering Atari with Discrete World Models</a>: DreamerV3 is the next generation after DreamerV2, which surpassed human performance on Atari; DreamerV3 adds the robustness techniques, a new network architecture, a new optimizer and a larger replay buffer (p.20).</li>
 <li><a href="2020-dreamer.html">Dream to Control: Learning Behaviors by Latent Imagination</a>: the paper describes DreamerV1 as limited to continuous control (p.20).</li>
 <li><a href="2019-planet.html">Learning Latent Dynamics for Planning from Pixels</a>: the world model is still the RSSM introduced by PlaNet (p.3).</li>

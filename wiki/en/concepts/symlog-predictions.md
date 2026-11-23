@@ -3,7 +3,7 @@ title: "Symlog predictions"
 aliases: [symlog, symexp, symlog squared error, symexp twohot loss, twohot encoding]
 updated: 2026-11-24
 areas: [reinforcement-learning, world-model]
-sources: [2023-dreamerv3]
+sources: [2023-dreamerv3, 2025-dreamer4]
 ---
 
 ## One-line definition
@@ -21,6 +21,15 @@ Rewards, values and observations can be tiny in one environment and huge in anot
 ### Mastering Diverse Domains through World Models (2023)
 
 [DreamerV3](../sources/2023-dreamerv3.md) introduces the symlog squared error and the symexp twohot loss as a simple answer to targets of unknown scale (p.7). It applies symlog to vector observations for the encoder and decoder, and uses the symexp twohot loss for the reward predictor and the critic (p.7). The bins span symexp of the range from minus 20 to plus 20, and the output weights of twohot heads are initialized to zero so that the agent does not hallucinate rewards and values at the start (p.18). In the ablations, removing the symexp twohot loss and falling back to a Huber loss hurts performance on average, and removing observation symlog also hurts (p.10, Fig. 6).
+
+### Training Agents Inside of Scalable World Models (2025)
+
+[Dreamer 4](../sources/2025-dreamer4.md) parameterizes both its reward head and its value head as symexp twohot outputs, following DreamerV3, to learn rewards and values robustly across orders of magnitude (p.7).
+
+### Comparing the sources
+
+- [DreamerV3](../sources/2023-dreamerv3.md) introduces the technique for observations, rewards and values (p.7).
+- [Dreamer 4](../sources/2025-dreamer4.md) keeps it for rewards and values even though most other parts of the agent change (p.7). Dreamer 4 builds on DreamerV3; this summary is this Wiki's own.
 
 ## Related concepts
 

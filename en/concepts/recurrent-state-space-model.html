@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="source-hash" content="e4e222d1e866">
+<meta name="source-hash" content="32ccb256ee5c">
 <title>Recurrent state-space model · Paper Wiki</title>
 <link rel="stylesheet" href="../../assets/style.css">
 </head>
@@ -15,7 +15,7 @@
 <main class="page page-concept">
   <p class="page-kind"><span class="tag tag-concept">Concept</span></p>
   <h1>Recurrent state-space model</h1>
-  <p class="meta">RSSM · 4 sources</p>
+  <p class="meta">RSSM · 5 sources</p>
   <article class="content">
 <h2>One-line definition</h2>
 <p>A latent dynamics model whose state has a deterministic part, carried forward by a recurrent network, and a stochastic part sampled at every step.</p>
@@ -33,12 +33,15 @@
 <p><a href="../sources/2021-dreamerv2.html">DreamerV2</a> keeps the RSSM structure: a GRU computes the deterministic recurrent state, a posterior stochastic state sees the current image, and a prior stochastic state predicts it without the image (pp.2-3). The stochastic state, however, becomes a vector of 32 categorical variables with 32 classes each instead of a Gaussian (p.3, Fig. 2). The RSSM uses 600 units (p.19), and adding layer normalization to its GRU gave little or no benefit (p.18).</p>
 <h3>Mastering Diverse Domains through World Models (2023)</h3>
 <p><a href="../sources/2023-dreamerv3.html">DreamerV3</a> still implements its world model as an RSSM, with a sequence model, an encoder, a dynamics predictor and heads for reward, continuation and reconstruction (pp.3-4). The sequence model is a GRU with block-diagonal recurrent weights of 8 blocks, which allows many memory units without a quadratic growth in parameters (p.18). Given 5 context frames and the actions, the model predicts 45 frames ahead in DMLab and robot scenes (p.4, Fig. 4) and in Minecraft (p.23, Fig. 7).</p>
+<h3>Training Agents Inside of Scalable World Models (2025)</h3>
+<p><a href="../sources/2025-dreamer4.html">Dreamer 4</a> describes the RSSM of DreamerV3 as a recurrent network with a variational objective that gives a lightweight world model with very efficient inference but is difficult to scale to diverse data distributions (p.29). It replaces the RSSM with a transformer tokenizer and dynamics model trained by shortcut forcing (p.29).</p>
 <h3>Comparing the sources</h3>
 <ul>
 <li><a href="../sources/2019-planet.html">PlaNet</a> introduces the RSSM and uses it for planning (p.4).</li>
 <li><a href="../sources/2020-dreamer.html">Dreamer</a> reuses it unchanged for policy learning (p.6). The same model therefore supports two different ways of choosing actions; Dreamer builds directly on PlaNet, and this summary is this Wiki's own.</li>
 <li><a href="../sources/2021-dreamerv2.html">DreamerV2</a> keeps the deterministic and stochastic paths but swaps the Gaussian stochastic state for categorical variables, which helps on most Atari games (p.9).</li>
 <li><a href="../sources/2023-dreamerv3.html">DreamerV3</a> keeps this structure across more than 150 tasks and changes mainly the recurrent cell and the training losses (p.18).</li>
+<li><a href="../sources/2025-dreamer4.html">Dreamer 4</a> ends this line within the Dreamer series by switching to a transformer for scalability (p.29). This is a replacement for scale, not a claim that the RSSM was wrong for the smaller domains where it was used.</li>
 </ul>
 <h2>Related concepts</h2>
 <ul>
@@ -48,6 +51,7 @@
 <li><a href="mixture-density-rnn.html">Mixture density RNN</a>: another way to add randomness to a recurrent model; it samples the output, while the RSSM samples part of the state.</li>
 <li><a href="categorical-latents.html">Categorical latents</a>: the discrete stochastic state used in DreamerV2.</li>
 <li><a href="kl-balancing.html">KL balancing</a>: a way to train the RSSM prior.</li>
+<li><a href="shortcut-forcing.html">Shortcut forcing</a>: the objective of the transformer that replaces the RSSM in Dreamer 4.</li>
 </ul>
 <h2>Background</h2>
 <p>(None yet)</p>

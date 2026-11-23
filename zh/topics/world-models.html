@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="source-hash" content="8b37a262dd21">
+<meta name="source-hash" content="3bd5b47301cd">
 <title>世界模型（World models） · 論文 Wiki</title>
 <link rel="stylesheet" href="../../assets/style.css">
 </head>
@@ -15,7 +15,7 @@
 <main class="page page-topic">
   <p class="page-kind"><span class="tag tag-topic">主題</span></p>
   <h1>世界模型（World models）</h1>
-  <p class="meta">世界模型 · 5 個來源</p>
+  <p class="meta">世界模型 · 6 個來源</p>
   <article class="content">
 <h2>概述</h2>
 <p>世界模型是學出來的模擬器：讓代理人能預測環境會如何回應自己的行動。相關研究關心的是：如何從原始觀測學到這樣的模型、如何用它來選擇動作或訓練策略，以及如何避免代理人利用模型的錯誤。這個主題頁逐篇整理這條研究脈絡。</p>
@@ -26,6 +26,7 @@
 <li>2020：<a href="../sources/2020-dreamer.html">Dreamer</a> 保留 PlaNet 的世界模型，但完全在想像中用 actor-critic 學習行為，價值模型能看見視野之外，在 20 個任務的平均上勝過 PlaNet 與無模型的 D4PG (p.6, Fig. 6)。</li>
 <li>2021：<a href="../sources/2021-dreamerv2.html">DreamerV2</a> 改用類別潛在變數與 KL 平衡，成為第一個完全在另外訓練的世界模型裡學習、就在 Atari 達到人類水準的代理人 (p.1)。</li>
 <li>2023：<a href="../sources/2023-dreamerv3.html">DreamerV3</a> 加入穩定技術，讓一組固定設定在 150 多個任務上勝過專門的方法，並成為第一個從零開始在 Minecraft 挖到鑽石的演算法 (p.1)。</li>
+<li>2025：<a href="../sources/2025-dreamer4.html">Dreamer 4</a> 改用以 shortcut forcing 訓練、可擴展的 transformer 世界模型，成為第一個完全只靠離線資料就在 Minecraft 拿到鑽石的代理人 (p.1)。</li>
 </ul>
 <h2>來源</h2>
 <table>
@@ -68,6 +69,12 @@
 <td>未讀</td>
 <td>穩定技術讓一組固定設定精通許多領域，包括在 Minecraft 挖到鑽石。</td>
 </tr>
+<tr>
+<td>2025</td>
+<td><a href="../sources/2025-dreamer4.html">Training Agents Inside of Scalable World Models (Dreamer 4)</a></td>
+<td>未讀</td>
+<td>快速的 transformer 世界模型；只靠離線資料在想像中訓練，就在 Minecraft 拿到鑽石。</td>
+</tr>
 </tbody>
 </table>
 <h2>關鍵概念</h2>
@@ -85,6 +92,8 @@
 <li><a href="../concepts/kl-balancing.html">KL 平衡（KL balancing）</a>：訓練潛在模型時，先驗更新得比後驗快。</li>
 <li><a href="../concepts/symlog-predictions.html">Symlog 預測（Symlog predictions）</a>：壓縮目標值，以預測任意量級的數值。</li>
 <li><a href="../concepts/return-normalization.html">報酬正規化（Return normalization）</a>：縮放報酬，讓一組探索設定適用每個環境。</li>
+<li><a href="../concepts/shortcut-forcing.html">Shortcut forcing</a>：只用幾個去噪步驟生成每一格影片畫面。</li>
+<li><a href="../concepts/action-conditioning.html">動作條件（Action conditioning）</a>：讓預測的未來取決於代理人的動作。</li>
 </ul>
 <h2>術語表</h2>
 <ul>
@@ -111,6 +120,11 @@
 <li><strong>Replay ratio</strong>：每收集一步新經驗，代理人要做多少訓練步。</li>
 <li><strong>PPO</strong>：廣泛使用的無模型策略梯度演算法，常被當作穩健的基準。</li>
 <li><strong>Minecraft Diamond</strong>：一個評測任務，代理人要在 Minecraft 中依序收集一連串物品，最後拿到鑽石，而且獎勵很稀少。</li>
+<li><strong>擴散模型（diffusion model）</strong>：從隨機雜訊出發、逐步去除雜訊來產生資料的生成模型。</li>
+<li><strong>Tokenizer</strong>：把影片畫面等原始輸入壓縮成較短表示序列、供另一個模型處理的網路。</li>
+<li><strong>行為克隆（behavior cloning）</strong>：訓練策略去模仿資料集中記錄的動作。</li>
+<li><strong>離線強化學習（offline reinforcement learning）</strong>：只用固定資料集改進策略，不與環境互動。</li>
+<li><strong>FVD（Fréchet Video Distance）</strong>：衡量生成影片與真實影片有多接近的指標，越低越好。</li>
 </ul>
 <h2>未解問題</h2>
 <ul>
@@ -133,6 +147,8 @@
 <li>以重建為基礎的世界模型，要如何掌握小而重要的物體？<a href="../sources/2021-dreamerv2.html">DreamerV2</a> 在 Video Pinball 上失敗，因為球只有一個像素 (p.8)。</li>
 <li>以世界模型為基礎的代理人，能不能穩定地在 Minecraft 找到鑽石，而不只是偶爾找到？<a href="../sources/2023-dreamerv3.html">DreamerV3</a> 在預算結束時只有 0.4% 的回合拿到 (p.24, Fig. 9)。</li>
 <li>世界模型能不能在網路影片這類無標記資料上預訓練，或在不同領域之間共用？<a href="../sources/2023-dreamerv3.html">DreamerV3</a> 把這些列為未來方向 (p.11)。</li>
+<li>世界模型需要多長的記憶？<a href="../sources/2025-dreamer4.html">Dreamer 4</a> 保留 9.6 秒的脈絡，遠多於先前的 Minecraft 模型，但超過這個長度仍會遺忘，物品欄也會模糊 (p.13)。</li>
+<li>從少量標註資料學到的動作條件，能否擴展到一般的網路影片？<a href="../sources/2025-dreamer4.html">Dreamer 4</a> 顯示它能轉移到 Minecraft 中沒見過的部分，並把網路影片列為下一步 (p.15)。</li>
 </ul>
 <h2>背景資料</h2>
 <p>（尚無）</p>

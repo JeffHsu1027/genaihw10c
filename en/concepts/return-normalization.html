@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="source-hash" content="34d0b6faeb6c">
+<meta name="source-hash" content="8f366ebb7ef4">
 <title>Return normalization · Paper Wiki</title>
 <link rel="stylesheet" href="../../assets/style.css">
 </head>
@@ -15,7 +15,7 @@
 <main class="page page-concept">
   <p class="page-kind"><span class="tag tag-concept">Concept</span></p>
   <h1>Return normalization</h1>
-  <p class="meta">percentile return normalization, retnorm · 1 source</p>
+  <p class="meta">percentile return normalization, retnorm · 2 sources</p>
   <article class="content">
 <h2>One-line definition</h2>
 <p>Scaling the returns used to train a policy by a robust estimate of their range, so that the balance between maximizing reward and exploring does not depend on the reward scale of the environment.</p>
@@ -24,6 +24,13 @@
 <h2>What each source says</h2>
 <h3>Mastering Diverse Domains through World Models (2023)</h3>
 <p><a href="../sources/2023-dreamerv3.html">DreamerV3</a> normalizes returns so that they fall roughly into the interval from 0 to 1, which lets it use a fixed entropy scale of <code>3e-4</code> across domains (p.6). The scale is the range between the 5th and 95th return percentiles, smoothed with an exponential moving average, and returns are divided by it only when it exceeds 1, so that noise under sparse rewards is not amplified (p.6). The paper argues that advantage normalization, normalization by standard deviation and constrained entropy targets all failed to give stable hyperparameters across domains (p.6). In the ablations, return normalization is the second most important robustness technique after the KL objective (p.10).</p>
+<h3>Training Agents Inside of Scalable World Models (2025)</h3>
+<p><a href="../sources/2025-dreamer4.html">Dreamer 4</a> no longer uses return normalization: its PMPO policy loss depends only on the sign of the advantages, which removes the need to normalize returns or advantages and gives equal focus to tasks with different return scales (p.7). The paper contrasts this explicitly with the return normalization and entropy regularizer of DreamerV3 (p.29).</p>
+<h3>Comparing the sources</h3>
+<ul>
+<li><a href="../sources/2023-dreamerv3.html">DreamerV3</a> needs return normalization so that a fixed entropy scale works across domains (p.6).</li>
+<li><a href="../sources/2025-dreamer4.html">Dreamer 4</a> avoids the problem by changing the policy loss instead of rescaling returns (p.7). The two are not in conflict; Dreamer 4 builds on DreamerV3, and this summary is this Wiki's own.</li>
+</ul>
 <h2>Related concepts</h2>
 <ul>
 <li><a href="actor-critic.html">Actor-critic</a>: return normalization scales the actor's learning signal.</li>

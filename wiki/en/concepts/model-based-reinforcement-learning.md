@@ -3,7 +3,7 @@ title: "Model-based reinforcement learning"
 aliases: [model-based RL, MBRL]
 updated: 2026-11-24
 areas: [reinforcement-learning, world-model]
-sources: [2018-world-models, 2019-planet, 2020-dreamer, 2021-dreamerv2, 2023-dreamerv3]
+sources: [2018-world-models, 2019-planet, 2020-dreamer, 2021-dreamerv2, 2023-dreamerv3, 2025-dreamer4]
 ---
 
 ## One-line definition
@@ -36,6 +36,10 @@ Model-free methods learn a policy or a value function directly from trial and er
 
 [DreamerV3](../sources/2023-dreamerv3.md) positions itself as a general algorithm and compares it with PPO, which is robust but data-hungry, and with MuZero, which is strong but complex and not publicly released (p.11). It outperforms PPO in every domain tested and MuZero on Atari with a fraction of the compute (p.8). In Minecraft it collects diamonds from scratch with 1 GPU for 9 days, while VPT needed human demonstrations and 720 GPUs for 9 days (p.11).
 
+### Training Agents Inside of Scalable World Models (2025)
+
+[Dreamer 4](../sources/2025-dreamer4.md) argues that world models can in principle learn from fixed datasets, which allows agents to be trained purely in imagination without online interaction (p.2). In the offline Minecraft setting it outperforms the VPT offline agent with 100 times less data, and a VLA agent finetuned from Gemma 3 (p.9, Fig. 3). Behavior cloning on top of the world model's representations also beats behavior cloning on Gemma 3, suggesting that video prediction learns an understanding of the world that is useful for decisions (p.12).
+
 ### Comparing the sources
 
 - [World Models](../sources/2018-world-models.md) uses its model to train a policy ahead of time; at decision time the controller reacts to the model's hidden state without planning ahead (p.6).
@@ -45,13 +49,15 @@ Model-free methods learn a policy or a value function directly from trial and er
 - Dreamer reports that planning only within a fixed horizon, as PlaNet does, is shortsighted on tasks that need long-horizon credit assignment (p.7, Fig. 7). PlaNet itself pointed to the missing value function as a limitation (see the PlaNet page), so this is agreement rather than conflict.
 - [DreamerV2](../sources/2021-dreamerv2.md) keeps Dreamer's policy learning in imagination and shows it can win on Atari, a benchmark the earlier sources did not reach (p.2).
 - [DreamerV3](../sources/2023-dreamerv3.md) shifts the claim from beating model-free methods on one benchmark to working across many domains without retuning (p.2).
-- PlaNet, Dreamer, DreamerV2 and DreamerV3 cite World Models, and each later paper builds on the previous one; this side-by-side comparison is this Wiki's own summary.
+- [Dreamer 4](../sources/2025-dreamer4.md) moves from online learning to purely offline learning, where the model is the only place the agent can practise (p.10).
+- PlaNet, Dreamer, DreamerV2, DreamerV3 and Dreamer 4 cite World Models, and each later paper builds on the previous one; this side-by-side comparison is this Wiki's own summary.
 
 ## Related concepts
 
 - [World model](world-model.md): the model that model-based methods learn.
 - [Latent space planning](latent-space-planning.md): using the model at decision time.
 - [Learning in imagination](learning-in-imagination.md): using the model to train a policy.
+- [Offline reinforcement learning](offline-reinforcement-learning.md): learning without environment interaction, as in Dreamer 4.
 
 ## Background
 

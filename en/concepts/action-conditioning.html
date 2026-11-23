@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="source-hash" content="5abc4170a0ff">
+<title>Action conditioning · Paper Wiki</title>
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="site-name" href="../index.html">Paper Wiki</a>
+  <a class="lang-switch" href="../../zh/concepts/action-conditioning.html" hreflang="zh-Hant">中文</a>
+</header>
+<main class="page page-concept">
+  <p class="page-kind"><span class="tag tag-concept">Concept</span></p>
+  <h1>Action conditioning</h1>
+  <p class="meta">action-conditioned video prediction, action grounding, learning from unlabeled videos · 1 source</p>
+  <article class="content">
+<h2>One-line definition</h2>
+<p>Making a world model's predictions depend on the actions taken, so that different actions from the same situation lead to correspondingly different predicted futures.</p>
+<h2>Explanation</h2>
+<p>A video model without actions can only predict what usually happens next. To serve as a world model for an agent, it must also predict how the future changes with the agent's choices. Learning this requires videos paired with the actions that produced them, which are scarce compared with the huge amount of unlabeled video available. A useful property is therefore to learn most of the world's appearance and physics from unlabeled video and only the link between actions and outcomes from a small labeled set.</p>
+<blockquote class="note note-explainer">
+<p><strong>Explainer:</strong> It is like learning a game mostly by watching others play, and then needing only a short session with the controller to figure out which button does what.</p>
+</blockquote>
+<h2>What each source says</h2>
+<h3>Training Agents Inside of Scalable World Models (2025)</h3>
+<p><a href="../sources/2025-dreamer4.html">Dreamer 4</a> encodes each action component, such as mouse and keyboard, into tokens, and uses only a learned embedding when a video has no actions, so labeled and unlabeled videos can be mixed (p.5). Trained on all 2541 hours of VPT videos but with actions for only 100 hours, it reaches 85% of the PSNR and 100% of the SSIM of a model trained with all actions (p.14). When actions are given only for the Overworld, the action conditioning transfers to the Nether and End, which appear only in unlabeled videos, reaching 76% of the PSNR and 80% of the SSIM (p.15). The authors conclude that world models can absorb most of their knowledge from unlabeled videos, which points toward learning from web videos (p.14).</p>
+<h2>Related concepts</h2>
+<ul>
+<li><a href="world-model.html">World model</a>: action conditioning is what turns a video model into a world model.</li>
+<li><a href="shortcut-forcing.html">Shortcut forcing</a>: the objective of the action-conditioned dynamics model in Dreamer 4.</li>
+<li><a href="offline-reinforcement-learning.html">Offline reinforcement learning</a>: the world model is trained on logged actions only.</li>
+</ul>
+<h2>Background</h2>
+<p>(None yet)</p>
+  </article>
+</main>
+<footer class="site-footer"><a href="../index.html">Back to home</a></footer>
+</body>
+</html>

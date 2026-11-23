@@ -3,8 +3,8 @@ title: "Symlog 預測（Symlog predictions）"
 aliases: [symlog, symexp, symlog 平方誤差, symexp twohot 損失, twohot 編碼]
 updated: 2026-11-24
 areas: [reinforcement-learning, world-model]
-sources: [2023-dreamerv3]
-translated_from: "cb3d7960804f"
+sources: [2023-dreamerv3, 2025-dreamer4]
+translated_from: "3ab1be2bb113"
 ---
 
 ## 一句話定義
@@ -22,6 +22,15 @@ translated_from: "cb3d7960804f"
 ### Mastering Diverse Domains through World Models（2023）
 
 [DreamerV3](../sources/2023-dreamerv3.md) 提出 symlog 平方誤差與 symexp twohot 損失，作為處理未知量級目標的簡單解法 (p.7)。它對編碼器與解碼器的向量觀測使用 symlog，並在獎勵預測器與 critic 使用 symexp twohot 損失 (p.7)。分箱涵蓋從負 20 到正 20 的 symexp 範圍，twohot 輸出頭的權重初始化為零，讓代理人在一開始不會幻想出獎勵與價值 (p.18)。消融實驗中，拿掉 symexp twohot 損失改用 Huber 損失會讓平均表現變差，拿掉觀測的 symlog 也會變差 (p.10, Fig. 6)。
+
+### Training Agents Inside of Scalable World Models（2025）
+
+[Dreamer 4](../sources/2025-dreamer4.md) 沿用 DreamerV3，把獎勵頭與價值頭都設計成 symexp twohot 輸出，以便穩健地學習跨越多個數量級的獎勵與價值 (p.7)。
+
+### 來源之間的比較
+
+- [DreamerV3](../sources/2023-dreamerv3.md) 提出這項技術，用於觀測、獎勵與價值 (p.7)。
+- [Dreamer 4](../sources/2025-dreamer4.md) 雖然改動了代理人大部分的部分，仍保留它用於獎勵與價值 (p.7)。Dreamer 4 建立在 DreamerV3 之上；這段整理是本 Wiki 的。
 
 ## 相關概念
 

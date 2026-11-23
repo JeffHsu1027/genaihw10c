@@ -3,7 +3,7 @@ title: "Learning in imagination"
 aliases: [dream training, learning inside a dream, hallucinated environment, latent imagination]
 updated: 2026-11-24
 areas: [world-model, reinforcement-learning]
-sources: [2018-world-models, 2020-dreamer, 2021-dreamerv2, 2023-dreamerv3]
+sources: [2018-world-models, 2020-dreamer, 2021-dreamerv2, 2023-dreamerv3, 2025-dreamer4]
 ---
 
 ## One-line definition
@@ -34,6 +34,10 @@ If a world model can predict observations, rewards and the end of an episode, it
 
 [DreamerV3](../sources/2023-dreamerv3.md) learns behaviors purely from abstract trajectories predicted by the world model and selects actions in the environment without lookahead planning (p.5). Imagined trajectories start from representations of replayed inputs (p.5). With this setup and one fixed configuration, it is the first algorithm to collect diamonds in Minecraft from scratch (p.10).
 
+### Training Agents Inside of Scalable World Models (2025)
+
+[Dreamer 4](../sources/2025-dreamer4.md) calls this imagination training: after behavior cloning, the policy keeps improving by reinforcement learning on rollouts that the world model generates from dataset contexts (p.7). Unlike earlier Dreamers, it starts only one rollout from each context, favoring data diversity and lower memory use (p.7). Because no real environment is used, imagination training here works fully offline (p.11). It improves both success rates and speed compared with behavior cloning alone, more so for harder milestones (p.12).
+
 ### Comparing the sources
 
 - [World Models](../sources/2018-world-models.md) trains its controller in imagination with CMA-ES, which only needs the final reward of each rollout (p.12).
@@ -42,7 +46,9 @@ If a world model can predict observations, rewards and the end of an episode, it
 - [Dreamer](../sources/2020-dreamer.md) keeps alternating between imagination, which trains the behavior, and acting in the real environment, which grows the data that trains the world model (p.2).
 - [DreamerV2](../sources/2021-dreamerv2.md) shows that learning only in imagination can reach human-level results on Atari, where world models had not been competitive before (p.2).
 - [DreamerV3](../sources/2023-dreamerv3.md) extends this to more than 150 tasks across 8 domains without changing hyperparameters (p.8).
-- Model exploitation is discussed explicitly only in World Models; Dreamer, DreamerV2 and DreamerV3 do not report a comparable failure, and this difference is this Wiki's observation, not a claim of any of the papers.
+- [Dreamer 4](../sources/2025-dreamer4.md) removes the remaining online interaction: the world model is learned from a fixed dataset and the agent improves only inside it (p.10).
+- [World Models](../sources/2018-world-models.md) also trained its VizDoom agent only inside the dream, but its dream was built from random-policy data in a simple game (p.7).
+- Model exploitation is discussed explicitly only in World Models; Dreamer, DreamerV2, DreamerV3 and Dreamer 4 do not report a comparable failure, although Dreamer 4 keeps its policy close to a behavior-cloning prior, and this difference is this Wiki's observation, not a claim of any of the papers.
 
 ## Related concepts
 
@@ -51,6 +57,7 @@ If a world model can predict observations, rewards and the end of an episode, it
 - [Evolution strategies](evolution-strategies.md): the optimizer that trains the controller inside the dream in World Models.
 - [Actor-critic](actor-critic.md): the method Dreamer uses to learn inside imagination.
 - [Latent space planning](latent-space-planning.md): the alternative that uses the model at decision time instead of training a policy.
+- [Offline reinforcement learning](offline-reinforcement-learning.md): Dreamer 4 uses imagination to learn without environment interaction.
 
 ## Background
 

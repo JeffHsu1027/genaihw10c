@@ -3,7 +3,7 @@ title: "World model"
 aliases: [dynamics model, environment model, predictive model of the environment]
 updated: 2026-11-24
 areas: [world-model, reinforcement-learning]
-sources: [2018-world-models, 2019-planet, 2020-dreamer, 2021-dreamerv2, 2023-dreamerv3]
+sources: [2018-world-models, 2019-planet, 2020-dreamer, 2021-dreamerv2, 2023-dreamerv3, 2025-dreamer4]
 ---
 
 ## One-line definition
@@ -38,6 +38,10 @@ An agent that can predict the consequences of its actions does not have to try e
 
 [DreamerV3](../sources/2023-dreamerv3.md) describes the world model as giving the agent rich perception and the ability to imagine the future, and notes that learning and using world models robustly had been an open problem (p.2). Its performance rests mainly on the unsupervised reconstruction loss of the world model rather than on reward and value gradients, which the authors see as an opening for pretraining on unsupervised data (p.10). Larger world models, from 12 million to 400 million parameters, both score higher and need less environment interaction (p.10, Fig. 6).
 
+### Training Agents Inside of Scalable World Models (2025)
+
+[Dreamer 4](../sources/2025-dreamer4.md) describes world models as learning general knowledge from videos and simulating experience for training behaviors in imagination (p.1). It argues that earlier world-model agents were accurate only in narrow environments, while large controllable video models still missed precise object interactions and were too slow (p.2). Its transformer world model, with 2B parameters, runs in real time on one GPU (p.9). Players complete 14 of 16 Minecraft tasks inside it, compared with 5 of 16 for the large Oasis model (p.13). Its memory is still short and its inventory predictions imprecise (p.18).
+
 ### Comparing the sources
 
 - Both learn a compressed latent state from pixels and a transition model over it: [World Models](../sources/2018-world-models.md) with a VAE and an MDN-RNN (p.2, Fig. 4), [PlaNet](../sources/2019-planet.md) with a recurrent state-space model (p.4, Eq. 4).
@@ -47,7 +51,8 @@ An agent that can predict the consequences of its actions does not have to try e
 - [Dreamer](../sources/2020-dreamer.md) keeps PlaNet's world model and changes only how behavior is derived from it, which shows that the same model can serve planning or policy learning (p.8).
 - [DreamerV2](../sources/2021-dreamerv2.md) keeps the same overall design but changes the latent variables and the KL term, which is enough to move from simple control tasks to human-level Atari (p.2).
 - [DreamerV2](../sources/2021-dreamerv2.md) and [DreamerV3](../sources/2023-dreamerv3.md) agree that image reconstruction, not reward prediction, is the main learning signal for the world model (p.10).
-- PlaNet, Dreamer, DreamerV2 and DreamerV3 cite World Models (see their source pages); this side-by-side comparison is this Wiki's own summary.
+- [Dreamer 4](../sources/2025-dreamer4.md) replaces the recurrent world model used from PlaNet to DreamerV3 with a transformer, because the recurrent design was efficient but hard to scale to diverse data (p.29).
+- PlaNet, Dreamer, DreamerV2, DreamerV3 and Dreamer 4 cite World Models (see their source pages); this side-by-side comparison is this Wiki's own summary.
 
 ## Related concepts
 
@@ -55,6 +60,8 @@ An agent that can predict the consequences of its actions does not have to try e
 - [Mixture density RNN](mixture-density-rnn.md): predicts the next state as a probability distribution.
 - [Recurrent state-space model](recurrent-state-space-model.md): a world model design with deterministic and stochastic state.
 - [Categorical latents](categorical-latents.md): discrete latent states used in DreamerV2's world model.
+- [Shortcut forcing](shortcut-forcing.md): the objective of Dreamer 4's transformer world model.
+- [Action conditioning](action-conditioning.md): making predictions depend on the agent's actions.
 - [Model-based reinforcement learning](model-based-reinforcement-learning.md): reinforcement learning that uses a world model.
 - [Learning in imagination](learning-in-imagination.md): training an agent inside a world model.
 
