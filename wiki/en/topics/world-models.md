@@ -2,8 +2,8 @@
 title: "World models"
 area: world-model
 updated: 2026-11-24
-sources: [2018-world-models, 2019-planet, 2020-dreamer, 2021-dreamerv2]
-concepts: [world-model, model-based-reinforcement-learning, variational-autoencoder, mixture-density-rnn, recurrent-state-space-model, learning-in-imagination, latent-space-planning, latent-overshooting, actor-critic, categorical-latents, kl-balancing]
+sources: [2018-world-models, 2019-planet, 2020-dreamer, 2021-dreamerv2, 2023-dreamerv3]
+concepts: [world-model, model-based-reinforcement-learning, variational-autoencoder, mixture-density-rnn, recurrent-state-space-model, learning-in-imagination, latent-space-planning, latent-overshooting, actor-critic, categorical-latents, kl-balancing, symlog-predictions, return-normalization]
 ---
 
 ## Overview
@@ -16,6 +16,7 @@ World models are learned simulators: models that let an agent predict how its en
 - 2019: [PlaNet](../sources/2019-planet.md) learns a recurrent state-space model with deterministic and stochastic parts and plans every action online in latent space, reaching strong model-free performance with about 200 times fewer episodes (p.2).
 - 2020: [Dreamer](../sources/2020-dreamer.md) keeps PlaNet's world model but learns behavior purely in imagination with an actor-critic whose value model looks beyond the horizon, beating PlaNet and the model-free D4PG on average across 20 tasks (p.6, Fig. 6).
 - 2021: [DreamerV2](../sources/2021-dreamerv2.md) switches to categorical latents and KL balancing and becomes the first agent to reach human-level Atari performance by learning purely inside a separately trained world model (p.1).
+- 2023: [DreamerV3](../sources/2023-dreamerv3.md) adds robustness techniques so that one fixed configuration outperforms specialized methods on more than 150 tasks, and becomes the first algorithm to collect diamonds in Minecraft from scratch (p.1).
 
 ## Sources
 
@@ -25,6 +26,7 @@ World models are learned simulators: models that let an agent predict how its en
 | 2019 | [Learning Latent Dynamics for Planning from Pixels (PlaNet)](../sources/2019-planet.md) | to-read | A purely model-based agent that plans with CEM inside a learned recurrent state-space model. |
 | 2020 | [Dream to Control (Dreamer)](../sources/2020-dreamer.md) | to-read | Learns an actor-critic purely in the latent imagination of PlaNet's world model, using value gradients through the dynamics. |
 | 2021 | [Mastering Atari with Discrete World Models (DreamerV2)](../sources/2021-dreamerv2.md) | to-read | Dreamer with categorical latents and KL balancing; human-level Atari from learning only inside the world model. |
+| 2023 | [Mastering Diverse Domains through World Models (DreamerV3)](../sources/2023-dreamerv3.md) | to-read | Robustness techniques let one fixed configuration master many domains, including diamonds in Minecraft. |
 
 ## Key concepts
 
@@ -39,6 +41,8 @@ World models are learned simulators: models that let an agent predict how its en
 - [Actor-critic](../concepts/actor-critic.md): learning a policy together with a value function that estimates future rewards.
 - [Categorical latents](../concepts/categorical-latents.md): describing the latent state with discrete choices instead of Gaussians.
 - [KL balancing](../concepts/kl-balancing.md): training the prior of a latent model faster than its posterior.
+- [Symlog predictions](../concepts/symlog-predictions.md): predicting targets of any scale by compressing them.
+- [Return normalization](../concepts/return-normalization.md): scaling returns so one exploration setting fits every environment.
 
 ## Key terms
 
@@ -60,6 +64,11 @@ World models are learned simulators: models that let an agent predict how its en
 - **Reinforce gradient**: a policy gradient that increases the probability of sampled actions in proportion to how good they turned out; unbiased but noisy.
 - **Sticky actions**: an Atari evaluation setting in which the previous action is sometimes repeated at random, so agents cannot memorize exact action sequences.
 - **Human-normalized score**: a game score rescaled so that a reference human player, or the human world record, corresponds to one.
+- **Fixed hyperparameters**: using the same settings on every task instead of tuning them per domain.
+- **Free bits**: not penalizing a KL term while it is already below a small threshold.
+- **Replay ratio**: how many training steps an agent takes per step of new experience collected.
+- **PPO**: a widely used model-free policy gradient algorithm, often taken as a robust baseline.
+- **Minecraft Diamond**: a benchmark task in which an agent must collect a sequence of items in Minecraft, ending with a diamond, from sparse rewards.
 
 ## Open questions
 
@@ -76,6 +85,8 @@ World models are learned simulators: models that let an agent predict how its en
 
 - Why do categorical latents work better than Gaussian ones? [DreamerV2](../sources/2021-dreamerv2.md) only offers hypotheses (p.9).
 - How can a reconstruction-based world model capture small but important objects? [DreamerV2](../sources/2021-dreamerv2.md) fails on Video Pinball, where the ball is a single pixel (p.8).
+- Can a world-model agent find diamonds in Minecraft reliably, not only occasionally? [DreamerV3](../sources/2023-dreamerv3.md) gets one in 0.4% of episodes at its budget (p.24, Fig. 9).
+- Can world models be pretrained on unlabeled data such as internet videos, or shared across domains? [DreamerV3](../sources/2023-dreamerv3.md) names these as future directions (p.11).
 
 ## Background
 

@@ -3,8 +3,8 @@ title: "變分自編碼器（Variational autoencoder）"
 aliases: [VAE, ConvVAE, 卷積變分自編碼器]
 updated: 2026-11-24
 areas: [world-model]
-sources: [2018-world-models, 2019-planet, 2020-dreamer, 2021-dreamerv2]
-translated_from: "c13bacbe1363"
+sources: [2018-world-models, 2019-planet, 2020-dreamer, 2021-dreamerv2, 2023-dreamerv3]
+translated_from: "76ee7c659f7f"
 ---
 
 ## 一句話定義
@@ -35,6 +35,10 @@ translated_from: "c13bacbe1363"
 
 [DreamerV2](../sources/2021-dreamerv2.md) 指出它的世界模型損失是以動作為條件的隱藏馬可夫模型的 ELBO，因此世界模型可以看成序列 VAE：表示模型是後驗，轉移預測器是先驗 (p.4)。它把高斯潛在變數換成以 straight-through 梯度訓練的類別變數 (p.4)。它的 KL 平衡被描述為與 β-VAE 縮放 KL 項的做法不同、彼此獨立 (p.4)。
 
+### Mastering Diverse Domains through World Models（2023）
+
+[DreamerV3](../sources/2023-dreamerv3.md) 指出它的世界模型透過自編碼學習壓縮的表示 (p.3)。它觀察到 KL 損失偶爾暴衝，與深層變分自編碼器的報告一致，並以在類別分布中混入 1% 均勻分布來避免 (p.5)。向量觀測在編碼前與作為解碼目標時都經過 symlog 轉換，避免過大的重建梯度 (p.5)。
+
 ### 來源之間的比較
 
 - [World Models](../sources/2018-world-models.md) 先單獨、逐張畫面訓練 VAE，再訓練動態模型；作者認為這比端到端訓練實際 (p.4)。
@@ -44,6 +48,7 @@ translated_from: "c13bacbe1363"
 
 - [Dreamer](../sources/2020-dreamer.md) 保留 PlaNet 的聯合訓練，並直接比較出重建不是唯一的選擇，只是在它的實驗中最好的一種 (p.8, Fig. 8)。
 - [DreamerV2](../sources/2021-dreamerv2.md) 保留變分的觀點，但改了其中兩部分：潛在變數的類型，以及 KL 項的權重方式 (p.4)。
+- [DreamerV3](../sources/2023-dreamerv3.md) 在同樣的觀點上加入穩定措施，例如 free bits、均勻混合與 symlog 輸入 (p.5)。
 - PlaNet 與 Dreamer 都沿用了 World Models 的網路（見各自的來源頁）；這段比較是本 Wiki 的整理。
 
 ## 相關概念

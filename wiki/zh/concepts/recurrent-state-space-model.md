@@ -3,8 +3,8 @@ title: "遞迴狀態空間模型（Recurrent state-space model）"
 aliases: [RSSM]
 updated: 2026-11-24
 areas: [world-model]
-sources: [2019-planet, 2020-dreamer, 2021-dreamerv2]
-translated_from: "897b75cf162f"
+sources: [2019-planet, 2020-dreamer, 2021-dreamerv2, 2023-dreamerv3]
+translated_from: "ab266a73e7a5"
 ---
 
 ## 一句話定義
@@ -31,11 +31,16 @@ translated_from: "897b75cf162f"
 
 [DreamerV2](../sources/2021-dreamerv2.md) 保留 RSSM 的結構：GRU 計算確定性的遞迴狀態，後驗隨機狀態看得到目前的影像，先驗隨機狀態則在看不到影像時預測它 (pp.2-3)。不過隨機狀態改成 32 個各有 32 類的類別變數向量，不再是高斯分布 (p.3, Fig. 2)。RSSM 使用 600 個單元 (p.19)，在它的 GRU 中加入層正規化幾乎沒有幫助 (p.18)。
 
+### Mastering Diverse Domains through World Models（2023）
+
+[DreamerV3](../sources/2023-dreamerv3.md) 仍以 RSSM 實作世界模型，包含序列模型、編碼器、動態預測器，以及獎勵、是否繼續與重建的輸出頭 (pp.3-4)。序列模型是遞迴權重為 8 個區塊對角的 GRU，能有大量記憶單元而參數不會呈平方成長 (p.18)。給定 5 張脈絡畫面與動作後，模型能在 DMLab 與機器人場景中往後預測 45 格畫面 (p.4, Fig. 4)，在 Minecraft 中也一樣 (p.23, Fig. 7)。
+
 ### 來源之間的比較
 
 - [PlaNet](../sources/2019-planet.md) 提出 RSSM 並用於規劃 (p.4)。
 - [Dreamer](../sources/2020-dreamer.md) 原封不動地沿用它來學習策略 (p.6)。因此同一個模型支援兩種不同的動作選擇方式；Dreamer 直接建立在 PlaNet 之上，這段整理是本 Wiki 的。
 - [DreamerV2](../sources/2021-dreamerv2.md) 保留確定性與隨機兩條路徑，但把高斯隨機狀態換成類別變數，在多數 Atari 遊戲上有幫助 (p.9)。
+- [DreamerV3](../sources/2023-dreamerv3.md) 在 150 多個任務上保留這個結構，主要只改了遞迴單元與訓練損失 (p.18)。
 
 ## 相關概念
 

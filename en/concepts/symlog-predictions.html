@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="source-hash" content="04c5d164fa46">
+<title>Symlog predictions · Paper Wiki</title>
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="site-name" href="../index.html">Paper Wiki</a>
+  <a class="lang-switch" href="../../zh/concepts/symlog-predictions.html" hreflang="zh-Hant">中文</a>
+</header>
+<main class="page page-concept">
+  <p class="page-kind"><span class="tag tag-concept">Concept</span></p>
+  <h1>Symlog predictions</h1>
+  <p class="meta">symlog, symexp, symlog squared error, symexp twohot loss, twohot encoding · 1 source</p>
+  <article class="content">
+<h2>One-line definition</h2>
+<p>A way to predict quantities whose scale is unknown by training a network on a log-like compressed version of the target, or on a classification over exponentially spaced bins, instead of on the raw value.</p>
+<h2>Explanation</h2>
+<p>Rewards, values and observations can be tiny in one environment and huge in another. A squared loss on raw targets can diverge on large values, while absolute or Huber losses learn slowly, and normalizing by running statistics makes the targets keep shifting. The symlog function compresses large positive and negative values but stays close to the identity near zero, and its inverse, symexp, turns predictions back into the original scale. For noisy targets, a network can instead output probabilities over bins spaced in symlog space and be trained with a classification loss against a twohot target, which spreads the target over the two nearest bins; the gradient then no longer grows with the size of the target.</p>
+<blockquote class="note note-explainer">
+<p><strong>Explainer:</strong> It is like measuring everything on a logarithmic ruler: a coin and a building can both be read without changing rulers.</p>
+</blockquote>
+<h2>What each source says</h2>
+<h3>Mastering Diverse Domains through World Models (2023)</h3>
+<p><a href="../sources/2023-dreamerv3.html">DreamerV3</a> introduces the symlog squared error and the symexp twohot loss as a simple answer to targets of unknown scale (p.7). It applies symlog to vector observations for the encoder and decoder, and uses the symexp twohot loss for the reward predictor and the critic (p.7). The bins span symexp of the range from minus 20 to plus 20, and the output weights of twohot heads are initialized to zero so that the agent does not hallucinate rewards and values at the start (p.18). In the ablations, removing the symexp twohot loss and falling back to a Huber loss hurts performance on average, and removing observation symlog also hurts (p.10, Fig. 6).</p>
+<h2>Related concepts</h2>
+<ul>
+<li><a href="return-normalization.html">Return normalization</a>: the other DreamerV3 technique for handling reward scale.</li>
+<li><a href="actor-critic.html">Actor-critic</a>: the critic is trained with the symexp twohot loss.</li>
+<li><a href="world-model.html">World model</a>: its reward predictor and vector decoder use symlog.</li>
+</ul>
+<h2>Background</h2>
+<p>(None yet)</p>
+  </article>
+</main>
+<footer class="site-footer"><a href="../index.html">Back to home</a></footer>
+</body>
+</html>

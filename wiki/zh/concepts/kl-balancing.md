@@ -3,8 +3,8 @@ title: "KL 平衡（KL balancing）"
 aliases: [KL balance, 平衡 KL 損失]
 updated: 2026-11-24
 areas: [world-model]
-sources: [2021-dreamerv2]
-translated_from: "ba3de6199d3d"
+sources: [2021-dreamerv2, 2023-dreamerv3]
+translated_from: "a4b1397c4f4a"
 ---
 
 ## 一句話定義
@@ -20,6 +20,15 @@ translated_from: "ba3de6199d3d"
 ### Mastering Atari with Discrete World Models（2021）
 
 [DreamerV2](../sources/2021-dreamerv2.md) 提出 KL 平衡，先驗權重為 0.8、後驗為 0.2，以截斷梯度實作 (p.4, Alg. 2)。它主張準確的先驗非常關鍵，因為策略學習所用的想像軌跡就是由先驗產生的 (p.9)。在 55 個 Atari 遊戲中，KL 平衡在 44 個勝過標準 KL 項、6 個較差、5 個平手 (p.9)。它取代了 Dreamer 使用的 free nats (p.18)。作者認為它也可能幫助其他具有學習先驗的機率模型 (p.9)。
+
+### Mastering Diverse Domains through World Models（2023）
+
+[DreamerV3](../sources/2023-dreamerv3.md) 把兩個方向寫成兩個獨立的損失：把先驗訓練得接近表示的動態損失，以及讓表示更容易預測的表示損失，權重分別為 1 與 0.1 (p.4)。兩者都在 1 nat 的 free bits 以下截斷，已經夠小時就停用，讓學習專注在預測上 (p.5)。作者認為這個組合免去了依各領域視覺複雜度調整正則項的需要 (p.5)。消融實驗中，拿掉 KL 平衡與 free bits 是所有穩定技術中傷害最大的 (p.10)。
+
+### 來源之間的比較
+
+- [DreamerV2](../sources/2021-dreamerv2.md) 提出 KL 平衡來取代 free nats，但在 Atari 與連續控制上仍用不同的 KL 縮放 (p.4)。
+- [DreamerV3](../sources/2023-dreamerv3.md) 重新加入 free bits 並與平衡結合，讓一組設定適用所有領域 (p.5)。DreamerV3 建立在 DreamerV2 之上；這段整理是本 Wiki 的。
 
 ## 相關概念
 

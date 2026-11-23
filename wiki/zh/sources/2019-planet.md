@@ -12,7 +12,7 @@ areas: [world-model, reinforcement-learning]
 status: to-read
 concepts: [model-based-reinforcement-learning, world-model, recurrent-state-space-model, latent-overshooting, latent-space-planning, variational-autoencoder]
 topics: [world-models]
-translated_from: "a00cfa8b41f3"
+translated_from: "30fbd976d59d"
 ---
 
 ## 一句話總結
@@ -79,6 +79,7 @@ PlaNet（Deep Planning Network）是一個純粹[基於模型](../concepts/model
 - [World Models](2018-world-models.md)：PlaNet 沿用 World Models 的卷積編碼器與反卷積解碼器 (p.12)，並把 World Models 列為從想像經驗學習策略的混合式代理人 (p.17)。World Models 在夢境中訓練小型控制器，PlaNet 則完全沒有策略，每一步都用模型重新規劃 (p.3)。David Ha 是兩篇論文的共同作者 (p.1)。
 - [Dream to Control: Learning Behaviors by Latent Imagination](2020-dreamer.md)（Dreamer，2020）學習相同的世界模型，但改用在想像中訓練的動作模型與價值模型取代線上規劃。它以固定的動作重複重新執行 PlaNet 作為基準，因此其中的 PlaNet 分數與上方不同（見 Dreamer 頁）。
 - [Mastering Atari with Discrete World Models](2021-dreamerv2.md)（DreamerV2，2021）建立在本篇提出的世界模型上，並把它的高斯潛在變數換成類別變數。
+- [Mastering Diverse Domains through World Models](2023-dreamerv3.md)（DreamerV3，2023）的世界模型仍以本篇提出的 RSSM 實作。
 
 ## 背景資料
 

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="source-hash" content="5a219479f17e">
+<title>Symlog 預測（Symlog predictions） · 論文 Wiki</title>
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="site-name" href="../index.html">論文 Wiki</a>
+  <a class="lang-switch" href="../../en/concepts/symlog-predictions.html" hreflang="en">English</a>
+</header>
+<main class="page page-concept">
+  <p class="page-kind"><span class="tag tag-concept">概念</span></p>
+  <h1>Symlog 預測（Symlog predictions）</h1>
+  <p class="meta">symlog, symexp, symlog 平方誤差, symexp twohot 損失, twohot 編碼 · 1 個來源</p>
+  <article class="content">
+<h2>一句話定義</h2>
+<p>預測量級未知的數值的一種方法：讓網路學習目標值經過類似對數壓縮後的版本，或改成在指數間隔的分箱上做分類，而不是直接學原始數值。</p>
+<h2>說明</h2>
+<p>獎勵、價值與觀測在某個環境可能很小，在另一個環境卻很大。對原始目標用平方損失，遇到大數值可能發散；用絕對值或 Huber 損失又學得很慢；用移動統計量正規化，則會讓目標不斷變動。Symlog 函數會壓縮很大的正值與負值，但在零附近幾乎等於恆等函數；它的反函數 symexp 再把預測轉回原本的尺度。對帶有雜訊的目標，網路也可以改為輸出在 symlog 空間等距分箱上的機率，並以 twohot 目標（把目標值分攤到最近的兩個分箱）做分類訓練；這樣梯度就不會隨目標值變大而變大。</p>
+<blockquote class="note note-explainer">
+<p><strong>解說（Explainer）：</strong> 就像改用對數刻度的尺來量東西：硬幣和大樓都能用同一把尺讀出來。</p>
+</blockquote>
+<h2>各來源怎麼說</h2>
+<h3>Mastering Diverse Domains through World Models（2023）</h3>
+<p><a href="../sources/2023-dreamerv3.html">DreamerV3</a> 提出 symlog 平方誤差與 symexp twohot 損失，作為處理未知量級目標的簡單解法 (p.7)。它對編碼器與解碼器的向量觀測使用 symlog，並在獎勵預測器與 critic 使用 symexp twohot 損失 (p.7)。分箱涵蓋從負 20 到正 20 的 symexp 範圍，twohot 輸出頭的權重初始化為零，讓代理人在一開始不會幻想出獎勵與價值 (p.18)。消融實驗中，拿掉 symexp twohot 損失改用 Huber 損失會讓平均表現變差，拿掉觀測的 symlog 也會變差 (p.10, Fig. 6)。</p>
+<h2>相關概念</h2>
+<ul>
+<li><a href="return-normalization.html">報酬正規化（Return normalization）</a>：DreamerV3 處理獎勵尺度的另一項技術。</li>
+<li><a href="actor-critic.html">Actor-critic（演員－評論家）</a>：critic 以 symexp twohot 損失訓練。</li>
+<li><a href="world-model.html">世界模型（World model）</a>：它的獎勵預測器與向量解碼器使用 symlog。</li>
+</ul>
+<h2>背景資料</h2>
+<p>（尚無）</p>
+  </article>
+</main>
+<footer class="site-footer"><a href="../index.html">回首頁</a></footer>
+</body>
+</html>

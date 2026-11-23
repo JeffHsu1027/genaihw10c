@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="source-hash" content="62d1bde4c616">
+<meta name="source-hash" content="26218670ff2d">
 <title>Mastering Atari with Discrete World Models · Paper Wiki</title>
 <link rel="stylesheet" href="../../assets/style.css">
 </head>
@@ -32,7 +32,10 @@
 <li><strong>Behavior learning</strong>: an <a href="../concepts/actor-critic.html">actor-critic</a> is trained purely on imagined trajectories with a horizon of 15, and the world model is fixed during this step (pp.4-5). The critic regresses λ-targets with a target network that is updated every 100 gradient steps (p.6). The actor mixes Reinforce gradients and straight-through gradients through the dynamics, plus an entropy regularizer (p.6, Eq. 6).</li>
 <li><strong>Domain-specific choices</strong>: for Atari, Reinforce gradients work substantially better, while for continuous control, backpropagating through the dynamics works substantially better (p.6).</li>
 </ul>
-<blockquote class="note note-explainer">
+<blockquote class="note note-superseded">
+<p><strong>Superseded:</strong> <a href="2023-dreamerv3.html">DreamerV3</a> uses Reinforce gradients for both discrete and continuous actions, made workable by return normalization (p.6).</p>
+<p><strong>Superseded:</strong> <a href="2023-dreamerv3.html">DreamerV3</a> replaces the per-domain KL scale with fixed loss weights and free bits that work across all domains (p.5).</p>
+<p><strong>Superseded:</strong> <a href="2023-dreamerv3.html">DreamerV3</a> replaces the critic's target network with a regularizer toward an exponential moving average of the critic's own parameters (p.6).</p>
 <p><strong>Explainer:</strong> A Gaussian latent can only say <em>somewhere around here</em>. A set of categorical latents is more like a checklist of discrete facts, which suits games where rooms switch, enemies vanish and items appear.</p>
 </blockquote>
 <p>Implementation details: the world model has about 20 million trainable parameters, and the actor and critic have about 1 million each (pp.4-5). Images are downscaled from 84x84 grayscale to 64x64 pixels so that Dreamer's convolutional networks can be reused (p.3). Training batches contain 50 sequences of length 50 (p.2). The text states a discount of 0.999 (p.2), while the hyperparameter table lists 0.995 (p.19); which value was used for the reported results is (to be verified). The RSSM uses 600 units, the world model learning rate is <code>2e-4</code>, and the actor and critic learning rates are <code>4e-5</code> and <code>1e-4</code> (p.19). Compared with Dreamer, the model grew from 13 million to 22 million parameters, and policy entropy replaced external action noise for exploration (p.18).</p>
@@ -71,6 +74,7 @@
 <h2>Relation to other sources</h2>
 <ul>
 <li><a href="2020-dreamer.html">Dream to Control: Learning Behaviors by Latent Imagination</a>: DreamerV2 is an evolution of Dreamer, called DreamerV1 in this paper (p.2). Appendix C lists every change, including the ones that did not help, such as binary latents and layer normalization in the GRU (p.18).</li>
+<li><a href="2023-dreamerv3.html">Mastering Diverse Domains through World Models</a> (DreamerV3, 2023) is the next generation. It keeps categorical latents and KL balancing but adds robustness techniques so that one configuration works across many domains, not only Atari.</li>
 <li><a href="2019-planet.html">Learning Latent Dynamics for Planning from Pixels</a>: DreamerV2 builds on the world model introduced by PlaNet and replaces its Gaussian latents with categorical variables (p.2).</li>
 </ul>
 <h2>Background</h2>

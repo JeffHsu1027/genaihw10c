@@ -8,6 +8,6 @@
 | `(planet)Learning Latent Dynamics for Planning from Pixels v5.pdf` | Learning Latent Dynamics for Planning from Pixels（PlaNet，2019） | <https://arxiv.org/abs/1811.04551> | [2019-planet](../wiki/en/sources/2019-planet.md) |
 | `(dreamerv1)DREAM TO CONTROL LEARNING BEHAVIORSv3.pdf` | Dream to Control: Learning Behaviors by Latent Imagination（Dreamer，2020） | <https://arxiv.org/abs/1912.01603> | [2020-dreamer](../wiki/en/sources/2020-dreamer.md) |
 | `(dreamerv2)MASTERING ATARI WITH DISCRETE WORLD MODELSv4.pdf` | Mastering Atari with Discrete World Models（DreamerV2，2021） | <https://arxiv.org/abs/2010.02193> | [2021-dreamerv2](../wiki/en/sources/2021-dreamerv2.md) |
-| `(dreamerv3)Mastering Diverse Domains through World Modelsv2.pdf` | Mastering Diverse Domains through World Models（DreamerV3，2023） | （ingest 時填入） | （ingest 時填入） |
+| `(dreamerv3)Mastering Diverse Domains through World Modelsv2.pdf` | Mastering Diverse Domains through World Models（DreamerV3，2023） | <https://arxiv.org/abs/2301.04104> | [2023-dreamerv3](../wiki/en/sources/2023-dreamerv3.md) |
 | `(dreamerv4)Training Agents Inside of Scalable World Modelsv1.pdf` | Training Agents Inside of Scalable World Models（Dreamer 4，2025） | （ingest 時填入） | （ingest 時填入） |
 | `World and Human Action Models towards gameplay ideation.pdf` | World and Human Action Models towards gameplay ideation（WHAM，2025） | （ingest 時填入） | （ingest 時填入） |

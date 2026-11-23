@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="source-hash" content="31ba1bb12566">
+<meta name="source-hash" content="2aae3b0a2d57">
 <title>類別潛在變數（Categorical latents） · 論文 Wiki</title>
 <link rel="stylesheet" href="../../assets/style.css">
 </head>
@@ -15,7 +15,7 @@
 <main class="page page-concept">
   <p class="page-kind"><span class="tag tag-concept">概念</span></p>
   <h1>類別潛在變數（Categorical latents）</h1>
-  <p class="meta">離散潛在變數, 離散表示, straight-through 梯度, discrete latents · 1 個來源</p>
+  <p class="meta">離散潛在變數, 離散表示, straight-through 梯度, discrete latents · 2 個來源</p>
   <article class="content">
 <h2>一句話定義</h2>
 <p>由多個類別變數組成的潛在表示，每個變數從一組固定的類別中取一個，用來取代連續的高斯變數。</p>
@@ -27,6 +27,13 @@
 <h2>各來源怎麼說</h2>
 <h3>Mastering Atari with Discrete World Models（2021）</h3>
 <p><a href="../sources/2021-dreamerv2.html">DreamerV2</a> 把隨機狀態表示成 32 個各有 32 類的類別變數，攤平後的樣本是長度 1024、只有 32 個位元為 1 的稀疏二元向量 (p.9)。類別變數以 straight-through 梯度訓練，用自動微分只要三行程式 (p.3, Alg. 1)。在 55 個 Atari 遊戲中，類別潛在變數在 42 個勝過高斯、8 個較差、5 個平手 (p.9)。作者不知道原因，只提出假設：類別先驗能完全貼合後驗的混合、稀疏性可能有助於泛化、類別變數可能更容易最佳化，以及它們可能更適合「進入新房間」這類不平滑的事件 (p.9)。改用大量二元潛在變數則比較差 (p.18)。</p>
+<h3>Mastering Diverse Domains through World Models（2023）</h3>
+<p><a href="../sources/2023-dreamerv3.html">DreamerV3</a> 仍從一組 softmax 分布抽樣出表示，並使用 straight-through 梯度 (p.4)。因為觀察到 KL 損失偶爾暴衝，它在每個類別分布中混入 1% 的均勻分布，讓分布永遠不會變成確定性的 (p.5)。Actor 也使用同樣的混合，避免出現零機率與無限大的對數機率 (p.18)。每個潛在變數的類別數會隨模型大小增加 (p.20)。</p>
+<h3>來源之間的比較</h3>
+<ul>
+<li><a href="../sources/2021-dreamerv2.html">DreamerV2</a> 提出類別潛在變數，並證明它在 Atari 上的好處 (p.9)。</li>
+<li><a href="../sources/2023-dreamerv3.html">DreamerV3</a> 在所有領域都保留它，並加入均勻混合來穩定訓練 (p.5)。DreamerV3 建立在 DreamerV2 之上；這段整理是本 Wiki 的。</li>
+</ul>
 <h2>相關概念</h2>
 <ul>
 <li><a href="recurrent-state-space-model.html">遞迴狀態空間模型（Recurrent state-space model）</a>：DreamerV2 把類別潛在變數用在 RSSM 的隨機部分。</li>

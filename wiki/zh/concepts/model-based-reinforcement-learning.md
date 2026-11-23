@@ -3,8 +3,8 @@ title: "基於模型的強化學習（Model-based reinforcement learning）"
 aliases: [model-based RL, MBRL, 模型式強化學習]
 updated: 2026-11-24
 areas: [reinforcement-learning, world-model]
-sources: [2018-world-models, 2019-planet, 2020-dreamer, 2021-dreamerv2]
-translated_from: "027dbb082e57"
+sources: [2018-world-models, 2019-planet, 2020-dreamer, 2021-dreamerv2, 2023-dreamerv3]
+translated_from: "05779132c8ac"
 ---
 
 ## 一句話定義
@@ -33,6 +33,10 @@ translated_from: "027dbb082e57"
 
 [DreamerV2](../sources/2021-dreamerv2.md) 指出 Atari 向來需要無模型演算法才能達到人類水準，過去的 Atari 世界模型都沒有競爭力 (p.2)。它與兩個基於模型的 Atari 代理人比較：在像素空間預測畫面再用來訓練 PPO 的 SimPLe，以及學習任務專屬的獎勵與價值預測、用於樹搜尋而不建模影像的 MuZero (pp.10-11, Table 3)。MuZero 很強，但用一張 GPU 訓練一個 Atari 代理人需要超過 2 個月，DreamerV2 只需 10 天 (p.11)。作者把 DreamerV2 視為基於模型的強化學習能在最具競爭性的評測上勝過頂尖無模型演算法的證明 (p.11)。
 
+### Mastering Diverse Domains through World Models（2023）
+
+[DreamerV3](../sources/2023-dreamerv3.md) 把自己定位為通用演算法，並與 PPO（穩健但很耗資料）以及 MuZero（強大但複雜且未公開）比較 (p.11)。它在所有測試領域都勝過 PPO，並以一小部分的計算量在 Atari 上勝過 MuZero (p.8)。在 Minecraft 中，它用 1 張 GPU 跑 9 天就從零開始挖到鑽石；VPT 則需要人類示範資料與 720 張 GPU 跑 9 天 (p.11)。
+
 ### 來源之間的比較
 
 - [World Models](../sources/2018-world-models.md) 事先用模型訓練策略；做決定時，控制器根據模型的隱藏狀態直接反應，不往前規劃 (p.6)。
@@ -41,7 +45,8 @@ translated_from: "027dbb082e57"
 - [Dreamer](../sources/2020-dreamer.md) 回到像 World Models 一樣事先訓練策略，但改用梯度而非演化，並加上能看見想像視野之外的價值模型 (p.5)。
 - Dreamer 指出像 PlaNet 那樣只在固定視野內規劃，在需要長期功勞分配的任務上很短視 (p.7, Fig. 7)。PlaNet 自己也把缺少價值函數列為限制（見 PlaNet 頁），所以這是說法一致，不是衝突。
 - [DreamerV2](../sources/2021-dreamerv2.md) 保留 Dreamer 在想像中學習策略的方式，並證明它能在先前來源未達到的 Atari 上勝出 (p.2)。
-- PlaNet、Dreamer 與 DreamerV2 都引用 World Models，每一篇也都建立在前一篇之上；這段並列比較是本 Wiki 的整理。
+- [DreamerV3](../sources/2023-dreamerv3.md) 把主張從「在單一評測上勝過無模型方法」轉為「不必重新調整就能在許多領域運作」(p.2)。
+- PlaNet、Dreamer、DreamerV2 與 DreamerV3 都引用 World Models，每一篇也都建立在前一篇之上；這段並列比較是本 Wiki 的整理。
 
 ## 相關概念
 

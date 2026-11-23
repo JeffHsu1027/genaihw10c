@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="source-hash" content="9471be68501c">
+<title>Mastering Diverse Domains through World Models · Paper Wiki</title>
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="site-name" href="../index.html">Paper Wiki</a>
+  <a class="lang-switch" href="../../zh/sources/2023-dreamerv3.html" hreflang="zh-Hant">中文</a>
+</header>
+<main class="page page-source">
+  <p class="page-kind"><span class="tag tag-source">Source</span></p>
+  <h1>Mastering Diverse Domains through World Models</h1>
+  <p class="meta">Danijar Hafner et al. · 2023 · arXiv:2301.04104 · <a href="https://arxiv.org/abs/2301.04104">Paper</a></p>
+  <p class="meta"><span class="status status-to-read">To read</span> · <a href="../topics/world-models.html">World models</a></p>
+  <p class="meta"><span class="status-note">The owner has not read this paper yet. This page was written by the AI from the full PDF.</span></p>
+  <article class="content">
+<h2>One-line summary</h2>
+<p>DreamerV3 adds a set of robustness techniques, such as <a href="../concepts/symlog-predictions.html">symlog predictions</a>, <a href="../concepts/return-normalization.html">return normalization</a> and <a href="../concepts/kl-balancing.html">KL balancing</a> with free bits, so that one <a href="../concepts/world-model.html">world model</a> agent with a single fixed configuration outperforms specialized methods across more than 150 tasks and collects diamonds in Minecraft from scratch (p.1).</p>
+<h2>Research question</h2>
+<p>Reinforcement learning algorithms usually need expert tuning to work in a new domain, which makes them brittle and expensive to apply (p.2). Can a world-model agent learn across very different domains with one fixed set of hyperparameters, and does such an agent scale predictably with model size and compute (p.2)?</p>
+<h2>Method</h2>
+<ul>
+<li><strong>Three networks</strong>: a world model predicts the outcomes of potential actions, a critic judges the value of each outcome, and an actor chooses actions to reach the best outcomes; all three are trained concurrently from replayed experience (p.3).</li>
+<li><strong>World model</strong>: a <a href="../concepts/recurrent-state-space-model.html">recurrent state-space model</a> with an encoder, a sequence model, a dynamics predictor, and reward, continue and decoder heads; the representations are vectors of <a href="../concepts/categorical-latents.html">categorical latents</a> trained with straight-through gradients (pp.3-4). The world model learns its representations through autoencoding, as in a <a href="../concepts/variational-autoencoder.html">variational autoencoder</a> (p.3).</li>
+<li><strong>World model loss</strong>: a prediction loss, a dynamics loss and a representation loss weighted 1, 1 and 0.1, with both KL losses clipped below 1 nat of free bits (pp.4-5). The categorical distributions are mixed with 1% uniform noise to prevent spikes in the KL losses (p.5).</li>
+<li><strong>Behavior learning</strong>: an <a href="../concepts/actor-critic.html">actor-critic</a> is trained purely on trajectories imagined by the world model; actions in the environment are sampled from the actor without lookahead planning, so this is <a href="../concepts/learning-in-imagination.html">learning in imagination</a> (p.5).</li>
+<li><strong>Critic</strong>: it predicts a distribution over λ-returns, parameterized as a categorical distribution over exponentially spaced bins; it is also trained on replayed trajectories with a loss scale of 0.3 and regularized toward an exponential moving average of its own parameters (pp.5-6).</li>
+<li><strong>Actor</strong>: it uses the Reinforce estimator for both discrete and continuous actions, with a fixed entropy scale of <code>3e-4</code> made possible by return normalization (p.6).</li>
+<li><strong>Robust predictions</strong>: vector observations, rewards and values are handled with the symlog transform and a symexp twohot loss, so the size of the gradients does not depend on the size of the targets (p.7).</li>
+</ul>
+<blockquote class="note note-explainer">
+<p><strong>Explainer:</strong> Earlier Dreamers were like a car that needed its mirrors and seat adjusted for every new driver. DreamerV3 adds automatic adjustments, so the same settings work whether the rewards are tiny or huge, frequent or rare.</p>
+</blockquote>
+<p>Implementation details: training uses a uniform replay buffer with an online queue, and the amount of training is set by the replay ratio (p.18). Gradients are clipped adaptively per tensor and applied with the LaProp optimizer instead of Adam, which avoided occasional instabilities (p.18). The sequence model is a GRU with block-diagonal recurrent weights of 8 blocks (p.18). Model sizes range from 12 million to 400 million parameters, and the default model has 200 million (p.19). The text gives a prediction horizon of 16 (p.5), while the hyperparameter table lists an imagination horizon of 15 (p.21); the exact value is (to be verified). Every agent was trained on a single A100 GPU (p.19).</p>
+<h2>Key results</h2>
+<ul>
+<li>With fixed hyperparameters, Dreamer is evaluated on 8 domains with over 150 tasks and outperforms tuned expert algorithms across them, as well as a high-quality PPO baseline in all domains (p.8).</li>
+<li>On 57 Atari games with 200 million frames, Dreamer outperforms MuZero while using a fraction of its computational resources, and also beats Rainbow and IQN (p.8).</li>
+<li>On DMLab, Dreamer at 100 million frames exceeds IMPALA and R2D2+ at 1 billion steps, a data-efficiency gain of over 1000% (p.8).</li>
+<li>Dreamer sets new state-of-the-art results on Proprio Control, Visual Control and BSuite, and beats IRIS, TWM, SPR and SimPLe on Atari100k (pp.9-10).</li>
+<li>All 10 Dreamer agents trained on Minecraft discover diamonds within 100 million environment steps, while IMPALA, Rainbow and PPO reach the iron pickaxe at most (p.10, Fig. 5).</li>
+<li>At the end of the budget, Dreamer obtains a diamond in 0.4% of episodes (p.24, Fig. 9).</li>
+<li>Dreamer used 1 GPU for 9 days on Minecraft, compared with 720 GPUs for 9 days for VPT, which also relied on human data (p.11).</li>
+<li>Ablations show that every robustness technique helps on average; the KL objective matters most, followed by return normalization and symexp twohot regression (p.10, Fig. 6).</li>
+<li>Performance rests mainly on the unsupervised reconstruction loss of the world model, not on reward and value gradients (p.10, Fig. 6).</li>
+<li>Larger models, from 12 million to 400 million parameters, both score higher and need less environment interaction, and higher replay ratios also improve performance predictably (p.10, Fig. 6).</li>
+</ul>
+<h2>Limitations and open questions</h2>
+<ul>
+<li>Diamonds are found reliably during training, but only in 0.4% of episodes at the budget, which the authors leave as a challenge for future research (p.24, Fig. 9).</li>
+<li>The Minecraft setup uses a block-breaking action of prior work, because the original action space makes it hard for stochastic policies to keep a key pressed (p.10).</li>
+<li>Uniform replay was used for simplicity, even though prioritized replay also improved Dreamer (p.18).</li>
+<li>DMLab was evaluated at 100 million steps because longer runs were infeasible, and ProcGen used a single seed (p.19).</li>
+<li>Future directions named by the authors include pretraining world models on internet videos and learning one world model across domains (p.11).</li>
+</ul>
+<h2>Related concepts</h2>
+<ul>
+<li><a href="../concepts/symlog-predictions.html">Symlog predictions</a>: robust prediction of targets of any scale.</li>
+<li><a href="../concepts/return-normalization.html">Return normalization</a>: makes one entropy scale work across domains.</li>
+<li><a href="../concepts/kl-balancing.html">KL balancing</a>: kept from DreamerV2 and combined with free bits.</li>
+<li><a href="../concepts/categorical-latents.html">Categorical latents</a>: kept from DreamerV2, with a small amount of uniform mixing.</li>
+<li><a href="../concepts/recurrent-state-space-model.html">Recurrent state-space model</a>: the world model architecture.</li>
+<li><a href="../concepts/actor-critic.html">Actor-critic</a>: behavior learning with a distributional critic and Reinforce actor.</li>
+<li><a href="../concepts/learning-in-imagination.html">Learning in imagination</a>: behaviors are learned only from imagined trajectories.</li>
+<li><a href="../concepts/world-model.html">World model</a>: the core of the agent.</li>
+<li><a href="../concepts/model-based-reinforcement-learning.html">Model-based reinforcement learning</a>: compared with PPO, MuZero and VPT.</li>
+<li><a href="../concepts/variational-autoencoder.html">Variational autoencoder</a>: the world model learns representations by autoencoding.</li>
+</ul>
+<h2>Relation to other sources</h2>
+<ul>
+<li><a href="2021-dreamerv2.html">Mastering Atari with Discrete World Models</a>: DreamerV3 is the next generation after DreamerV2, which surpassed human performance on Atari; DreamerV3 adds the robustness techniques, a new network architecture, a new optimizer and a larger replay buffer (p.20).</li>
+<li><a href="2020-dreamer.html">Dream to Control: Learning Behaviors by Latent Imagination</a>: the paper describes DreamerV1 as limited to continuous control (p.20).</li>
+<li><a href="2019-planet.html">Learning Latent Dynamics for Planning from Pixels</a>: the world model is still the RSSM introduced by PlaNet (p.3).</li>
+</ul>
+<h2>Background</h2>
+<ul>
+<li><a href="https://danijar.com/dreamerv3">DreamerV3 project page</a>: public implementation that reproduces the results, linked from the paper.</li>
+</ul>
+  </article>
+</main>
+<footer class="site-footer"><a href="../index.html">Back to home</a></footer>
+</body>
+</html>

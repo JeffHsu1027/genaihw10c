@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="source-hash" content="9c9a22533494">
+<title>報酬正規化（Return normalization） · 論文 Wiki</title>
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="site-name" href="../index.html">論文 Wiki</a>
+  <a class="lang-switch" href="../../en/concepts/return-normalization.html" hreflang="en">English</a>
+</header>
+<main class="page page-concept">
+  <p class="page-kind"><span class="tag tag-concept">概念</span></p>
+  <h1>報酬正規化（Return normalization）</h1>
+  <p class="meta">百分位數報酬正規化, retnorm · 1 個來源</p>
+  <article class="content">
+<h2>一句話定義</h2>
+<p>以穩健估計的報酬範圍來縮放訓練策略所用的報酬，讓「追求獎勵」與「探索」之間的平衡不受環境獎勵尺度影響。</p>
+<h2>說明</h2>
+<p>帶有熵獎勵的策略學習要平衡兩項：報酬會隨獎勵的縮放而變，熵則不會。獎勵很大時，熵獎勵變得無足輕重；獎勵很小或很稀少時，探索則永遠佔上風。正規化優勢值或除以標準差，在獎勵稀少時可能放大雜訊。改成除以低百分位數與高百分位數之間的差距，並且只縮小大的報酬、不放大小的報酬，就能讓熵係數在各種環境中保有意義，也不怕極端值。</p>
+<h2>各來源怎麼說</h2>
+<h3>Mastering Diverse Domains through World Models（2023）</h3>
+<p><a href="../sources/2023-dreamerv3.html">DreamerV3</a> 正規化報酬，讓它大致落在 0 到 1 之間，因此能在各領域使用固定的熵係數 <code>3e-4</code> (p.6)。縮放尺度是第 5 到第 95 百分位數報酬的範圍，再以指數移動平均平滑；只有這個尺度大於 1 時才除以它，以免在獎勵稀少時放大雜訊 (p.6)。論文主張，優勢值正規化、以標準差正規化，以及限制熵的目標，都無法在各領域找到穩定的超參數 (p.6)。消融實驗中，報酬正規化是重要性僅次於 KL 目標的穩定技術 (p.10)。</p>
+<h2>相關概念</h2>
+<ul>
+<li><a href="actor-critic.html">Actor-critic（演員－評論家）</a>：報酬正規化縮放 actor 的學習訊號。</li>
+<li><a href="symlog-predictions.html">Symlog 預測（Symlog predictions）</a>：DreamerV3 處理獎勵尺度的另一項技術。</li>
+</ul>
+<h2>背景資料</h2>
+<p>（尚無）</p>
+  </article>
+</main>
+<footer class="site-footer"><a href="../index.html">回首頁</a></footer>
+</body>
+</html>

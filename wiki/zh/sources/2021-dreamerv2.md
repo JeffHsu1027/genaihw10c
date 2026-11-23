@@ -12,7 +12,7 @@ areas: [world-model, reinforcement-learning]
 status: to-read
 concepts: [categorical-latents, kl-balancing, world-model, recurrent-state-space-model, actor-critic, learning-in-imagination, model-based-reinforcement-learning, variational-autoencoder]
 topics: [world-models]
-translated_from: "52a44cc161fb"
+translated_from: "aac84d768f41"
 ---
 
 ## 一句話總結
@@ -31,6 +31,12 @@ DreamerV2 對 Dreamer 做了幾項小修改，主要是[類別潛在變數](../c
 - **KL 平衡**：KL 項對先驗的最小化速度比對後驗快，先驗的權重為 0.8、後驗為 0.2，避免表示被拉向訓練不足的先驗 (p.4, Alg. 2)。見 [KL 平衡](../concepts/kl-balancing.md)。
 - **行為學習**：完全在想像的軌跡上訓練 [actor-critic](../concepts/actor-critic.md)，想像視野為 15，這一步中世界模型固定不動 (pp.4-5)。Critic 回歸 λ 目標值，並使用每 100 次梯度更新同步一次的目標網路 (p.6)。Actor 混合 Reinforce 梯度與穿過動態模型的 straight-through 梯度，再加上熵正則項 (p.6, Eq. 6)。
 - **依領域不同的選擇**：Atari 用 Reinforce 梯度效果好得多，連續控制則是穿過動態模型反向傳播好得多 (p.6)。
+
+> **後續變更：** [DreamerV3](2023-dreamerv3.md) 對離散與連續動作都使用 Reinforce 梯度，靠報酬正規化讓這個做法可行 (p.6)。
+
+> **後續變更：** [DreamerV3](2023-dreamerv3.md) 以固定的損失權重與 free bits 取代依領域調整的 KL 縮放，所有領域通用 (p.5)。
+
+> **後續變更：** [DreamerV3](2023-dreamerv3.md) 以「把 critic 拉向自己參數的指數移動平均」取代 critic 的目標網路 (p.6)。
 
 > **解說（Explainer）：** 高斯潛在變數只能說*大概在這附近*。一組類別變數比較像一張勾選清單，記下一個個離散的事實，很適合房間會突然切換、敵人會消失、物品會出現的遊戲。
 
@@ -71,6 +77,7 @@ DreamerV2 對 Dreamer 做了幾項小修改，主要是[類別潛在變數](../c
 ## 與其他來源的關係
 
 - [Dream to Control: Learning Behaviors by Latent Imagination](2020-dreamer.md)：DreamerV2 是 Dreamer 的演進版，本篇稱原版為 DreamerV1 (p.2)。附錄 C 列出所有修改，也包括沒有幫助的嘗試，例如二元潛在變數與在 GRU 中加入層正規化 (p.18)。
+- [Mastering Diverse Domains through World Models](2023-dreamerv3.md)（DreamerV3，2023）是下一代。它保留類別潛在變數與 KL 平衡，但加入穩定技術，讓一組設定能用在許多領域，而不只是 Atari。
 - [Learning Latent Dynamics for Planning from Pixels](2019-planet.md)：DreamerV2 建立在 PlaNet 提出的世界模型上，並把它的高斯潛在變數換成類別變數 (p.2)。
 
 ## 背景資料

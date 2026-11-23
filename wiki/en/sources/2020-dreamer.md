@@ -29,6 +29,9 @@ Policies or planners that only maximize rewards within a fixed imagination horiz
 - **Imagination**: imagined trajectories start from the model states of sequences drawn from past experience and roll forward with the transition model, the reward model and the policy for a fixed horizon (p.3). The world model is kept fixed while behaviors are learned (p.5).
 - **Actor and critic**: the action model outputs a tanh-transformed Gaussian whose sample is written as a deterministic function of the network output plus noise, so gradients can pass through sampling (p.4, Eq. 3). The value model estimates the imagined rewards that the action model will collect, including those beyond the horizon (p.4, Eq. 2). Value targets are λ-returns, an exponentially weighted average of estimates that add up imagined rewards for some steps and then use the value model for the rest (p.4, Eq. 6).
 - **Learning**: the value model regresses the λ-return targets, and the action model maximizes them by backpropagating analytic gradients through the values, rewards, imagined states and actions (p.5). Unlike Reinforce-style methods such as A3C and PPO, Dreamer backpropagates through the value model, and unlike DDPG and SAC it also backpropagates through the learned transitions (p.5).
+
+> **Superseded:** [DreamerV3](2023-dreamerv3.md) trains the actor with Reinforce gradients for continuous actions as well, instead of backpropagating through the dynamics (p.6).
+
 - **Discrete actions and early termination**: straight-through gradients are used for discrete actions, and in tasks that can end early the model also predicts a discount factor that down-weights imagined steps that are likely to come after the episode ended (p.5).
 - **Representation learning**: three ways to learn the world model are compared: image reconstruction as in PlaNet, contrastive estimation that predicts states from images instead of images from states, and reward prediction alone (pp.5-6).
 
@@ -77,6 +80,7 @@ Implementation details from the appendix: Dreamer reuses the convolutional encod
 
 - [Learning Latent Dynamics for Planning from Pixels](2019-planet.md): Dreamer learns the same world model as PlaNet but chooses actions with a learned action model instead of online planning (p.8). It re-runs PlaNet with the same action repeat for a fair comparison (p.8), and reports it as shortsighted on long-horizon tasks (p.7, Fig. 7).
 - [Mastering Atari with Discrete World Models](2021-dreamerv2.md) (DreamerV2, 2021) is the direct successor of this paper, which it calls DreamerV1. It keeps the overall agent but switches to categorical latents, KL balancing and, for Atari, Reinforce gradients for the actor.
+- [Mastering Diverse Domains through World Models](2023-dreamerv3.md) (DreamerV3, 2023) is the third generation and describes this paper as limited to continuous control.
 - [World Models](2018-world-models.md): Dreamer describes World Models as learning latent dynamics in a two-stage process to evolve linear controllers in imagination (p.7), and reuses its convolutional encoder and decoder (p.14).
 
 ## Background

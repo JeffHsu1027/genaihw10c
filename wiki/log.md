@@ -132,3 +132,20 @@
 - `raw/README.md`：填入公開連結（arXiv 2010.02193）與來源頁。
 - `build.py` 產生 34 個頁面，`check.py` 全部通過。
 
+## [2026-11-24] ingest | Mastering Diverse Domains through World Models
+
+- 閱讀範圍：PDF 第 1–40 頁全文（正文 pp.1-11、參考文獻 pp.12-16、方法與實作附錄 pp.17-22、補充材料 pp.23-40）。`status: to-read`（依擁有者原則）。
+- 新增來源頁：`2023-dreamerv3`（arXiv 2023；areas：world-model、reinforcement-learning；pages: 40）。Wiki 來源達 5 篇，滿足作業最低要求。
+- 新增概念頁（2 個）：
+  - `symlog-predictions`（把握度高：核心技術，含 symexp twohot 損失，p.7）
+  - `return-normalization`（高：核心技術，p.6；消融重要性第二，p.10）
+- 更新既有頁面（新增 DreamerV3 小節，比較段擴充）：`kl-balancing`、`categorical-latents`（兩頁首次有兩個來源，新增比較段）、`recurrent-state-space-model`、`actor-critic`、`learning-in-imagination`、`world-model`、`model-based-reinforcement-learning`（皆高）、`variational-autoencoder`（中）。
+- 取代（Superseded）：`2021-dreamerv2` 三處（actor 梯度依領域 → 一律 Reinforce；依領域的 KL 縮放 → 固定權重加 free bits；目標網路 → EMA 正則化，pp.5-6）；`2020-dreamer` 一處（連續控制穿過動態的梯度 → Reinforce，p.6）。
+- 一致而非衝突：DreamerV2 與 DreamerV3 都指出影像重建是世界模型主要的學習訊號。
+- 來源關係：`2021-dreamerv2`、`2020-dreamer`、`2019-planet` 補上 DreamerV3。
+- 刻意不連結：`latent-space-planning`（V3 明確不做往前規劃）；`latent-overshooting`、`mixture-density-rnn`、`evolution-strategies`（未提及）；`2018-world-models`（只在一般引用中出現）。
+- 待確認：想像視野正文為 16（p.5），超參數表為 15（p.21），來源頁標 `(to be verified)`。
+- 寫作時被 `check.py` 擋下並修正：來源頁「相關概念」寫了 1% 卻沒有出處，改為不含數字的說法。
+- `raw/README.md`：填入公開連結（arXiv 2301.04104）與來源頁。
+- `build.py` 產生 40 個頁面，`check.py` 全部通過。
+

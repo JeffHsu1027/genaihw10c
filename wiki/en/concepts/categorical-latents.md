@@ -3,7 +3,7 @@ title: "Categorical latents"
 aliases: [discrete latents, categorical latent variables, discrete representations, straight-through gradients]
 updated: 2026-11-24
 areas: [world-model]
-sources: [2021-dreamerv2]
+sources: [2021-dreamerv2, 2023-dreamerv3]
 ---
 
 ## One-line definition
@@ -21,6 +21,15 @@ A Gaussian latent describes a state with continuous numbers and one smooth bump 
 ### Mastering Atari with Discrete World Models (2021)
 
 [DreamerV2](../sources/2021-dreamerv2.md) represents the stochastic state as 32 categorical variables with 32 classes each, so a flattened sample is a sparse binary vector of length 1024 with 32 active bits (p.9). The categoricals are trained with straight-through gradients, which take three lines with automatic differentiation (p.3, Alg. 1). Categorical latents outperform Gaussian latents on 42 of 55 Atari games, lose on 8, and tie on 5 (p.9). The authors do not know why and offer hypotheses: a categorical prior can fit a mixture of posteriors exactly, the sparsity may help generalization, categoricals may be easier to optimize, and they may suit non-smooth events such as entering a new room (p.9). Using many binary latents instead was worse (p.18).
+
+### Mastering Diverse Domains through World Models (2023)
+
+[DreamerV3](../sources/2023-dreamerv3.md) keeps representations sampled from a vector of softmax distributions with straight-through gradients (p.4). After observing occasional spikes in the KL losses, it mixes each categorical distribution with 1% uniform noise so it can never become deterministic (p.5). The same mixing is used for the actor, to avoid zero probabilities and infinite log probabilities (p.18). The number of codes per latent grows with the model size (p.20).
+
+### Comparing the sources
+
+- [DreamerV2](../sources/2021-dreamerv2.md) introduces categorical latents and shows their benefit on Atari (p.9).
+- [DreamerV3](../sources/2023-dreamerv3.md) keeps them across all domains and adds uniform mixing for stability (p.5). DreamerV3 builds on DreamerV2; this summary is this Wiki's own.
 
 ## Related concepts
 

@@ -3,7 +3,7 @@ title: "Variational autoencoder"
 aliases: [VAE, ConvVAE, convolutional variational autoencoder]
 updated: 2026-11-24
 areas: [world-model]
-sources: [2018-world-models, 2019-planet, 2020-dreamer, 2021-dreamerv2]
+sources: [2018-world-models, 2019-planet, 2020-dreamer, 2021-dreamerv2, 2023-dreamerv3]
 ---
 
 ## One-line definition
@@ -34,6 +34,10 @@ The encoder outputs the mean and spread of a Gaussian distribution, a latent vec
 
 [DreamerV2](../sources/2021-dreamerv2.md) states that its world model loss is the ELBO of an action-conditioned hidden Markov model, so the world model can be read as a sequential VAE whose posterior is the representation model and whose prior is the transition predictor (p.4). It replaces Gaussian latents with categorical ones trained by straight-through gradients (p.4). Its KL balancing is described as different from, and orthogonal to, scaling the KL term as in a β-VAE (p.4).
 
+### Mastering Diverse Domains through World Models (2023)
+
+[DreamerV3](../sources/2023-dreamerv3.md) says its world model learns compact representations through autoencoding (p.3). It observed occasional spikes in the KL losses, consistent with reports for deep variational autoencoders, and prevented them by mixing 1% uniform noise into its categorical distributions (p.5). Vector observations are symlog-transformed before encoding and as decoder targets, to avoid large reconstruction gradients (p.5).
+
 ### Comparing the sources
 
 - [World Models](../sources/2018-world-models.md) trains the VAE on its own, frame by frame, before the dynamics model, which the authors found more practical than end-to-end training (p.4).
@@ -43,6 +47,7 @@ The encoder outputs the mean and spread of a Gaussian distribution, a latent vec
 
 - [Dreamer](../sources/2020-dreamer.md) keeps PlaNet's joint training and adds a direct comparison showing that reconstruction is not the only option, though it is the best one in its experiments (p.8, Fig. 8).
 - [DreamerV2](../sources/2021-dreamerv2.md) keeps the variational view but changes two parts of it: the type of latent variable and how the KL term is weighted (p.4).
+- [DreamerV3](../sources/2023-dreamerv3.md) adds stabilizers on top of the same view, such as free bits, uniform mixing and symlog inputs (p.5).
 - PlaNet and Dreamer reuse the World Models networks (see their source pages); this comparison is this Wiki's own summary.
 
 ## Related concepts

@@ -3,7 +3,7 @@ title: "Recurrent state-space model"
 aliases: [RSSM]
 updated: 2026-11-24
 areas: [world-model]
-sources: [2019-planet, 2020-dreamer, 2021-dreamerv2]
+sources: [2019-planet, 2020-dreamer, 2021-dreamerv2, 2023-dreamerv3]
 ---
 
 ## One-line definition
@@ -30,11 +30,16 @@ A purely deterministic recurrent model remembers well but can only predict a sin
 
 [DreamerV2](../sources/2021-dreamerv2.md) keeps the RSSM structure: a GRU computes the deterministic recurrent state, a posterior stochastic state sees the current image, and a prior stochastic state predicts it without the image (pp.2-3). The stochastic state, however, becomes a vector of 32 categorical variables with 32 classes each instead of a Gaussian (p.3, Fig. 2). The RSSM uses 600 units (p.19), and adding layer normalization to its GRU gave little or no benefit (p.18).
 
+### Mastering Diverse Domains through World Models (2023)
+
+[DreamerV3](../sources/2023-dreamerv3.md) still implements its world model as an RSSM, with a sequence model, an encoder, a dynamics predictor and heads for reward, continuation and reconstruction (pp.3-4). The sequence model is a GRU with block-diagonal recurrent weights of 8 blocks, which allows many memory units without a quadratic growth in parameters (p.18). Given 5 context frames and the actions, the model predicts 45 frames ahead in DMLab and robot scenes (p.4, Fig. 4) and in Minecraft (p.23, Fig. 7).
+
 ### Comparing the sources
 
 - [PlaNet](../sources/2019-planet.md) introduces the RSSM and uses it for planning (p.4).
 - [Dreamer](../sources/2020-dreamer.md) reuses it unchanged for policy learning (p.6). The same model therefore supports two different ways of choosing actions; Dreamer builds directly on PlaNet, and this summary is this Wiki's own.
 - [DreamerV2](../sources/2021-dreamerv2.md) keeps the deterministic and stochastic paths but swaps the Gaussian stochastic state for categorical variables, which helps on most Atari games (p.9).
+- [DreamerV3](../sources/2023-dreamerv3.md) keeps this structure across more than 150 tasks and changes mainly the recurrent cell and the training losses (p.18).
 
 ## Related concepts
 

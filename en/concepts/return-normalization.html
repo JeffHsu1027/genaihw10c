@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="source-hash" content="34d0b6faeb6c">
+<title>Return normalization · Paper Wiki</title>
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="site-name" href="../index.html">Paper Wiki</a>
+  <a class="lang-switch" href="../../zh/concepts/return-normalization.html" hreflang="zh-Hant">中文</a>
+</header>
+<main class="page page-concept">
+  <p class="page-kind"><span class="tag tag-concept">Concept</span></p>
+  <h1>Return normalization</h1>
+  <p class="meta">percentile return normalization, retnorm · 1 source</p>
+  <article class="content">
+<h2>One-line definition</h2>
+<p>Scaling the returns used to train a policy by a robust estimate of their range, so that the balance between maximizing reward and exploring does not depend on the reward scale of the environment.</p>
+<h2>Explanation</h2>
+<p>Policy learning with an entropy bonus has to balance two terms: the return, which depends on how rewards are scaled, and the entropy, which does not. If rewards are large, the entropy bonus becomes irrelevant; if they are small or rare, exploration dominates forever. Normalizing advantages or dividing by a standard deviation can amplify noise when rewards are sparse. Dividing returns by the spread between a low and a high percentile, and only shrinking large returns while leaving small ones untouched, keeps the entropy scale meaningful across environments and stays robust to outliers.</p>
+<h2>What each source says</h2>
+<h3>Mastering Diverse Domains through World Models (2023)</h3>
+<p><a href="../sources/2023-dreamerv3.html">DreamerV3</a> normalizes returns so that they fall roughly into the interval from 0 to 1, which lets it use a fixed entropy scale of <code>3e-4</code> across domains (p.6). The scale is the range between the 5th and 95th return percentiles, smoothed with an exponential moving average, and returns are divided by it only when it exceeds 1, so that noise under sparse rewards is not amplified (p.6). The paper argues that advantage normalization, normalization by standard deviation and constrained entropy targets all failed to give stable hyperparameters across domains (p.6). In the ablations, return normalization is the second most important robustness technique after the KL objective (p.10).</p>
+<h2>Related concepts</h2>
+<ul>
+<li><a href="actor-critic.html">Actor-critic</a>: return normalization scales the actor's learning signal.</li>
+<li><a href="symlog-predictions.html">Symlog predictions</a>: the other DreamerV3 technique for handling reward scale.</li>
+</ul>
+<h2>Background</h2>
+<p>(None yet)</p>
+  </article>
+</main>
+<footer class="site-footer"><a href="../index.html">Back to home</a></footer>
+</body>
+</html>

@@ -78,6 +78,7 @@ Implementation details from the appendix: the deterministic path is a GRU with 2
 - [World Models](2018-world-models.md): PlaNet reuses the convolutional encoder and deconvolutional decoder of World Models (p.12) and lists World Models among hybrid agents that learn a policy from imagined experience (p.17). Where World Models trains a small controller inside its dream, PlaNet has no policy at all and replans with the model at every step (p.3). David Ha is an author of both papers (p.1).
 - [Dream to Control: Learning Behaviors by Latent Imagination](2020-dreamer.md) (Dreamer, 2020) learns the same world model but replaces online planning with an action model and a value model trained in imagination. It re-runs PlaNet with a fixed action repeat as a baseline, so its PlaNet scores differ from the ones above (see the Dreamer page).
 - [Mastering Atari with Discrete World Models](2021-dreamerv2.md) (DreamerV2, 2021) builds on the world model introduced here and replaces its Gaussian latents with categorical variables.
+- [Mastering Diverse Domains through World Models](2023-dreamerv3.md) (DreamerV3, 2023) still implements its world model as the RSSM introduced here.
 
 ## Background
 

@@ -3,8 +3,8 @@ title: "世界模型（World model）"
 aliases: [動態模型, 環境模型, dynamics model, environment model]
 updated: 2026-11-24
 areas: [world-model, reinforcement-learning]
-sources: [2018-world-models, 2019-planet, 2020-dreamer, 2021-dreamerv2]
-translated_from: "0a87ea873894"
+sources: [2018-world-models, 2019-planet, 2020-dreamer, 2021-dreamerv2, 2023-dreamerv3]
+translated_from: "a49a501e0faf"
 ---
 
 ## 一句話定義
@@ -35,6 +35,10 @@ translated_from: "0a87ea873894"
 
 [DreamerV2](../sources/2021-dreamerv2.md) 把世界模型描述為把代理人的經驗濃縮成一個預測模型，可以代替環境來學習行為 (p.2)。它的世界模型多了折扣預測器，讓想像軌跡能考慮回合結束，並使用類別潛在變數與 KL 平衡 (pp.3-4)。世界模型約有 2000 萬個參數 (p.4)，準確到只在其中學習的代理人就能在 Atari 上達到人類水準 (p.2)。世界模型依賴影像梯度：拿掉後表現崩潰，截斷獎勵梯度則影響不大 (p.9)。
 
+### Mastering Diverse Domains through World Models（2023）
+
+[DreamerV3](../sources/2023-dreamerv3.md) 把世界模型描述為賦予代理人豐富的感知與想像未來的能力，並指出穩健地學習與使用世界模型過去一直是未解的問題 (p.2)。它的表現主要來自世界模型的非監督重建損失，而不是獎勵與價值的梯度，作者認為這為在無標記資料上預訓練開了一扇門 (p.10)。從 1200 萬到 4 億個參數，較大的世界模型分數更高，需要的環境互動也更少 (p.10, Fig. 6)。
+
 ### 來源之間的比較
 
 - 兩篇都從像素學出壓縮的潛在狀態與其上的轉移模型：[World Models](../sources/2018-world-models.md) 用 VAE 加 MDN-RNN (p.2, Fig. 4)，[PlaNet](../sources/2019-planet.md) 用遞迴狀態空間模型 (p.4, Eq. 4)。
@@ -43,7 +47,8 @@ translated_from: "0a87ea873894"
 - 兩篇都警告純確定性的模型容易被利用：[World Models](../sources/2018-world-models.md) 是被控制器利用 (p.9)，[PlaNet](../sources/2019-planet.md) 是被規劃器利用 (p.4, Fig. 2)。這是兩篇說法一致，不是衝突。
 - [Dreamer](../sources/2020-dreamer.md) 保留 PlaNet 的世界模型，只改變從模型得出行為的方式，顯示同一個模型既能用於規劃，也能用於學習策略 (p.8)。
 - [DreamerV2](../sources/2021-dreamerv2.md) 保留相同的整體設計，只改變潛在變數與 KL 項，就足以從簡單的控制任務進展到 Atari 上的人類水準 (p.2)。
-- PlaNet、Dreamer 與 DreamerV2 都引用了 World Models（見各自的來源頁）；這段並列比較是本 Wiki 的整理。
+- [DreamerV2](../sources/2021-dreamerv2.md) 與 [DreamerV3](../sources/2023-dreamerv3.md) 都認為世界模型主要的學習訊號是影像重建，而不是獎勵預測 (p.10)。
+- PlaNet、Dreamer、DreamerV2 與 DreamerV3 都引用了 World Models（見各自的來源頁）；這段並列比較是本 Wiki 的整理。
 
 ## 相關概念
 

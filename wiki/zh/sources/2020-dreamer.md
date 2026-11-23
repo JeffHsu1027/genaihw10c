@@ -12,7 +12,7 @@ areas: [world-model, reinforcement-learning]
 status: to-read
 concepts: [actor-critic, learning-in-imagination, world-model, model-based-reinforcement-learning, recurrent-state-space-model, latent-overshooting, latent-space-planning, variational-autoencoder]
 topics: [world-models]
-translated_from: "d78b6141421b"
+translated_from: "b2899a46c569"
 ---
 
 ## 一句話總結
@@ -30,6 +30,9 @@ Dreamer 先從影像學出[世界模型](../concepts/world-model.md)，再完全
 - **想像**：想像軌跡從過去經驗中取出的序列的模型狀態出發，用轉移模型、獎勵模型與策略往前推演固定的視野 (p.3)。學習行為時，世界模型保持固定不動 (p.5)。
 - **Actor 與 critic**：動作模型輸出經過 tanh 轉換的高斯分布，抽樣寫成網路輸出加上雜訊的確定性函數，讓梯度能穿過抽樣步驟 (p.4, Eq. 3)。價值模型估計動作模型將會得到的想像獎勵，包括視野之外的部分 (p.4, Eq. 2)。價值的目標值是 λ-return：把「先加總若干步想像獎勵、其餘交給價值模型」的各種估計做指數加權平均 (p.4, Eq. 6)。
 - **學習**：價值模型回歸 λ-return 目標值，動作模型則把解析梯度穿過價值、獎勵、想像狀態與動作反向傳播來最大化目標值 (p.5)。和 A3C、PPO 這類 Reinforce 式方法不同，Dreamer 會穿過價值模型反向傳播；和 DDPG、SAC 不同，它也會穿過學到的轉移反向傳播 (p.5)。
+
+> **後續變更：** [DreamerV3](2023-dreamerv3.md) 對連續動作也改用 Reinforce 梯度訓練 actor，不再穿過動態模型反向傳播 (p.6)。
+
 - **離散動作與提前結束**：離散動作使用 straight-through 梯度；在可能提前結束的任務中，模型也預測折扣因子，降低回合可能已結束後的想像步驟的權重 (p.5)。
 - **表示學習**：比較三種學習世界模型的方式：PlaNet 的影像重建、從影像預測狀態（而不是從狀態預測影像）的對比式估計，以及只預測獎勵 (pp.5-6)。
 
@@ -78,6 +81,7 @@ Dreamer 先從影像學出[世界模型](../concepts/world-model.md)，再完全
 
 - [Learning Latent Dynamics for Planning from Pixels](2019-planet.md)：Dreamer 學習與 PlaNet 相同的世界模型，但用學到的動作模型取代線上規劃來選擇動作 (p.8)。為了公平比較，它以相同的動作重複重新執行 PlaNet (p.8)，並指出 PlaNet 在需要長期規劃的任務上很短視 (p.7, Fig. 7)。
 - [Mastering Atari with Discrete World Models](2021-dreamerv2.md)（DreamerV2，2021）是本篇的直接後繼，它把本篇稱為 DreamerV1。它保留整體代理人架構，但改用類別潛在變數、KL 平衡，並在 Atari 上以 Reinforce 梯度訓練 actor。
+- [Mastering Diverse Domains through World Models](2023-dreamerv3.md)（DreamerV3，2023）是第三代，把本篇描述為只限於連續控制。
 - [World Models](2018-world-models.md)：Dreamer 把 World Models 描述為以兩階段學習潛在動態、在想像中演化出線性控制器 (p.7)，並沿用它的卷積編碼器與解碼器 (p.14)。
 
 ## 背景資料

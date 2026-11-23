@@ -3,7 +3,7 @@ title: "World model"
 aliases: [dynamics model, environment model, predictive model of the environment]
 updated: 2026-11-24
 areas: [world-model, reinforcement-learning]
-sources: [2018-world-models, 2019-planet, 2020-dreamer, 2021-dreamerv2]
+sources: [2018-world-models, 2019-planet, 2020-dreamer, 2021-dreamerv2, 2023-dreamerv3]
 ---
 
 ## One-line definition
@@ -34,6 +34,10 @@ An agent that can predict the consequences of its actions does not have to try e
 
 [DreamerV2](../sources/2021-dreamerv2.md) describes world models as summarizing an agent's experience into a predictive model that can replace the environment for learning behaviors (p.2). Its world model adds a discount predictor, so that imagined trajectories can account for episode ends, and uses categorical latents with KL balancing (pp.3-4). The world model has about 20 million parameters (p.4), and it is accurate enough for an agent that learns only inside it to reach human-level Atari performance (p.2). The world model relies on image gradients: without them performance collapses, while stopping reward gradients changes little (p.9).
 
+### Mastering Diverse Domains through World Models (2023)
+
+[DreamerV3](../sources/2023-dreamerv3.md) describes the world model as giving the agent rich perception and the ability to imagine the future, and notes that learning and using world models robustly had been an open problem (p.2). Its performance rests mainly on the unsupervised reconstruction loss of the world model rather than on reward and value gradients, which the authors see as an opening for pretraining on unsupervised data (p.10). Larger world models, from 12 million to 400 million parameters, both score higher and need less environment interaction (p.10, Fig. 6).
+
 ### Comparing the sources
 
 - Both learn a compressed latent state from pixels and a transition model over it: [World Models](../sources/2018-world-models.md) with a VAE and an MDN-RNN (p.2, Fig. 4), [PlaNet](../sources/2019-planet.md) with a recurrent state-space model (p.4, Eq. 4).
@@ -42,7 +46,8 @@ An agent that can predict the consequences of its actions does not have to try e
 - Both warn that a purely deterministic model is easy to exploit: [World Models](../sources/2018-world-models.md) for its controller (p.9) and [PlaNet](../sources/2019-planet.md) for its planner (p.4, Fig. 2). This is agreement, not conflict.
 - [Dreamer](../sources/2020-dreamer.md) keeps PlaNet's world model and changes only how behavior is derived from it, which shows that the same model can serve planning or policy learning (p.8).
 - [DreamerV2](../sources/2021-dreamerv2.md) keeps the same overall design but changes the latent variables and the KL term, which is enough to move from simple control tasks to human-level Atari (p.2).
-- PlaNet, Dreamer and DreamerV2 cite World Models (see their source pages); this side-by-side comparison is this Wiki's own summary.
+- [DreamerV2](../sources/2021-dreamerv2.md) and [DreamerV3](../sources/2023-dreamerv3.md) agree that image reconstruction, not reward prediction, is the main learning signal for the world model (p.10).
+- PlaNet, Dreamer, DreamerV2 and DreamerV3 cite World Models (see their source pages); this side-by-side comparison is this Wiki's own summary.
 
 ## Related concepts
 

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="source-hash" content="6aa73c985e7a">
+<meta name="source-hash" content="b210397ba74f">
 <title>Mastering Atari with Discrete World Models · 論文 Wiki</title>
 <link rel="stylesheet" href="../../assets/style.css">
 </head>
@@ -32,7 +32,10 @@
 <li><strong>行為學習</strong>：完全在想像的軌跡上訓練 <a href="../concepts/actor-critic.html">actor-critic</a>，想像視野為 15，這一步中世界模型固定不動 (pp.4-5)。Critic 回歸 λ 目標值，並使用每 100 次梯度更新同步一次的目標網路 (p.6)。Actor 混合 Reinforce 梯度與穿過動態模型的 straight-through 梯度，再加上熵正則項 (p.6, Eq. 6)。</li>
 <li><strong>依領域不同的選擇</strong>：Atari 用 Reinforce 梯度效果好得多，連續控制則是穿過動態模型反向傳播好得多 (p.6)。</li>
 </ul>
-<blockquote class="note note-explainer">
+<blockquote class="note note-superseded">
+<p><strong>後續變更：</strong> <a href="2023-dreamerv3.html">DreamerV3</a> 對離散與連續動作都使用 Reinforce 梯度，靠報酬正規化讓這個做法可行 (p.6)。</p>
+<p><strong>後續變更：</strong> <a href="2023-dreamerv3.html">DreamerV3</a> 以固定的損失權重與 free bits 取代依領域調整的 KL 縮放，所有領域通用 (p.5)。</p>
+<p><strong>後續變更：</strong> <a href="2023-dreamerv3.html">DreamerV3</a> 以「把 critic 拉向自己參數的指數移動平均」取代 critic 的目標網路 (p.6)。</p>
 <p><strong>解說（Explainer）：</strong> 高斯潛在變數只能說<em>大概在這附近</em>。一組類別變數比較像一張勾選清單，記下一個個離散的事實，很適合房間會突然切換、敵人會消失、物品會出現的遊戲。</p>
 </blockquote>
 <p>實作細節：世界模型約有 2000 萬個可訓練參數，actor 與 critic 各約 100 萬個 (pp.4-5)。影像從 84x84 灰階縮小為 64x64 像素，以便沿用 Dreamer 的卷積網路 (p.3)。每批訓練資料有 50 段長度 50 的序列 (p.2)。正文寫折扣為 0.999 (p.2)，超參數表卻列為 0.995 (p.19)；回報的結果實際用哪個值（待確認）。RSSM 使用 600 個單元，世界模型學習率為 <code>2e-4</code>，actor 與 critic 的學習率為 <code>4e-5</code> 與 <code>1e-4</code> (p.19)。和 Dreamer 相比，模型從 1300 萬個參數增加到 2200 萬個，探索方式也從外加的動作雜訊改成策略熵 (p.18)。</p>
@@ -71,6 +74,7 @@
 <h2>與其他來源的關係</h2>
 <ul>
 <li><a href="2020-dreamer.html">Dream to Control: Learning Behaviors by Latent Imagination</a>：DreamerV2 是 Dreamer 的演進版，本篇稱原版為 DreamerV1 (p.2)。附錄 C 列出所有修改，也包括沒有幫助的嘗試，例如二元潛在變數與在 GRU 中加入層正規化 (p.18)。</li>
+<li><a href="2023-dreamerv3.html">Mastering Diverse Domains through World Models</a>（DreamerV3，2023）是下一代。它保留類別潛在變數與 KL 平衡，但加入穩定技術，讓一組設定能用在許多領域，而不只是 Atari。</li>
 <li><a href="2019-planet.html">Learning Latent Dynamics for Planning from Pixels</a>：DreamerV2 建立在 PlaNet 提出的世界模型上，並把它的高斯潛在變數換成類別變數 (p.2)。</li>
 </ul>
 <h2>背景資料</h2>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="source-hash" content="65ddd83f847f">
+<meta name="source-hash" content="58431f9f211b">
 <title>在想像中學習（Learning in imagination） · 論文 Wiki</title>
 <link rel="stylesheet" href="../../assets/style.css">
 </head>
@@ -15,7 +15,7 @@
 <main class="page page-concept">
   <p class="page-kind"><span class="tag tag-concept">概念</span></p>
   <h1>在想像中學習（Learning in imagination）</h1>
-  <p class="meta">夢境訓練, 在夢裡學習, 幻覺環境, 潛在想像, latent imagination · 3 個來源</p>
+  <p class="meta">夢境訓練, 在夢裡學習, 幻覺環境, 潛在想像, latent imagination · 4 個來源</p>
   <article class="content">
 <h2>一句話定義</h2>
 <p>用學到的世界模型所產生的經驗來訓練代理人的策略，而不是用真實環境產生的經驗。</p>
@@ -31,6 +31,8 @@
 <p><a href="../sources/2020-dreamer.html">Dreamer</a> 完全靠潛在想像學習行為：想像軌跡從真實過去序列的狀態出發，由世界模型與策略往前推演，不產生影像 (p.3)。動作模型與價值模型在這些軌跡上訓練，動作模型則用穿過想像動態的解析梯度改進 (p.5)。因為潛在狀態很小，可以平行想像數千條軌跡 (p.2)。學習行為時，世界模型保持固定 (p.5)。</p>
 <h3>Mastering Atari with Discrete World Models（2021）</h3>
 <p><a href="../sources/2021-dreamerv2.html">DreamerV2</a> 完全在另外訓練的世界模型裡學習行為，並藉此在 Atari 上達到人類水準 (p.2)。因為學習行為時不預測影像，它能在一張 GPU 上平行模擬 2500 條潛在軌跡 (p.4)。在 2 億環境步中，策略從 4680 億個想像狀態學習，約為真實輸入的 10,000 倍 (p.6)。作者把這次成功視為世界模型準確表示環境的證據 (p.2)。</p>
+<h3>Mastering Diverse Domains through World Models（2023）</h3>
+<p><a href="../sources/2023-dreamerv3.html">DreamerV3</a> 完全從世界模型預測的抽象軌跡學習行為，在環境中選擇動作時不做往前規劃 (p.5)。想像軌跡從回放輸入的表示出發 (p.5)。以這種方式加上一組固定設定，它成為第一個從零開始在 Minecraft 挖到鑽石的演算法 (p.10)。</p>
 <h3>來源之間的比較</h3>
 <ul>
 <li><a href="../sources/2018-world-models.html">World Models</a> 在想像中用 CMA-ES 訓練控制器，只需要每次 rollout 的最終獎勵 (p.12)。</li>
@@ -38,7 +40,8 @@
 <li>在 <a href="../sources/2018-world-models.html">World Models</a> 中，代理人只在一個由隨機策略資料建成的夢境裡訓練一次，然後部署 (p.7)。</li>
 <li><a href="../sources/2020-dreamer.html">Dreamer</a> 則持續交替：在想像中訓練行為，以及在真實環境中行動、擴充用來訓練世界模型的資料 (p.2)。</li>
 <li><a href="../sources/2021-dreamerv2.html">DreamerV2</a> 顯示只在想像中學習，也能在過去世界模型沒有競爭力的 Atari 上達到人類水準 (p.2)。</li>
-<li>只有 World Models 明確討論模型被利用的問題；Dreamer 與 DreamerV2 都沒有回報類似的失敗。這個差異是本 Wiki 的觀察，不是任何一篇論文的主張。</li>
+<li><a href="../sources/2023-dreamerv3.html">DreamerV3</a> 把這種做法延伸到 8 個領域、150 多個任務，而且不改超參數 (p.8)。</li>
+<li>只有 World Models 明確討論模型被利用的問題；Dreamer、DreamerV2 與 DreamerV3 都沒有回報類似的失敗。這個差異是本 Wiki 的觀察，不是任何一篇論文的主張。</li>
 </ul>
 <h2>相關概念</h2>
 <ul>

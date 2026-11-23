@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="source-hash" content="4361041000de">
+<meta name="source-hash" content="d6a8c92b92ce">
 <title>Model-based reinforcement learning · Paper Wiki</title>
 <link rel="stylesheet" href="../../assets/style.css">
 </head>
@@ -15,7 +15,7 @@
 <main class="page page-concept">
   <p class="page-kind"><span class="tag tag-concept">Concept</span></p>
   <h1>Model-based reinforcement learning</h1>
-  <p class="meta">model-based RL, MBRL · 4 sources</p>
+  <p class="meta">model-based RL, MBRL · 5 sources</p>
   <article class="content">
 <h2>One-line definition</h2>
 <p>Reinforcement learning that learns or uses a model of how the environment responds to actions, and uses that model to decide how to act or to learn how to act.</p>
@@ -30,6 +30,8 @@
 <p><a href="../sources/2020-dreamer.html">Dreamer</a> follows the classical agent structure of dynamics learning, behavior learning and environment interaction, with behavior learned inside the latent space of the world model (p.2). It argues that world models can interpolate past experience and offer analytic gradients of multi-step returns, which model-free actor-critics trained online or by experience replay cannot (p.1). With 5 million environment steps, it exceeds the final performance that the model-free D4PG reaches after 100 million steps (p.6, Fig. 6).</p>
 <h3>Mastering Atari with Discrete World Models (2021)</h3>
 <p><a href="../sources/2021-dreamerv2.html">DreamerV2</a> notes that Atari had historically required model-free algorithms to reach human-level performance, and that earlier world models of Atari were not competitive (p.2). It compares itself with two model-based Atari agents: SimPLe, which predicts frames in pixel space and trains PPO on them, and MuZero, which learns task-specific reward and value predictions for tree search without modeling images (pp.10-11, Table 3). MuZero is powerful but would need more than 2 months to train one Atari agent on a GPU, while DreamerV2 needs 10 days (p.11). The authors present DreamerV2 as proof that model-based RL can beat top model-free algorithms on the most competitive benchmarks (p.11).</p>
+<h3>Mastering Diverse Domains through World Models (2023)</h3>
+<p><a href="../sources/2023-dreamerv3.html">DreamerV3</a> positions itself as a general algorithm and compares it with PPO, which is robust but data-hungry, and with MuZero, which is strong but complex and not publicly released (p.11). It outperforms PPO in every domain tested and MuZero on Atari with a fraction of the compute (p.8). In Minecraft it collects diamonds from scratch with 1 GPU for 9 days, while VPT needed human demonstrations and 720 GPUs for 9 days (p.11).</p>
 <h3>Comparing the sources</h3>
 <ul>
 <li><a href="../sources/2018-world-models.html">World Models</a> uses its model to train a policy ahead of time; at decision time the controller reacts to the model's hidden state without planning ahead (p.6).</li>
@@ -38,7 +40,8 @@
 <li><a href="../sources/2020-dreamer.html">Dreamer</a> returns to training a policy ahead of time, like World Models, but with gradients instead of evolution and with a value model that looks beyond the imagination horizon (p.5).</li>
 <li>Dreamer reports that planning only within a fixed horizon, as PlaNet does, is shortsighted on tasks that need long-horizon credit assignment (p.7, Fig. 7). PlaNet itself pointed to the missing value function as a limitation (see the PlaNet page), so this is agreement rather than conflict.</li>
 <li><a href="../sources/2021-dreamerv2.html">DreamerV2</a> keeps Dreamer's policy learning in imagination and shows it can win on Atari, a benchmark the earlier sources did not reach (p.2).</li>
-<li>PlaNet, Dreamer and DreamerV2 cite World Models, and each later paper builds on the previous one; this side-by-side comparison is this Wiki's own summary.</li>
+<li><a href="../sources/2023-dreamerv3.html">DreamerV3</a> shifts the claim from beating model-free methods on one benchmark to working across many domains without retuning (p.2).</li>
+<li>PlaNet, Dreamer, DreamerV2 and DreamerV3 cite World Models, and each later paper builds on the previous one; this side-by-side comparison is this Wiki's own summary.</li>
 </ul>
 <h2>Related concepts</h2>
 <ul>

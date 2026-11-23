@@ -3,7 +3,7 @@ title: "Learning in imagination"
 aliases: [dream training, learning inside a dream, hallucinated environment, latent imagination]
 updated: 2026-11-24
 areas: [world-model, reinforcement-learning]
-sources: [2018-world-models, 2020-dreamer, 2021-dreamerv2]
+sources: [2018-world-models, 2020-dreamer, 2021-dreamerv2, 2023-dreamerv3]
 ---
 
 ## One-line definition
@@ -30,6 +30,10 @@ If a world model can predict observations, rewards and the end of an episode, it
 
 [DreamerV2](../sources/2021-dreamerv2.md) learns behaviors purely within a separately trained world model and reaches human-level Atari performance this way (p.2). Because no images are predicted during behavior learning, it simulates 2500 latent trajectories in parallel on one GPU (p.4). Over 200 million environment steps, the policy learns from 468 billion imagined states, about 10,000 times more than the real inputs (p.6). The authors take this success as evidence that the world model represents the environment accurately (p.2).
 
+### Mastering Diverse Domains through World Models (2023)
+
+[DreamerV3](../sources/2023-dreamerv3.md) learns behaviors purely from abstract trajectories predicted by the world model and selects actions in the environment without lookahead planning (p.5). Imagined trajectories start from representations of replayed inputs (p.5). With this setup and one fixed configuration, it is the first algorithm to collect diamonds in Minecraft from scratch (p.10).
+
 ### Comparing the sources
 
 - [World Models](../sources/2018-world-models.md) trains its controller in imagination with CMA-ES, which only needs the final reward of each rollout (p.12).
@@ -37,7 +41,8 @@ If a world model can predict observations, rewards and the end of an episode, it
 - In [World Models](../sources/2018-world-models.md), the agent is trained once inside a dream built from random-policy data and then deployed (p.7).
 - [Dreamer](../sources/2020-dreamer.md) keeps alternating between imagination, which trains the behavior, and acting in the real environment, which grows the data that trains the world model (p.2).
 - [DreamerV2](../sources/2021-dreamerv2.md) shows that learning only in imagination can reach human-level results on Atari, where world models had not been competitive before (p.2).
-- Model exploitation is discussed explicitly only in World Models; Dreamer and DreamerV2 do not report a comparable failure, and this difference is this Wiki's observation, not a claim of any of the papers.
+- [DreamerV3](../sources/2023-dreamerv3.md) extends this to more than 150 tasks across 8 domains without changing hyperparameters (p.8).
+- Model exploitation is discussed explicitly only in World Models; Dreamer, DreamerV2 and DreamerV3 do not report a comparable failure, and this difference is this Wiki's observation, not a claim of any of the papers.
 
 ## Related concepts
 

@@ -3,8 +3,8 @@ title: "Actor-critic（演員－評論家）"
 aliases: [演員評論家, 動作模型與價值模型, 策略與價值函數, λ-return, lambda-return]
 updated: 2026-11-24
 areas: [reinforcement-learning]
-sources: [2020-dreamer, 2021-dreamerv2]
-translated_from: "d8e2bbd5700a"
+sources: [2020-dreamer, 2021-dreamerv2, 2023-dreamerv3]
+translated_from: "dc538463b6c6"
 ---
 
 ## 一句話定義
@@ -27,18 +27,25 @@ Critic 學習預測從某個狀態出發的期望報酬，actor 則被更新成�
 
 [DreamerV2](../sources/2021-dreamerv2.md) 也完全在想像的軌跡上訓練 actor 與 critic，想像視野為 15，並使用 λ 目標值 (p.5, Eq. 4)。Critic 使用每 100 次梯度更新同步一次的目標網路 (p.6)。Actor 的損失混合了無偏但雜訊大的 Reinforce 梯度，以及穿過動態模型、有偏但變異小的 straight-through 梯度，再加上熵正則項 (p.6, Eq. 6)。Atari 用 Reinforce 梯度效果好得多，連續控制則是穿過動態模型反向傳播好得多 (p.6)。只用 straight-through 梯度時，55 個 Atari 遊戲中有 44 個變差 (p.10)。
 
+### Mastering Diverse Domains through World Models（2023）
+
+[DreamerV3](../sources/2023-dreamerv3.md) 讓 critic 預測 λ-return 的分布，以指數間隔分箱上的類別分布表示，因為報酬可能是多峰的，而且在不同環境相差好幾個數量級 (p.5)。Critic 也在回放的軌跡上訓練，並被拉向自己參數的指數移動平均，扮演目標網路的角色 (p.6)。Actor 對離散與連續動作都使用 Reinforce 估計，並以百分位數範圍正規化報酬，讓一個熵係數到處都適用 (p.6)。
+
 ### 來源之間的比較
 
 - [Dreamer](../sources/2020-dreamer.md) 只靠把價值梯度穿過學到的動態模型反向傳播來訓練 actor，任務都是連續控制 (p.5)。
 - [DreamerV2](../sources/2021-dreamerv2.md) 在連續控制上保留這種估計方式，但在 Atari 上主要依靠 Reinforce 梯度 (p.6)。兩篇並不衝突：最好的估計方式取決於領域。
 - [Dreamer](../sources/2020-dreamer.md) 不需要目標網路或熵獎勵 (p.14)。
 - [DreamerV2](../sources/2021-dreamerv2.md) 兩者都用，並以策略熵取代外加的動作雜訊來探索 (p.18)。這是版本之間的設計差異，不是互相矛盾的主張；DreamerV2 建立在 Dreamer 之上，這段整理是本 Wiki 的。
+- [DreamerV3](../sources/2023-dreamerv3.md) 取消依領域選擇的做法，連續控制也改用 Reinforce 梯度，並搭配分布式 critic 與報酬正規化 (p.6)。這是取代先前的設計，而不是否定先前在各領域分別設定下得到的結果。
 
 ## 相關概念
 
 - [在想像中學習（Learning in imagination）](learning-in-imagination.md)：Dreamer 訓練 actor 與 critic 的地方。
 - [潛在空間規劃（Latent space planning）](latent-space-planning.md)：在做決定時搜尋動作、而非學習策略的另一種做法。
 - [基於模型的強化學習（Model-based reinforcement learning）](model-based-reinforcement-learning.md)：Dreamer 的 actor-critic 依賴學到的模型。
+- [報酬正規化（Return normalization）](return-normalization.md)：DreamerV3 縮放 actor 學習訊號的方式。
+- [Symlog 預測（Symlog predictions）](symlog-predictions.md)：DreamerV3 的 critic 以 symexp twohot 損失訓練。
 
 ## 背景資料
 

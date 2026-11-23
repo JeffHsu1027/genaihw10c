@@ -3,8 +3,8 @@ title: "在想像中學習（Learning in imagination）"
 aliases: [夢境訓練, 在夢裡學習, 幻覺環境, 潛在想像, latent imagination]
 updated: 2026-11-24
 areas: [world-model, reinforcement-learning]
-sources: [2018-world-models, 2020-dreamer, 2021-dreamerv2]
-translated_from: "3f8d8dac63d8"
+sources: [2018-world-models, 2020-dreamer, 2021-dreamerv2, 2023-dreamerv3]
+translated_from: "c9f6ebf54385"
 ---
 
 ## 一句話定義
@@ -31,6 +31,10 @@ translated_from: "3f8d8dac63d8"
 
 [DreamerV2](../sources/2021-dreamerv2.md) 完全在另外訓練的世界模型裡學習行為，並藉此在 Atari 上達到人類水準 (p.2)。因為學習行為時不預測影像，它能在一張 GPU 上平行模擬 2500 條潛在軌跡 (p.4)。在 2 億環境步中，策略從 4680 億個想像狀態學習，約為真實輸入的 10,000 倍 (p.6)。作者把這次成功視為世界模型準確表示環境的證據 (p.2)。
 
+### Mastering Diverse Domains through World Models（2023）
+
+[DreamerV3](../sources/2023-dreamerv3.md) 完全從世界模型預測的抽象軌跡學習行為，在環境中選擇動作時不做往前規劃 (p.5)。想像軌跡從回放輸入的表示出發 (p.5)。以這種方式加上一組固定設定，它成為第一個從零開始在 Minecraft 挖到鑽石的演算法 (p.10)。
+
 ### 來源之間的比較
 
 - [World Models](../sources/2018-world-models.md) 在想像中用 CMA-ES 訓練控制器，只需要每次 rollout 的最終獎勵 (p.12)。
@@ -38,7 +42,8 @@ translated_from: "3f8d8dac63d8"
 - 在 [World Models](../sources/2018-world-models.md) 中，代理人只在一個由隨機策略資料建成的夢境裡訓練一次，然後部署 (p.7)。
 - [Dreamer](../sources/2020-dreamer.md) 則持續交替：在想像中訓練行為，以及在真實環境中行動、擴充用來訓練世界模型的資料 (p.2)。
 - [DreamerV2](../sources/2021-dreamerv2.md) 顯示只在想像中學習，也能在過去世界模型沒有競爭力的 Atari 上達到人類水準 (p.2)。
-- 只有 World Models 明確討論模型被利用的問題；Dreamer 與 DreamerV2 都沒有回報類似的失敗。這個差異是本 Wiki 的觀察，不是任何一篇論文的主張。
+- [DreamerV3](../sources/2023-dreamerv3.md) 把這種做法延伸到 8 個領域、150 多個任務，而且不改超參數 (p.8)。
+- 只有 World Models 明確討論模型被利用的問題；Dreamer、DreamerV2 與 DreamerV3 都沒有回報類似的失敗。這個差異是本 Wiki 的觀察，不是任何一篇論文的主張。
 
 ## 相關概念
 
