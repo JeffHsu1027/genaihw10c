@@ -428,7 +428,7 @@ def ref_pages(ref: str) -> list[int]:
 
 def check_page_bounds(lang: str, pages: dict[str, Page]) -> None:
     """出處頁碼不可超過來源頁的 pages。
-    來源頁：出處屬於本篇，除非同一行連到另一篇來源頁（例如 Superseded 或與其他來源的關係），則屬於那一篇。
+    來源頁：出處屬於本篇；只有引用區塊（以 > 開頭，例如 Superseded、Conflict）中連到另一篇來源頁時，屬於那一篇。
     概念頁與主題頁：出處屬於同一行（或同一個小節中）最近連到的來源頁。"""
     cat = "格式"
     limits = {p.slug: p.fm.get("pages") for p in pages.values()
@@ -452,6 +452,8 @@ def check_page_bounds(lang: str, pages: dict[str, Page]) -> None:
             if line.startswith("#") or page.kind == "sources":
                 current = own
             linked = [s for s in SOURCE_LINK.findall(line) if s in limits]
+            if page.kind == "sources" and not line.lstrip().startswith(">"):
+                linked = []
             if linked:
                 current = linked[-1]
             for ref in REF_ANY.findall(line):
