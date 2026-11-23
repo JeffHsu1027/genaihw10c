@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="source-hash" content="fbb839cb822d">
+<meta name="source-hash" content="fb208ce90085">
 <title>世界模型（World models） · 論文 Wiki</title>
 <link rel="stylesheet" href="../../assets/style.css">
 </head>
@@ -15,7 +15,7 @@
 <main class="page page-topic">
   <p class="page-kind"><span class="tag tag-topic">主題</span></p>
   <h1>世界模型（World models）</h1>
-  <p class="meta">世界模型 · 2 個來源</p>
+  <p class="meta">世界模型 · 3 個來源</p>
   <article class="content">
 <h2>概述</h2>
 <p>世界模型是學出來的模擬器：讓代理人能預測環境會如何回應自己的行動。相關研究關心的是：如何從原始觀測學到這樣的模型、如何用它來選擇動作或訓練策略，以及如何避免代理人利用模型的錯誤。這個主題頁逐篇整理這條研究脈絡。</p>
@@ -23,6 +23,7 @@
 <ul>
 <li>2018：<a href="../sources/2018-world-models.html">World Models</a> 把代理人拆成大型非監督式世界模型與小型控制器，並證明完全在模型夢境中訓練的策略可以在真實遊戲中運作 (p.7)。</li>
 <li>2019：<a href="../sources/2019-planet.html">PlaNet</a> 學出同時具有確定性與隨機部分的遞迴狀態空間模型，每個動作都在潛在空間中線上規劃，以平均約少 200 倍的回合達到強大無模型方法的表現 (p.2)。</li>
+<li>2020：<a href="../sources/2020-dreamer.html">Dreamer</a> 保留 PlaNet 的世界模型，但完全在想像中用 actor-critic 學習行為，價值模型能看見視野之外，在 20 個任務的平均上勝過 PlaNet 與無模型的 D4PG (p.6, Fig. 6)。</li>
 </ul>
 <h2>來源</h2>
 <table>
@@ -44,8 +45,14 @@
 <tr>
 <td>2019</td>
 <td><a href="../sources/2019-planet.html">Learning Latent Dynamics for Planning from Pixels (PlaNet)</a></td>
-<td>已讀</td>
+<td>未讀</td>
 <td>純粹基於模型的代理人，在學到的遞迴狀態空間模型中用 CEM 規劃。</td>
+</tr>
+<tr>
+<td>2020</td>
+<td><a href="../sources/2020-dreamer.html">Dream to Control (Dreamer)</a></td>
+<td>未讀</td>
+<td>完全在 PlaNet 世界模型的潛在想像中學習 actor-critic，並把價值梯度穿過動態模型。</td>
 </tr>
 </tbody>
 </table>
@@ -59,6 +66,7 @@
 <li><a href="../concepts/learning-in-imagination.html">在想像中學習（Learning in imagination）</a>：用世界模型產生的經驗訓練策略。</li>
 <li><a href="../concepts/latent-space-planning.html">潛在空間規劃（Latent space planning）</a>：在模型裡搜尋動作序列來選擇動作。</li>
 <li><a href="../concepts/latent-overshooting.html">潛在超前預測（Latent overshooting）</a>：用多步預測訓練潛在模型。</li>
+<li><a href="../concepts/actor-critic.html">Actor-critic（演員－評論家）</a>：同時學習策略與估計未來獎勵的價值函數。</li>
 </ul>
 <h2>術語表</h2>
 <ul>
@@ -72,12 +80,23 @@
 <li><strong>模型預測控制（model-predictive control，MPC）</strong>：每次收到新觀測就重新規劃，每個計畫只執行第一個動作。</li>
 <li><strong>交叉熵方法（cross entropy method，CEM）</strong>：反覆抽樣候選解、留下最好的幾個、再用它們重新擬合抽樣分布的搜尋方法。</li>
 <li><strong>動作重複（action repeat）</strong>：把選定的動作連續執行好幾個環境步。</li>
+<li><strong>價值函數（value function）</strong>：預測代理人從某個狀態出發能得到多少未來獎勵。</li>
+<li><strong>想像視野（imagination horizon）</strong>：代理人想像時用世界模型往前推演的步數。</li>
+<li><strong>λ-return</strong>：一種價值目標值，混合「先相信若干步真實或想像的獎勵、再依賴價值函數」的各種估計。</li>
+<li><strong>重參數化（reparameterization）</strong>：把隨機樣本寫成雜訊的固定函數，讓梯度能穿過抽樣步驟。</li>
 </ul>
 <h2>未解問題</h2>
 <ul>
 <li>在隨機策略無法涵蓋的環境中，代理人要如何充分探索來改進世界模型？<a href="../sources/2018-world-models.html">World Models</a> 提出由好奇心驅動的迭代流程，但沒有實驗驗證 (pp.10-11)。</li>
 <li>在想像中訓練的策略要如何避免利用模型的錯誤？<a href="../sources/2018-world-models.html">World Models</a> 只用隨機模型與可調溫度部分解決了這個問題 (p.10)。</li>
 <li>規劃型代理人要如何考慮規劃視野之外的獎勵？<a href="../sources/2019-planet.html">PlaNet</a> 建議學習一個價值函數 (p.8)。</li>
+</ul>
+<blockquote class="note note-superseded">
+<p><strong>後續變更：</strong> <a href="../sources/2020-dreamer.html">Dreamer</a> 以在想像中學習價值模型回答了這個問題 (p.4, Fig. 4)。</p>
+</blockquote>
+<ul>
+<li>世界模型應該用什麼目標訓練？<a href="../sources/2020-dreamer.html">Dreamer</a> 發現像素重建最好、只預測獎勵不夠，並預期視覺複雜的環境需要更好的表示學習 (p.9)。</li>
+<li>完全透過世界模型學習的代理人，能否在 Atari 這類離散動作領域具有競爭力？<a href="../sources/2020-dreamer.html">Dreamer</a> 在那裡學到成功的行為，但還沒有競爭力 (p.16)。</li>
 </ul>
 <h2>背景資料</h2>
 <p>（尚無）</p>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="source-hash" content="feed12047f67">
+<meta name="source-hash" content="54d4d3ead4c3">
 <title>基於模型的強化學習（Model-based reinforcement learning） · 論文 Wiki</title>
 <link rel="stylesheet" href="../../assets/style.css">
 </head>
@@ -15,7 +15,7 @@
 <main class="page page-concept">
   <p class="page-kind"><span class="tag tag-concept">概念</span></p>
   <h1>基於模型的強化學習（Model-based reinforcement learning）</h1>
-  <p class="meta">model-based RL, MBRL, 模型式強化學習 · 2 個來源</p>
+  <p class="meta">model-based RL, MBRL, 模型式強化學習 · 3 個來源</p>
   <article class="content">
 <h2>一句話定義</h2>
 <p>會學習或使用「環境如何回應動作」的模型，並用這個模型來決定如何行動或學習如何行動的強化學習。</p>
@@ -26,12 +26,16 @@
 <p><a href="../sources/2018-world-models.html">World Models</a> 不使用獎勵學習世界模型，再訓練一個利用模型的小型控制器：先把模型當作特徵來源 (p.5)，接著完全取代真實環境 (p.7)。論文把自己定位為簡化版的示範，展示 1990 到 2015 年間一系列論文中「以 RNN 為基礎的世界模型加控制器」的想法 (p.2)。</p>
 <h3>Learning Latent Dynamics for Planning from Pixels（2019）</h3>
 <p><a href="../sources/2019-planet.html">PlaNet</a> 是純粹基於模型的代理人：沒有策略網路或價值網路，每個動作都靠學到的模型規劃 (p.3)。論文列出用學習模型規劃預期的好處：更豐富的訓練訊號、不需透過 Bellman 備份傳遞獎勵、增加搜尋計算就能提升表現，以及動態模型可轉移到其他任務 (p.1)。它以平均約少 200 倍的回合，達到強大無模型代理人的表現 (p.2)。</p>
+<h3>Dream to Control: Learning Behaviors by Latent Imagination（2020）</h3>
+<p><a href="../sources/2020-dreamer.html">Dreamer</a> 採用動態學習、行為學習與環境互動這套經典的代理人結構，而行為是在世界模型的潛在空間中學習 (p.2)。它主張世界模型能在過去經驗之間內插，並提供多步報酬的解析梯度，這是線上或用經驗回放訓練的無模型 actor-critic 做不到的 (p.1)。它用 500 萬環境步，就超越無模型的 D4PG 在 1 億步後的最終表現 (p.6, Fig. 6)。</p>
 <h3>來源之間的比較</h3>
 <ul>
 <li><a href="../sources/2018-world-models.html">World Models</a> 事先用模型訓練策略；做決定時，控制器根據模型的隱藏狀態直接反應，不往前規劃 (p.6)。</li>
 <li><a href="../sources/2019-planet.html">PlaNet</a> 沒有策略，只在做決定的當下用模型搜尋動作序列 (p.3)。</li>
 <li>兩篇都警告純確定性的模型容易被利用：<a href="../sources/2018-world-models.html">World Models</a> 是被控制器利用 (p.9)，<a href="../sources/2019-planet.html">PlaNet</a> 是被規劃器利用 (p.4, Fig. 2)。</li>
-<li>PlaNet 把 World Models 列為從想像經驗學習的混合式代理人；這段並列比較是本 Wiki 的整理。</li>
+<li><a href="../sources/2020-dreamer.html">Dreamer</a> 回到像 World Models 一樣事先訓練策略，但改用梯度而非演化，並加上能看見想像視野之外的價值模型 (p.5)。</li>
+<li>Dreamer 指出像 PlaNet 那樣只在固定視野內規劃，在需要長期功勞分配的任務上很短視 (p.7, Fig. 7)。PlaNet 自己也把缺少價值函數列為限制（見 PlaNet 頁），所以這是說法一致，不是衝突。</li>
+<li>PlaNet 與 Dreamer 都引用 World Models，Dreamer 也建立在 PlaNet 之上；這段並列比較是本 Wiki 的整理。</li>
 </ul>
 <h2>相關概念</h2>
 <ul>

@@ -6,7 +6,7 @@
 |---|---|---|---|
 | `world modelv4.pdf` | World Models（2018） | <https://arxiv.org/abs/1803.10122> | [2018-world-models](../wiki/en/sources/2018-world-models.md) |
 | `(planet)Learning Latent Dynamics for Planning from Pixels v5.pdf` | Learning Latent Dynamics for Planning from Pixels（PlaNet，2019） | <https://arxiv.org/abs/1811.04551> | [2019-planet](../wiki/en/sources/2019-planet.md) |
-| `(dreamerv1)DREAM TO CONTROL LEARNING BEHAVIORSv3.pdf` | Dream to Control: Learning Behaviors by Latent Imagination（Dreamer，2020） | （ingest 時填入） | （ingest 時填入） |
+| `(dreamerv1)DREAM TO CONTROL LEARNING BEHAVIORSv3.pdf` | Dream to Control: Learning Behaviors by Latent Imagination（Dreamer，2020） | <https://arxiv.org/abs/1912.01603> | [2020-dreamer](../wiki/en/sources/2020-dreamer.md) |
 | `(dreamerv2)MASTERING ATARI WITH DISCRETE WORLD MODELSv4.pdf` | Mastering Atari with Discrete World Models（DreamerV2，2021） | （ingest 時填入） | （ingest 時填入） |
 | `(dreamerv3)Mastering Diverse Domains through World Modelsv2.pdf` | Mastering Diverse Domains through World Models（DreamerV3，2023） | （ingest 時填入） | （ingest 時填入） |
 | `(dreamerv4)Training Agents Inside of Scalable World Modelsv1.pdf` | Training Agents Inside of Scalable World Models（Dreamer 4，2025） | （ingest 時填入） | （ingest 時填入） |

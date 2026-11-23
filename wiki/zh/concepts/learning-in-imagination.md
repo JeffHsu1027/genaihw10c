@@ -3,8 +3,8 @@ title: "在想像中學習（Learning in imagination）"
 aliases: [夢境訓練, 在夢裡學習, 幻覺環境, 潛在想像, latent imagination]
 updated: 2026-11-24
 areas: [world-model, reinforcement-learning]
-sources: [2018-world-models]
-translated_from: "23f1fbb767a4"
+sources: [2018-world-models, 2020-dreamer]
+translated_from: "babbaeb7f858"
 ---
 
 ## 一句話定義
@@ -23,11 +23,25 @@ translated_from: "23f1fbb767a4"
 
 [World Models](../sources/2018-world-models.md) 讓 MDN-RNN 預測代理人是否死亡，把它包裝成虛擬環境，完全在裡面訓練控制器，再放到 VizDoom 執行 (p.7)。代理人在夢裡大約存活 900 個時間步 (p.7)，在真實遊戲中大約存活 1100 個 (p.8)。在潛在空間中訓練比較便宜，因為不需要渲染畫面，也不必執行遊戲引擎 (p.15)。早期代理人學會利用模型的漏洞，讓怪物永遠不發射火球 (p.8)。溫度 τ 在真實度與可被利用程度之間取捨，最佳的轉移成績 1092 ± 556 出現在 τ = 1.15 (p.10, Table 2)。
 
+### Dream to Control: Learning Behaviors by Latent Imagination（2020）
+
+[Dreamer](../sources/2020-dreamer.md) 完全靠潛在想像學習行為：想像軌跡從真實過去序列的狀態出發，由世界模型與策略往前推演，不產生影像 (p.3)。動作模型與價值模型在這些軌跡上訓練，動作模型則用穿過想像動態的解析梯度改進 (p.5)。因為潛在狀態很小，可以平行想像數千條軌跡 (p.2)。學習行為時，世界模型保持固定 (p.5)。
+
+### 來源之間的比較
+
+- [World Models](../sources/2018-world-models.md) 在想像中用 CMA-ES 訓練控制器，只需要每次 rollout 的最終獎勵 (p.12)。
+- [Dreamer](../sources/2020-dreamer.md) 則把價值梯度穿過想像軌跡反向傳播，並把 World Models 描述為在想像中演化線性控制器 (p.7)。
+- 在 [World Models](../sources/2018-world-models.md) 中，代理人只在一個由隨機策略資料建成的夢境裡訓練一次，然後部署 (p.7)。
+- [Dreamer](../sources/2020-dreamer.md) 則持續交替：在想像中訓練行為，以及在真實環境中行動、擴充用來訓練世界模型的資料 (p.2)。
+- 只有 World Models 明確討論模型被利用的問題；Dreamer 沒有回報類似的失敗。這個差異是本 Wiki 的觀察，不是任何一篇論文的主張。
+
 ## 相關概念
 
 - [世界模型（World model）](world-model.md)：產生想像經驗的模型。
 - [混合密度遞迴神經網路（Mixture density RNN）](mixture-density-rnn.md)：它的抽樣溫度決定想像環境有多不確定。
-- [演化策略（Evolution strategies）](evolution-strategies.md)：在夢境中訓練控制器的最佳化方法。
+- [演化策略（Evolution strategies）](evolution-strategies.md)：World Models 在夢境中訓練控制器的最佳化方法。
+- [Actor-critic（演員－評論家）](actor-critic.md)：Dreamer 在想像中學習所用的方法。
+- [潛在空間規劃（Latent space planning）](latent-space-planning.md)：在做決定時使用模型、而不訓練策略的另一種做法。
 
 ## 背景資料
 

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="source-hash" content="893d3e578706">
+<title>Actor-critic · Paper Wiki</title>
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="site-name" href="../index.html">Paper Wiki</a>
+  <a class="lang-switch" href="../../zh/concepts/actor-critic.html" hreflang="zh-Hant">中文</a>
+</header>
+<main class="page page-concept">
+  <p class="page-kind"><span class="tag tag-concept">Concept</span></p>
+  <h1>Actor-critic</h1>
+  <p class="meta">actor critic, action model and value model, policy and value function, lambda-return, λ-return · 1 source</p>
+  <article class="content">
+<h2>One-line definition</h2>
+<p>A reinforcement learning method with two learned parts: an actor (policy) that chooses actions and a critic (value function) that estimates how much future reward the actor will collect from each state.</p>
+<h2>Explanation</h2>
+<p>The critic learns to predict the return expected from a state, and the actor is updated to choose actions that the critic rates highly. The critic lets the actor account for rewards far in the future without waiting for them to happen. Value targets can be built in several ways that trade bias against variance: adding up observed rewards only, adding a few rewards and then trusting the critic, or blending many such estimates, as the λ-return does. Actors can be improved with sampled policy gradients, or, when everything between action and value is differentiable, by backpropagating the critic's value directly into the actor.</p>
+<blockquote class="note note-explainer">
+<p><strong>Explainer:</strong> The actor is the player and the critic is the coach who says how promising each position looks; the player learns to move toward positions the coach likes.</p>
+</blockquote>
+<h2>What each source says</h2>
+<h3>Dream to Control: Learning Behaviors by Latent Imagination (2020)</h3>
+<p><a href="../sources/2020-dreamer.html">Dreamer</a> trains an action model and a value model entirely on trajectories imagined by its world model (p.4). The value model's targets are λ-returns that mix imagined rewards with value estimates beyond a fixed number of steps (p.4, Eq. 6). The action model maximizes these targets by backpropagating analytic gradients through the imagined states, rewards and values, which differs from Reinforce-style methods such as A3C and PPO and from DDPG and SAC, which do not backpropagate through learned transitions (p.5). Without the value model, the same agent becomes shortsighted and fails on tasks that need long-horizon credit assignment (p.7, Fig. 7). The value targets use a discount of 0.99 and λ of 0.95, and no target network or entropy bonus was needed (p.14).</p>
+<h2>Related concepts</h2>
+<ul>
+<li><a href="learning-in-imagination.html">Learning in imagination</a>: where Dreamer trains its actor and critic.</li>
+<li><a href="latent-space-planning.html">Latent space planning</a>: the alternative that searches actions at decision time instead of learning a policy.</li>
+<li><a href="model-based-reinforcement-learning.html">Model-based reinforcement learning</a>: Dreamer's actor-critic relies on a learned model.</li>
+</ul>
+<h2>Background</h2>
+<p>(None yet)</p>
+  </article>
+</main>
+<footer class="site-footer"><a href="../index.html">Back to home</a></footer>
+</body>
+</html>

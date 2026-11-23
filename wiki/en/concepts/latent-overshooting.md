@@ -3,7 +3,7 @@ title: "Latent overshooting"
 aliases: [overshooting, multi-step latent objective]
 updated: 2026-11-24
 areas: [world-model]
-sources: [2019-planet]
+sources: [2019-planet, 2020-dreamer]
 ---
 
 ## One-line definition
@@ -19,6 +19,15 @@ Standard variational training only teaches the transition model to predict one s
 ### Learning Latent Dynamics for Planning from Pixels (2019)
 
 [PlaNet](../sources/2019-planet.md) proposes latent overshooting as a generalization of the standard variational bound that trains predictions of every distance up to a maximum, with a weight for each distance (pp.5-6, Eq. 7). It contrasts this with observation overshooting, which decodes every multi-step prediction into an image and is usually too expensive in image domains (p.5, Fig. 3). Gradients are stopped at the posterior for longer distances, so the predictions move toward the informed posteriors but not the other way around (p.6). In the experiments, latent overshooting substantially improves a model called DRNN but slightly reduces the performance of the RSSM (p.14, Fig. 8). The final PlaNet agent therefore does not use it (p.12).
+
+### Dream to Control: Learning Behaviors by Latent Imagination (2020)
+
+[Dreamer](../sources/2020-dreamer.md) reports that it did not find latent overshooting necessary for learning its world model (p.14).
+
+### Comparing the sources
+
+- [PlaNet](../sources/2019-planet.md) found that overshooting helps other models but not the RSSM (p.14, Fig. 8).
+- [Dreamer](../sources/2020-dreamer.md), with the same RSSM, also leaves it out (p.14). The two sources agree; Dreamer builds on PlaNet, and this summary is this Wiki's own.
 
 ## Related concepts
 

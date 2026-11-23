@@ -3,8 +3,8 @@ title: "潛在空間規劃（Latent space planning）"
 aliases: [在潛在空間規劃, 線上規劃, 模型預測控制, MPC, CEM 規劃]
 updated: 2026-11-24
 areas: [world-model, reinforcement-learning]
-sources: [2019-planet]
-translated_from: "405f1f8239d5"
+sources: [2019-planet, 2020-dreamer]
+translated_from: "0c6e8b1bbf3a"
 ---
 
 ## 一句話定義
@@ -23,11 +23,22 @@ translated_from: "405f1f8239d5"
 
 [PlaNet](../sources/2019-planet.md) 在模型中用 CEM 規劃，並像模型預測控制一樣每一步都重新規劃 (p.3)。每次收到新觀測後，動作序列的信念都從平均為零、變異數為一重新開始，以避免陷入局部最佳 (p.3)。每個候選序列只用一條抽樣軌跡評分，把計算預算留給更多不同的序列 (p.3)。設定為規劃視野 12、迭代 10 次、1000 個候選、以最好的 100 個重新擬合 (p.12)。用 CEM 反覆修正，在所有任務上都勝過從 1000 個隨機序列中挑最好的一個 (p.6, Fig. 5)。在 cheetah 上使用真實模擬器時，視野 6 太短，最佳視野約為 8，視野太長反而因搜尋空間變大而變差 (p.20, Fig. 12)。由於 PlaNet 沒有價值函數，視野之外的獎勵都被忽略，作者建議學習一個價值函數 (p.8)。
 
+### Dream to Control: Learning Behaviors by Latent Imagination（2020）
+
+[Dreamer](../sources/2020-dreamer.md) 在同一個世界模型上，比較它學到的動作與價值模型和 PlaNet 的線上規劃 (p.4, Fig. 4)。規劃和沒有價值的動作模型一樣，只考慮視野內的獎勵，因此很短視，只在 walker 這類反應式任務成功 (p.7, Fig. 7)。Dreamer 的訓練也更快：每一百萬環境步約 3 小時，PlaNet 的線上規劃則需要 11 小時 (p.8)。
+
+### 來源之間的比較
+
+- [PlaNet](../sources/2019-planet.md) 主張規劃只要投入更多搜尋計算就能進步，而且學到的動態可以跨任務轉移 (p.1)。
+- [Dreamer](../sources/2020-dreamer.md) 顯示沒有價值函數時，在固定視野內規劃很短視，並改用學到的策略與價值取代 (p.7, Fig. 7)。
+- 兩者並不衝突：[PlaNet](../sources/2019-planet.md) 早已把缺少價值函數列為限制 (p.8)。Dreamer 建立在 PlaNet 之上，這段整理是本 Wiki 的。
+
 ## 相關概念
 
 - [基於模型的強化學習（Model-based reinforcement learning）](model-based-reinforcement-learning.md)：規劃是使用學習模型的一種方式。
 - [遞迴狀態空間模型（Recurrent state-space model）](recurrent-state-space-model.md)：PlaNet 用來規劃的模型。
 - [在想像中學習（Learning in imagination）](learning-in-imagination.md)：使用模型的另一種方式；它事先用想像的經驗訓練策略，規劃則是在做決定的當下搜尋。
+- [Actor-critic（演員－評論家）](actor-critic.md)：Dreamer 用來取代規劃的學習型策略與價值。
 
 ## 背景資料
 

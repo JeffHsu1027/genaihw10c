@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="source-hash" content="38c6938e3b39">
+<meta name="source-hash" content="fc31b6bf56fe">
 <title>在想像中學習（Learning in imagination） · 論文 Wiki</title>
 <link rel="stylesheet" href="../../assets/style.css">
 </head>
@@ -15,7 +15,7 @@
 <main class="page page-concept">
   <p class="page-kind"><span class="tag tag-concept">概念</span></p>
   <h1>在想像中學習（Learning in imagination）</h1>
-  <p class="meta">夢境訓練, 在夢裡學習, 幻覺環境, 潛在想像, latent imagination · 1 個來源</p>
+  <p class="meta">夢境訓練, 在夢裡學習, 幻覺環境, 潛在想像, latent imagination · 2 個來源</p>
   <article class="content">
 <h2>一句話定義</h2>
 <p>用學到的世界模型所產生的經驗來訓練代理人的策略，而不是用真實環境產生的經驗。</p>
@@ -27,11 +27,23 @@
 <h2>各來源怎麼說</h2>
 <h3>World Models（2018）</h3>
 <p><a href="../sources/2018-world-models.html">World Models</a> 讓 MDN-RNN 預測代理人是否死亡，把它包裝成虛擬環境，完全在裡面訓練控制器，再放到 VizDoom 執行 (p.7)。代理人在夢裡大約存活 900 個時間步 (p.7)，在真實遊戲中大約存活 1100 個 (p.8)。在潛在空間中訓練比較便宜，因為不需要渲染畫面，也不必執行遊戲引擎 (p.15)。早期代理人學會利用模型的漏洞，讓怪物永遠不發射火球 (p.8)。溫度 τ 在真實度與可被利用程度之間取捨，最佳的轉移成績 1092 ± 556 出現在 τ = 1.15 (p.10, Table 2)。</p>
+<h3>Dream to Control: Learning Behaviors by Latent Imagination（2020）</h3>
+<p><a href="../sources/2020-dreamer.html">Dreamer</a> 完全靠潛在想像學習行為：想像軌跡從真實過去序列的狀態出發，由世界模型與策略往前推演，不產生影像 (p.3)。動作模型與價值模型在這些軌跡上訓練，動作模型則用穿過想像動態的解析梯度改進 (p.5)。因為潛在狀態很小，可以平行想像數千條軌跡 (p.2)。學習行為時，世界模型保持固定 (p.5)。</p>
+<h3>來源之間的比較</h3>
+<ul>
+<li><a href="../sources/2018-world-models.html">World Models</a> 在想像中用 CMA-ES 訓練控制器，只需要每次 rollout 的最終獎勵 (p.12)。</li>
+<li><a href="../sources/2020-dreamer.html">Dreamer</a> 則把價值梯度穿過想像軌跡反向傳播，並把 World Models 描述為在想像中演化線性控制器 (p.7)。</li>
+<li>在 <a href="../sources/2018-world-models.html">World Models</a> 中，代理人只在一個由隨機策略資料建成的夢境裡訓練一次，然後部署 (p.7)。</li>
+<li><a href="../sources/2020-dreamer.html">Dreamer</a> 則持續交替：在想像中訓練行為，以及在真實環境中行動、擴充用來訓練世界模型的資料 (p.2)。</li>
+<li>只有 World Models 明確討論模型被利用的問題；Dreamer 沒有回報類似的失敗。這個差異是本 Wiki 的觀察，不是任何一篇論文的主張。</li>
+</ul>
 <h2>相關概念</h2>
 <ul>
 <li><a href="world-model.html">世界模型（World model）</a>：產生想像經驗的模型。</li>
 <li><a href="mixture-density-rnn.html">混合密度遞迴神經網路（Mixture density RNN）</a>：它的抽樣溫度決定想像環境有多不確定。</li>
-<li><a href="evolution-strategies.html">演化策略（Evolution strategies）</a>：在夢境中訓練控制器的最佳化方法。</li>
+<li><a href="evolution-strategies.html">演化策略（Evolution strategies）</a>：World Models 在夢境中訓練控制器的最佳化方法。</li>
+<li><a href="actor-critic.html">Actor-critic（演員－評論家）</a>：Dreamer 在想像中學習所用的方法。</li>
+<li><a href="latent-space-planning.html">潛在空間規劃（Latent space planning）</a>：在做決定時使用模型、而不訓練策略的另一種做法。</li>
 </ul>
 <h2>背景資料</h2>
 <p>（尚無）</p>

@@ -3,7 +3,7 @@ title: "Learning in imagination"
 aliases: [dream training, learning inside a dream, hallucinated environment, latent imagination]
 updated: 2026-11-24
 areas: [world-model, reinforcement-learning]
-sources: [2018-world-models]
+sources: [2018-world-models, 2020-dreamer]
 ---
 
 ## One-line definition
@@ -22,11 +22,25 @@ If a world model can predict observations, rewards and the end of an episode, it
 
 [World Models](../sources/2018-world-models.md) makes its MDN-RNN predict whether the agent dies, wraps it as a virtual environment, and trains the controller entirely inside it before deploying it in VizDoom (p.7). The agent survives about 900 time steps in the dream (p.7) and about 1100 in the real game (p.8). Training in the latent space is cheaper because no frames are rendered and no game engine runs (p.15). Early on, the agent learned to exploit the model so that monsters never fired (p.8). The temperature τ trades realism against exploitability, and the best transfer, 1092 ± 556, was reached at τ = 1.15 (p.10, Table 2).
 
+### Dream to Control: Learning Behaviors by Latent Imagination (2020)
+
+[Dreamer](../sources/2020-dreamer.md) learns behaviors purely by latent imagination: imagined trajectories start from states of real past sequences and are rolled forward by the world model and the policy, without generating images (p.3). An action model and a value model are trained on these trajectories, and the action model is improved with analytic gradients through the imagined dynamics (p.5). Because the latent states are small, thousands of trajectories can be imagined in parallel (p.2). The world model is kept fixed while behaviors are learned (p.5).
+
+### Comparing the sources
+
+- [World Models](../sources/2018-world-models.md) trains its controller in imagination with CMA-ES, which only needs the final reward of each rollout (p.12).
+- [Dreamer](../sources/2020-dreamer.md) instead backpropagates value gradients through the imagined trajectories, and describes World Models as evolving linear controllers in imagination (p.7).
+- In [World Models](../sources/2018-world-models.md), the agent is trained once inside a dream built from random-policy data and then deployed (p.7).
+- [Dreamer](../sources/2020-dreamer.md) keeps alternating between imagination, which trains the behavior, and acting in the real environment, which grows the data that trains the world model (p.2).
+- Model exploitation is discussed explicitly only in World Models; Dreamer does not report a comparable failure, and this difference is this Wiki's observation, not a claim of either paper.
+
 ## Related concepts
 
 - [World model](world-model.md): the model that generates the imagined experience.
 - [Mixture density RNN](mixture-density-rnn.md): its sampling temperature controls how uncertain the imagined environment is.
-- [Evolution strategies](evolution-strategies.md): the optimizer that trains the controller inside the dream.
+- [Evolution strategies](evolution-strategies.md): the optimizer that trains the controller inside the dream in World Models.
+- [Actor-critic](actor-critic.md): the method Dreamer uses to learn inside imagination.
+- [Latent space planning](latent-space-planning.md): the alternative that uses the model at decision time instead of training a policy.
 
 ## Background
 

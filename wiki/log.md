@@ -94,3 +94,23 @@
 - 上一筆的頁碼檢查會把「與其他來源的關係」段落中的出處也判給連到的那篇，但那裡的出處通常是本篇頁碼（例如 PlaNet 頁「沿用 World Models 的網路 (p.12)」）。改為：來源頁上只有引用區塊（`>` 開頭，如 Superseded、Conflict）中連到另一篇時，出處才對照那一篇的 `pages`。
 - 在 scratchpad 副本測試：關係段落的 `p.21` 視為本篇（21 頁，通過），Superseded 區塊的 `p.21` 正確判為超過 PlaNet 的 20 頁。
 
+## [2026-11-24] ingest | Dream to Control: Learning Behaviors by Latent Imagination
+
+- 閱讀範圍：PDF 第 1–20 頁全文（正文 pp.1-9、參考文獻 pp.10-13、附錄 A–G pp.14-20）。
+- **閱讀狀態（擁有者決定）**：除了 World Models 與 WHAM，其他論文一律先填 `status: to-read`。本篇填 `to-read`，並把已 ingest 的 `2019-planet` 從 `read` 改為 `to-read`（中英版、主題頁 Sources 表、`index.md`）。
+- 新增來源頁：`2020-dreamer`（ICLR 2020；areas：world-model、reinforcement-learning；pages: 20）。
+- 新增概念頁（1 個）：`actor-critic`（把握度高：核心方法；λ-return 與穿過動態模型的價值梯度寫在本頁，不另建頁）。
+- 更新既有頁面（皆新增 Dreamer 小節與「來源之間的比較」）：
+  - `learning-in-imagination`（高：標題即 latent imagination；比較 World Models 的 ES 與 Dreamer 的解析梯度）
+  - `world-model`、`model-based-reinforcement-learning`、`variational-autoencoder`（高）
+  - `recurrent-state-space-model`、`latent-overshooting`（高：Dreamer 沿用 RSSM、同樣不需要 overshooting，pp.6、14）
+  - `latent-space-planning`（高：Dreamer 顯示固定視野的規劃短視，pp.4、7）
+  - `2018-world-models`、`2019-planet`：`Relation to other sources` 補上 Dreamer。
+  - `world-models` 主題頁：Timeline、Sources、Key concepts、Key terms（value function、imagination horizon、λ-return、reparameterization）、Open questions。
+- **取代（Superseded）**：`2019-planet` 的規劃方法與「缺少價值函數」限制各加一個 Superseded 區塊（Dreamer pp.4、7）；主題頁 Open questions 中的同一問題也加一個。
+- 一致而非衝突：Dreamer 指出固定視野的規劃短視，PlaNet 自己也把缺少價值函數列為限制。
+- 刻意不連結：`evolution-strategies`（Dreamer 未使用，只作為不需梯度方法的對比，寫在 `learning-in-imagination` 比較段）；`mixture-density-rnn`。
+- 待確認：Dreamer p.9 同一段同時寫「19 個任務」與「20 個任務中 16 個勝出、4 個平手」，來源頁標為 `(to be verified)`。
+- `raw/README.md`：填入公開連結（arXiv 1912.01603）與來源頁。
+- `build.py` 產生 28 個頁面，`check.py` 全部通過。
+

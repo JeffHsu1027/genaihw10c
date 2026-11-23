@@ -3,8 +3,8 @@ title: "世界模型（World model）"
 aliases: [動態模型, 環境模型, dynamics model, environment model]
 updated: 2026-11-24
 areas: [world-model, reinforcement-learning]
-sources: [2018-world-models, 2019-planet]
-translated_from: "cc524bfa8579"
+sources: [2018-world-models, 2019-planet, 2020-dreamer]
+translated_from: "73c853f09637"
 ---
 
 ## 一句話定義
@@ -27,13 +27,18 @@ translated_from: "cc524bfa8579"
 
 [PlaNet](../sources/2019-planet.md) 把它的世界模型稱為潛在動態模型：由轉移模型、觀測模型、獎勵模型與編碼器組成，架構是遞迴狀態空間模型 (p.3)。因為模型也預測獎勵，規劃器可以完全在潛在空間中為動作序列評分，不必產生影像 (p.3)。模型的訓練資料是代理人持續用尚未訓練完的模型規劃所收集的，而不只是隨機資料 (p.3)。
 
+### Dream to Control: Learning Behaviors by Latent Imagination（2020）
+
+[Dreamer](../sources/2020-dreamer.md) 使用與 PlaNet 相同的世界模型，並把它描述為概括代理人的經驗，讓複雜的行為能從中學習 (p.1)。世界模型根據動作與過去的觀測預測獎勵，任何學習世界模型的目標函數都能與 Dreamer 搭配 (p.2)。論文比較三種學習目標：影像重建效果最好，對比式估計約能解決一半的任務，只預測獎勵則不夠 (p.8, Fig. 8)。
+
 ### 來源之間的比較
 
 - 兩篇都從像素學出壓縮的潛在狀態與其上的轉移模型：[World Models](../sources/2018-world-models.md) 用 VAE 加 MDN-RNN (p.2, Fig. 4)，[PlaNet](../sources/2019-planet.md) 用遞迴狀態空間模型 (p.4, Eq. 4)。
 - [World Models](../sources/2018-world-models.md) 只用隨機策略的資料訓練一次模型，而且在 Car Racing 中模型完全看不到獎勵 (p.5)。
 - [PlaNet](../sources/2019-planet.md) 讓模型預測獎勵，並持續用自己規劃收集的資料重新訓練模型 (p.3)。
 - 兩篇都警告純確定性的模型容易被利用：[World Models](../sources/2018-world-models.md) 是被控制器利用 (p.9)，[PlaNet](../sources/2019-planet.md) 是被規劃器利用 (p.4, Fig. 2)。這是兩篇說法一致，不是衝突。
-- PlaNet 有引用 World Models（見 PlaNet 來源頁）；這段並列比較是本 Wiki 的整理。
+- [Dreamer](../sources/2020-dreamer.md) 保留 PlaNet 的世界模型，只改變從模型得出行為的方式，顯示同一個模型既能用於規劃，也能用於學習策略 (p.8)。
+- PlaNet 與 Dreamer 都引用了 World Models（見各自的來源頁）；這段並列比較是本 Wiki 的整理。
 
 ## 相關概念
 

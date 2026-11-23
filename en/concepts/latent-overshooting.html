@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="source-hash" content="ef75c0d2bc0d">
+<meta name="source-hash" content="cbe25e317b9d">
 <title>Latent overshooting · Paper Wiki</title>
 <link rel="stylesheet" href="../../assets/style.css">
 </head>
@@ -15,7 +15,7 @@
 <main class="page page-concept">
   <p class="page-kind"><span class="tag tag-concept">Concept</span></p>
   <h1>Latent overshooting</h1>
-  <p class="meta">overshooting, multi-step latent objective · 1 source</p>
+  <p class="meta">overshooting, multi-step latent objective · 2 sources</p>
   <article class="content">
 <h2>One-line definition</h2>
 <p>A training objective for latent sequence models that, besides one-step predictions, also trains multi-step predictions by pulling them toward the states inferred from real observations, entirely in latent space.</p>
@@ -24,6 +24,13 @@
 <h2>What each source says</h2>
 <h3>Learning Latent Dynamics for Planning from Pixels (2019)</h3>
 <p><a href="../sources/2019-planet.html">PlaNet</a> proposes latent overshooting as a generalization of the standard variational bound that trains predictions of every distance up to a maximum, with a weight for each distance (pp.5-6, Eq. 7). It contrasts this with observation overshooting, which decodes every multi-step prediction into an image and is usually too expensive in image domains (p.5, Fig. 3). Gradients are stopped at the posterior for longer distances, so the predictions move toward the informed posteriors but not the other way around (p.6). In the experiments, latent overshooting substantially improves a model called DRNN but slightly reduces the performance of the RSSM (p.14, Fig. 8). The final PlaNet agent therefore does not use it (p.12).</p>
+<h3>Dream to Control: Learning Behaviors by Latent Imagination (2020)</h3>
+<p><a href="../sources/2020-dreamer.html">Dreamer</a> reports that it did not find latent overshooting necessary for learning its world model (p.14).</p>
+<h3>Comparing the sources</h3>
+<ul>
+<li><a href="../sources/2019-planet.html">PlaNet</a> found that overshooting helps other models but not the RSSM (p.14, Fig. 8).</li>
+<li><a href="../sources/2020-dreamer.html">Dreamer</a>, with the same RSSM, also leaves it out (p.14). The two sources agree; Dreamer builds on PlaNet, and this summary is this Wiki's own.</li>
+</ul>
 <h2>Related concepts</h2>
 <ul>
 <li><a href="recurrent-state-space-model.html">Recurrent state-space model</a>: the model that turned out not to need overshooting.</li>

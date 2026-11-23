@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="source-hash" content="304d70343e71">
+<meta name="source-hash" content="cdd852969815">
 <title>World model · Paper Wiki</title>
 <link rel="stylesheet" href="../../assets/style.css">
 </head>
@@ -15,7 +15,7 @@
 <main class="page page-concept">
   <p class="page-kind"><span class="tag tag-concept">Concept</span></p>
   <h1>World model</h1>
-  <p class="meta">dynamics model, environment model, predictive model of the environment · 2 sources</p>
+  <p class="meta">dynamics model, environment model, predictive model of the environment · 3 sources</p>
   <article class="content">
 <h2>One-line definition</h2>
 <p>A learned model of an environment that predicts what will happen next, usually given the current state and an action.</p>
@@ -29,13 +29,16 @@
 <p><a href="../sources/2018-world-models.html">World Models</a> builds the world model from two parts: a VAE that compresses each frame and an MDN-RNN that predicts the next compressed frame (p.2, Fig. 4). The world model is trained without rewards, and only the small controller sees the reward (p.5). The paper uses the world model in both ways: its hidden state gives the controller a sense of the future in Car Racing (p.5), and in VizDoom it fully replaces the real game during training (p.7).</p>
 <h3>Learning Latent Dynamics for Planning from Pixels (2019)</h3>
 <p><a href="../sources/2019-planet.html">PlaNet</a> calls its world model a latent dynamics model: a transition model, an observation model, a reward model and an encoder, built as a recurrent state-space model (p.3). Because the model also predicts rewards, the planner can score action sequences purely in latent space without generating images (p.3). The model is trained on data that the agent keeps collecting by planning with the partially trained model, not only on random data (p.3).</p>
+<h3>Dream to Control: Learning Behaviors by Latent Imagination (2020)</h3>
+<p><a href="../sources/2020-dreamer.html">Dreamer</a> uses the same world model as PlaNet and describes it as summarizing the agent's experience so that complex behaviors can be learned from it (p.1). The world model predicts rewards from actions and past observations, and any learning objective for it can be combined with Dreamer (p.2). The paper compares three objectives for learning it: image reconstruction works best, contrastive estimation solves about half of the tasks, and reward prediction alone is not enough (p.8, Fig. 8).</p>
 <h3>Comparing the sources</h3>
 <ul>
 <li>Both learn a compressed latent state from pixels and a transition model over it: <a href="../sources/2018-world-models.html">World Models</a> with a VAE and an MDN-RNN (p.2, Fig. 4), <a href="../sources/2019-planet.html">PlaNet</a> with a recurrent state-space model (p.4, Eq. 4).</li>
 <li><a href="../sources/2018-world-models.html">World Models</a> trains its model once on random-policy data, and in Car Racing the model never sees rewards (p.5).</li>
 <li><a href="../sources/2019-planet.html">PlaNet</a> predicts rewards with the model and keeps retraining it on data collected by its own plans (p.3).</li>
 <li>Both warn that a purely deterministic model is easy to exploit: <a href="../sources/2018-world-models.html">World Models</a> for its controller (p.9) and <a href="../sources/2019-planet.html">PlaNet</a> for its planner (p.4, Fig. 2). This is agreement, not conflict.</li>
-<li>PlaNet cites World Models (see the PlaNet source page); this side-by-side comparison is this Wiki's own summary.</li>
+<li><a href="../sources/2020-dreamer.html">Dreamer</a> keeps PlaNet's world model and changes only how behavior is derived from it, which shows that the same model can serve planning or policy learning (p.8).</li>
+<li>PlaNet and Dreamer cite World Models (see their source pages); this side-by-side comparison is this Wiki's own summary.</li>
 </ul>
 <h2>Related concepts</h2>
 <ul>

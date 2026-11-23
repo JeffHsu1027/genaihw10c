@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="source-hash" content="8cdfd64c35d3">
+<meta name="source-hash" content="07efba047f91">
 <title>Learning Latent Dynamics for Planning from Pixels · 論文 Wiki</title>
 <link rel="stylesheet" href="../../assets/style.css">
 </head>
@@ -16,7 +16,8 @@
   <p class="page-kind"><span class="tag tag-source">來源</span></p>
   <h1>Learning Latent Dynamics for Planning from Pixels</h1>
   <p class="meta">Danijar Hafner et al. · 2019 · ICML 2019 (arXiv:1811.04551) · <a href="https://arxiv.org/abs/1811.04551">論文連結</a></p>
-  <p class="meta"><span class="status status-read">已讀</span> · <a href="../topics/world-models.html">世界模型（World models）</a></p>
+  <p class="meta"><span class="status status-to-read">未讀</span> · <a href="../topics/world-models.html">世界模型（World models）</a></p>
+  <p class="meta"><span class="status-note">擁有者尚未閱讀這篇論文。本頁由 AI 讀完 PDF 全文後撰寫。</span></p>
   <article class="content">
 <h2>一句話總結</h2>
 <p>PlaNet（Deep Planning Network）是一個純粹<a href="../concepts/model-based-reinforcement-learning.html">基於模型</a>的代理人：從影像學出潛在的<a href="../concepts/world-model.html">世界模型</a>，每一個動作都靠在潛在空間中快速的線上規劃來決定，不使用策略網路或價值網路 (p.1)。</p>
@@ -30,6 +31,11 @@
 <li><strong>訓練目標</strong>：模型（包括類似<a href="../concepts/variational-autoencoder.html">變分自編碼器</a>的編碼器）以變分下界訓練，由重建項，以及編碼器後驗與轉移先驗之間的 KL 項組成 (p.4, Eq. 3)。</li>
 <li><strong><a href="../concepts/latent-overshooting.html">潛在超前預測</a>（latent overshooting）</strong>：一種推廣後的目標函數，直接在潛在空間訓練各種距離的多步預測，不需要額外解碼出影像 (p.5)。</li>
 <li><strong><a href="../concepts/latent-space-planning.html">規劃</a></strong>：每一步都用交叉熵方法（cross entropy method，CEM）在模型中搜尋最佳的動作序列，只執行第一個動作，做法如同模型預測控制（model-predictive control） (p.3)。每個候選序列的分數，是在潛在空間中把模型往前推演並加總預測的獎勵，因此規劃時完全不產生影像 (p.3)。</li>
+</ul>
+<blockquote class="note note-superseded">
+<p><strong>後續變更：</strong> <a href="2020-dreamer.html">Dreamer</a> 保留這個世界模型，但改用在想像中學到的動作模型與價值模型取代線上規劃，在需要長期規劃的任務上比較不短視 (p.7, Fig. 7)。</p>
+</blockquote>
+<ul>
 <li><strong>資料收集</strong>：先用少數隨機動作的種子回合開始，接著交替進行模型訓練，以及用規劃（加上少量高斯探索雜訊）收集新回合；每個選定的動作會重複執行好幾次 (p.3)。</li>
 </ul>
 <blockquote class="note note-explainer">
@@ -52,6 +58,11 @@
 <h2>限制與未解問題</h2>
 <ul>
 <li>規劃器只看得到規劃視野內的獎勵；作者建議學習價值函數來涵蓋視野之外的獎勵 (p.8)。</li>
+</ul>
+<blockquote class="note note-superseded">
+<p><strong>後續變更：</strong> <a href="2020-dreamer.html">Dreamer</a> 在想像中學習了這樣的價值函數，以 λ-return 目標值納入視野之外的獎勵 (p.4, Eq. 6)。</p>
+</blockquote>
+<ul>
 <li>動作重複次數是人工固定的；學習時間上的抽象（可能透過階層式模型）留待未來研究 (p.8)。</li>
 <li>每一步都要評估數千個動作序列，因此所有計算都必須留在潛在空間 (p.3)。以梯度為基礎的規劃可能讓代理人更有效率 (p.8)。</li>
 <li>模型靠重建影像來訓練；不靠重建的表示學習，可能有助於視覺更多樣的任務 (p.8)。</li>
@@ -70,6 +81,7 @@
 <h2>與其他來源的關係</h2>
 <ul>
 <li><a href="2018-world-models.html">World Models</a>：PlaNet 沿用 World Models 的卷積編碼器與反卷積解碼器 (p.12)，並把 World Models 列為從想像經驗學習策略的混合式代理人 (p.17)。World Models 在夢境中訓練小型控制器，PlaNet 則完全沒有策略，每一步都用模型重新規劃 (p.3)。David Ha 是兩篇論文的共同作者 (p.1)。</li>
+<li><a href="2020-dreamer.html">Dream to Control: Learning Behaviors by Latent Imagination</a>（Dreamer，2020）學習相同的世界模型，但改用在想像中訓練的動作模型與價值模型取代線上規劃。它以固定的動作重複重新執行 PlaNet 作為基準，因此其中的 PlaNet 分數與上方不同（見 Dreamer 頁）。</li>
 </ul>
 <h2>背景資料</h2>
 <ul>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="source-hash" content="79a55667bfdf">
+<title>Dream to Control: Learning Behaviors by Latent Imagination · Paper Wiki</title>
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="site-name" href="../index.html">Paper Wiki</a>
+  <a class="lang-switch" href="../../zh/sources/2020-dreamer.html" hreflang="zh-Hant">中文</a>
+</header>
+<main class="page page-source">
+  <p class="page-kind"><span class="tag tag-source">Source</span></p>
+  <h1>Dream to Control: Learning Behaviors by Latent Imagination</h1>
+  <p class="meta">Danijar Hafner et al. · 2020 · ICLR 2020 (arXiv:1912.01603) · <a href="https://arxiv.org/abs/1912.01603">Paper</a></p>
+  <p class="meta"><span class="status status-to-read">To read</span> · <a href="../topics/world-models.html">World models</a></p>
+  <p class="meta"><span class="status-note">The owner has not read this paper yet. This page was written by the AI from the full PDF.</span></p>
+  <article class="content">
+<h2>One-line summary</h2>
+<p>Dreamer learns a <a href="../concepts/world-model.html">world model</a> from images and then learns its behavior purely by <a href="../concepts/learning-in-imagination.html">latent imagination</a>: an <a href="../concepts/actor-critic.html">actor-critic</a> is trained on imagined trajectories, and the actor is improved by propagating analytic value gradients back through the learned dynamics (p.1).</p>
+<h2>Research question</h2>
+<p>Policies or planners that only maximize rewards within a fixed imagination horizon behave shortsightedly, and earlier work often used derivative-free optimization instead of the gradients that neural network dynamics offer (p.1). Can an agent learn long-horizon behaviors from images purely inside a learned world model, while accounting for rewards beyond the imagination horizon (p.1)?</p>
+<h2>Method</h2>
+<ul>
+<li><strong>World model</strong>: the same latent dynamics as PlaNet, with a <a href="../concepts/recurrent-state-space-model.html">recurrent state-space model</a> as the transition model, a CNN encoder for the representation model, a transposed CNN as the observation model, and a dense reward model (p.6). The parts are trained jointly with a variational bound made of reconstruction terms for images and rewards plus a KL regularizer, as in a <a href="../concepts/variational-autoencoder.html">variational autoencoder</a> (p.6, Eq. 10).</li>
+<li><strong>Three processes</strong>: Dreamer learns the dynamics from its dataset of past experience, learns action and value models from imagined trajectories, and executes the action model in the environment to grow the dataset, either interleaved or in parallel (p.2, Alg. 1).</li>
+<li><strong>Imagination</strong>: imagined trajectories start from the model states of sequences drawn from past experience and roll forward with the transition model, the reward model and the policy for a fixed horizon (p.3). The world model is kept fixed while behaviors are learned (p.5).</li>
+<li><strong>Actor and critic</strong>: the action model outputs a tanh-transformed Gaussian whose sample is written as a deterministic function of the network output plus noise, so gradients can pass through sampling (p.4, Eq. 3). The value model estimates the imagined rewards that the action model will collect, including those beyond the horizon (p.4, Eq. 2). Value targets are λ-returns, an exponentially weighted average of estimates that add up imagined rewards for some steps and then use the value model for the rest (p.4, Eq. 6).</li>
+<li><strong>Learning</strong>: the value model regresses the λ-return targets, and the action model maximizes them by backpropagating analytic gradients through the values, rewards, imagined states and actions (p.5). Unlike Reinforce-style methods such as A3C and PPO, Dreamer backpropagates through the value model, and unlike DDPG and SAC it also backpropagates through the learned transitions (p.5).</li>
+<li><strong>Discrete actions and early termination</strong>: straight-through gradients are used for discrete actions, and in tasks that can end early the model also predicts a discount factor that down-weights imagined steps that are likely to come after the episode ended (p.5).</li>
+<li><strong>Representation learning</strong>: three ways to learn the world model are compared: image reconstruction as in PlaNet, contrastive estimation that predicts states from images instead of images from states, and reward prediction alone (pp.5-6).</li>
+</ul>
+<blockquote class="note note-explainer">
+<p><strong>Explainer:</strong> Like World Models, Dreamer practises inside its own imagination. Instead of trying random variations of its behavior and keeping what works, it asks the model how a small change in each action would change the predicted future, and moves in the direction that improves it.</p>
+</blockquote>
+<p>Implementation details from the appendix: Dreamer reuses the convolutional encoder and decoder of World Models and the RSSM of PlaNet, and every other function is three dense layers of 300 units with ELU activations (p.14). The latent distributions are 30-dimensional diagonal Gaussians (p.14). Batches contain 50 sequences of length 50, and Adam uses learning rates of <code>6e-4</code> for the world model and <code>8e-5</code> for the value and action models (p.14). The imagination horizon is 15, with a discount of 0.99 and λ of 0.95 (p.14). The KL term is not scaled but is clipped below 3 free nats, as in PlaNet (p.14). Training starts from 5 random episodes and alternates 100 training steps with collecting one episode, using Normal(0, 0.3) exploration noise and an action repeat of 2 (p.14). Latent overshooting, an entropy bonus and target networks were not needed (p.14). Each run uses one V100 GPU and 10 CPU cores and takes about 3 hours per million environment steps, compared with 11 hours for PlaNet and 24 hours for D4PG to reach similar performance (p.8).</p>
+<h2>Key results</h2>
+<ul>
+<li>The benchmark is 20 visual control tasks from the DeepMind Control Suite with 64x64x3 image observations, an action repeat of 2, and the same hyperparameters for all tasks (p.8).</li>
+<li>After 5 million environment steps, Dreamer reaches an average score of 823 across tasks, compared with 332 for PlaNet and 786 for D4PG after 100 million steps (p.6, Fig. 6).</li>
+<li>Dreamer keeps the data efficiency of PlaNet while exceeding the final performance of the best model-free agents (p.9).</li>
+<li>Learning a value model makes Dreamer robust to the length of the imagination horizon, while an action model trained without values and online planning with PlaNet both depend strongly on the horizon (p.4, Fig. 4).</li>
+<li>Without a value model, both alternatives behave shortsightedly and only succeed in reactive tasks such as the walker domain, while Dreamer also solves tasks that need long-horizon credit assignment such as acrobot and hopper (p.7, Fig. 7).</li>
+<li>With a horizon of 20, Dreamer outperforms both alternatives on 16 of 20 tasks with 4 ties; the same paragraph also mentions 19 tasks, so the exact count is (to be verified) (p.9).</li>
+<li>Pixel reconstruction gives the best world model on most tasks, contrastive estimation solves about half of the tasks, and predicting rewards alone was not sufficient (p.8, Fig. 8).</li>
+<li>Dreamer also learns successful behaviors on a subset of Atari games and a DeepMind Lab level with discrete actions and early termination (p.16, Fig. 9).</li>
+<li>An action repeat of 2 works best across tasks (p.19, Fig. 12).</li>
+</ul>
+<h2>Limitations and open questions</h2>
+<ul>
+<li>How well Dreamer works depends on the representation learning objective; reward prediction alone fails, and the authors expect better representation learning to be needed for visually more complex environments (p.9).</li>
+<li>In domains with discrete actions such as Atari and DeepMind Lab, agents that learn purely through world models are not yet competitive (p.16).</li>
+<li>Behaviors are learned only from imagined trajectories while the world model is held fixed, so they can only be as good as the model's predictions (p.5).</li>
+<li>The evaluation of the action repeat used an earlier hyperparameter setting and only 2 seeds (p.19, Fig. 12).</li>
+</ul>
+<h2>Related concepts</h2>
+<ul>
+<li><a href="../concepts/actor-critic.html">Actor-critic</a>: the behavior learning algorithm, trained in imagination.</li>
+<li><a href="../concepts/learning-in-imagination.html">Learning in imagination</a>: Dreamer learns behaviors purely by latent imagination.</li>
+<li><a href="../concepts/world-model.html">World model</a>: the learned latent dynamics model.</li>
+<li><a href="../concepts/model-based-reinforcement-learning.html">Model-based reinforcement learning</a>: the family Dreamer belongs to.</li>
+<li><a href="../concepts/recurrent-state-space-model.html">Recurrent state-space model</a>: the transition model, taken from PlaNet.</li>
+<li><a href="../concepts/latent-overshooting.html">Latent overshooting</a>: not needed by Dreamer.</li>
+<li><a href="../concepts/latent-space-planning.html">Latent space planning</a>: the alternative Dreamer replaces.</li>
+<li><a href="../concepts/variational-autoencoder.html">Variational autoencoder</a>: the reconstruction objective is a variational bound.</li>
+</ul>
+<h2>Relation to other sources</h2>
+<ul>
+<li><a href="2019-planet.html">Learning Latent Dynamics for Planning from Pixels</a>: Dreamer learns the same world model as PlaNet but chooses actions with a learned action model instead of online planning (p.8). It re-runs PlaNet with the same action repeat for a fair comparison (p.8), and reports it as shortsighted on long-horizon tasks (p.7, Fig. 7).</li>
+<li><a href="2018-world-models.html">World Models</a>: Dreamer describes World Models as learning latent dynamics in a two-stage process to evolve linear controllers in imagination (p.7), and reuses its convolutional encoder and decoder (p.14).</li>
+</ul>
+<h2>Background</h2>
+<ul>
+<li><a href="https://danijar.com/dreamer">Dreamer project page</a>: code and videos, linked from the paper.</li>
+</ul>
+  </article>
+</main>
+<footer class="site-footer"><a href="../index.html">Back to home</a></footer>
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="source-hash" content="359a43be65a3">
+<meta name="source-hash" content="f31d5bfd8cdd">
 <title>Recurrent state-space model · Paper Wiki</title>
 <link rel="stylesheet" href="../../assets/style.css">
 </head>
@@ -15,7 +15,7 @@
 <main class="page page-concept">
   <p class="page-kind"><span class="tag tag-concept">Concept</span></p>
   <h1>Recurrent state-space model</h1>
-  <p class="meta">RSSM · 1 source</p>
+  <p class="meta">RSSM · 2 sources</p>
   <article class="content">
 <h2>One-line definition</h2>
 <p>A latent dynamics model whose state has a deterministic part, carried forward by a recurrent network, and a stochastic part sampled at every step.</p>
@@ -27,6 +27,13 @@
 <h2>What each source says</h2>
 <h3>Learning Latent Dynamics for Planning from Pixels (2019)</h3>
 <p><a href="../sources/2019-planet.html">PlaNet</a> introduces the RSSM: an RNN updates the deterministic state from the previous deterministic state, stochastic state and action, the stochastic state is sampled from a Gaussian given the deterministic state, and observations and rewards are predicted from both (p.4, Eq. 4). All information about the observations must pass through the sampling step of the encoder, to avoid a deterministic shortcut from inputs to reconstructions (p.4). In the experiments, both paths are needed on every task, and without the stochastic part the agent does not learn at all (p.6, Fig. 4). The implementation uses a GRU with 200 units and a 30-dimensional stochastic state (p.12). Unlike a purely stochastic model, the RSSM is robust to the choice between ReLU and ELU activations (p.15, Fig. 9).</p>
+<h3>Dream to Control: Learning Behaviors by Latent Imagination (2020)</h3>
+<p><a href="../sources/2020-dreamer.html">Dreamer</a> implements its transition model as the RSSM of PlaNet, and builds the representation model by combining the RSSM with a CNN applied to the image (p.6). Its latent distributions are 30-dimensional diagonal Gaussians, as in PlaNet (p.14). Given only the actions after five context frames, the RSSM predicts 45 steps ahead accurately enough for Dreamer to learn behaviors in its latent space (p.5, Fig. 5).</p>
+<h3>Comparing the sources</h3>
+<ul>
+<li><a href="../sources/2019-planet.html">PlaNet</a> introduces the RSSM and uses it for planning (p.4).</li>
+<li><a href="../sources/2020-dreamer.html">Dreamer</a> reuses it unchanged for policy learning (p.6). The same model therefore supports two different ways of choosing actions; Dreamer builds directly on PlaNet, and this summary is this Wiki's own.</li>
+</ul>
 <h2>Related concepts</h2>
 <ul>
 <li><a href="world-model.html">World model</a>: the RSSM is a design for the world model.</li>

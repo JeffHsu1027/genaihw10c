@@ -3,8 +3,8 @@ title: "遞迴狀態空間模型（Recurrent state-space model）"
 aliases: [RSSM]
 updated: 2026-11-24
 areas: [world-model]
-sources: [2019-planet]
-translated_from: "e40e4bf611b6"
+sources: [2019-planet, 2020-dreamer]
+translated_from: "4da1ee318472"
 ---
 
 ## 一句話定義
@@ -22,6 +22,15 @@ translated_from: "e40e4bf611b6"
 ### Learning Latent Dynamics for Planning from Pixels（2019）
 
 [PlaNet](../sources/2019-planet.md) 提出 RSSM：RNN 根據前一步的確定性狀態、隨機狀態與動作更新確定性狀態，隨機狀態則在給定確定性狀態下從高斯分布抽樣，觀測與獎勵由兩者共同預測 (p.4, Eq. 4)。關於觀測的所有資訊都必須經過編碼器的抽樣步驟，以避免從輸入到重建出現確定性的捷徑 (p.4)。實驗中，兩條路徑在每個任務上都需要，而沒有隨機部分時代理人完全學不起來 (p.6, Fig. 4)。實作使用 200 個單元的 GRU 與 30 維的隨機狀態 (p.12)。與純隨機模型不同，RSSM 對使用 ReLU 或 ELU 激活函數並不敏感 (p.15, Fig. 9)。
+
+### Dream to Control: Learning Behaviors by Latent Imagination（2020）
+
+[Dreamer](../sources/2020-dreamer.md) 以 PlaNet 的 RSSM 作為轉移模型，並把 RSSM 與作用在影像上的 CNN 結合成表示模型 (p.6)。它的潛在分布與 PlaNet 相同，是 30 維的對角高斯分布 (p.14)。在五張脈絡畫面之後只給動作，RSSM 往後預測 45 步仍夠準確，足以讓 Dreamer 在潛在空間中學習行為 (p.5, Fig. 5)。
+
+### 來源之間的比較
+
+- [PlaNet](../sources/2019-planet.md) 提出 RSSM 並用於規劃 (p.4)。
+- [Dreamer](../sources/2020-dreamer.md) 原封不動地沿用它來學習策略 (p.6)。因此同一個模型支援兩種不同的動作選擇方式；Dreamer 直接建立在 PlaNet 之上，這段整理是本 Wiki 的。
 
 ## 相關概念
 

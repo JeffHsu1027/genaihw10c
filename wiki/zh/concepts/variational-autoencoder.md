@@ -3,8 +3,8 @@ title: "變分自編碼器（Variational autoencoder）"
 aliases: [VAE, ConvVAE, 卷積變分自編碼器]
 updated: 2026-11-24
 areas: [world-model]
-sources: [2018-world-models, 2019-planet]
-translated_from: "404b94a3a7bb"
+sources: [2018-world-models, 2019-planet, 2020-dreamer]
+translated_from: "f78778492534"
 ---
 
 ## 一句話定義
@@ -27,6 +27,10 @@ translated_from: "404b94a3a7bb"
 
 [PlaNet](../sources/2019-planet.md) 把它的遞迴狀態空間模型描述為一種序列 VAE 或非線性卡爾曼濾波器 (p.3)。它沿用 World Models 的卷積編碼器與反卷積解碼器 (p.12)，但編碼器是從整段觀測與動作的歷史推斷潛在狀態，而不是只看單張畫面 (p.3)。KL 項低於 3 個 free nats 時不予懲罰 (p.12)。
 
+### Dream to Control: Learning Behaviors by Latent Imagination（2020）
+
+[Dreamer](../sources/2020-dreamer.md) 以變分下界（ELBO），或更一般的變分資訊瓶頸，訓練世界模型，目標由影像與獎勵的重建項加上 KL 正則項組成 (p.6, Eq. 10)。它沿用 World Models 的卷積編碼器與解碼器 (p.14)。論文也把重建與一種不預測像素的對比式目標做比較，重建在多數任務上較好 (p.8, Fig. 8)。
+
 ### 來源之間的比較
 
 - [World Models](../sources/2018-world-models.md) 先單獨、逐張畫面訓練 VAE，再訓練動態模型；作者認為這比端到端訓練實際 (p.4)。
@@ -34,7 +38,8 @@ translated_from: "404b94a3a7bb"
 
 > **解說（Explainer）：** 一起訓練時，壓縮後的畫面描述不只要能把畫面畫回來，也要容易從前一步預測出來。
 
-- PlaNet 沿用了 World Models 的網路（見 PlaNet 來源頁）；這段比較是本 Wiki 的整理。
+- [Dreamer](../sources/2020-dreamer.md) 保留 PlaNet 的聯合訓練，並直接比較出重建不是唯一的選擇，只是在它的實驗中最好的一種 (p.8, Fig. 8)。
+- PlaNet 與 Dreamer 都沿用了 World Models 的網路（見各自的來源頁）；這段比較是本 Wiki 的整理。
 
 ## 相關概念
 

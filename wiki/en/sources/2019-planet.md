@@ -9,7 +9,7 @@ pages: 20
 added: 2026-11-24
 updated: 2026-11-24
 areas: [world-model, reinforcement-learning]
-status: read
+status: to-read
 concepts: [model-based-reinforcement-learning, world-model, recurrent-state-space-model, latent-overshooting, latent-space-planning, variational-autoencoder]
 topics: [world-models]
 ---
@@ -30,6 +30,9 @@ Can a dynamics model learned from pixels be accurate enough to plan with, on con
 - **Training objective**: the model, including the encoder in the style of a [variational autoencoder](../concepts/variational-autoencoder.md), is trained with a variational bound made of a reconstruction term and a KL term between the encoder's posterior and the transition prior (p.4, Eq. 3).
 - **[Latent overshooting](../concepts/latent-overshooting.md)**: a generalized objective that also trains multi-step predictions of every distance directly in latent space, without decoding extra images (p.5).
 - **[Planning](../concepts/latent-space-planning.md)**: at every step, the cross entropy method (CEM) searches for the best action sequence under the model, and only the first action is executed, as in model-predictive control (p.3). Each candidate sequence is scored by rolling the model forward in latent space and summing the predicted rewards, so no images are generated during planning (p.3).
+
+> **Superseded:** [Dreamer](2020-dreamer.md) keeps this world model but replaces online planning with an action model and a value model learned in imagination, which is less shortsighted on long-horizon tasks (p.7, Fig. 7).
+
 - **Data collection**: starting from a few random seed episodes, PlaNet alternates between training the model and collecting a new episode by planning with small Gaussian exploration noise; each chosen action is repeated several times (p.3).
 
 > **Explainer:** Instead of learning reflexes, PlaNet thinks before every move: it imagines many possible action plans inside its model, keeps the most promising ones, refines them, and then takes only the first step of the best plan.
@@ -52,6 +55,9 @@ Implementation details from the appendix: the deterministic path is a GRU with 2
 ## Limitations and open questions
 
 - The planner only sees rewards up to its planning horizon; the authors suggest learning a value function to account for rewards beyond it (p.8).
+
+> **Superseded:** [Dreamer](2020-dreamer.md) learns such a value function in imagination, with λ-return targets that account for rewards beyond the horizon (p.4, Eq. 6).
+
 - The action repeat is fixed by hand; learning temporal abstraction, possibly with hierarchical models, is left for future work (p.8).
 - Planning evaluates thousands of action sequences at every step, which is why everything has to stay in latent space (p.3). Gradient-based planning could make the agent more efficient (p.8).
 - The model is trained by reconstructing images; learning representations without reconstruction could help in visually more diverse tasks (p.8).
@@ -70,6 +76,7 @@ Implementation details from the appendix: the deterministic path is a GRU with 2
 ## Relation to other sources
 
 - [World Models](2018-world-models.md): PlaNet reuses the convolutional encoder and deconvolutional decoder of World Models (p.12) and lists World Models among hybrid agents that learn a policy from imagined experience (p.17). Where World Models trains a small controller inside its dream, PlaNet has no policy at all and replans with the model at every step (p.3). David Ha is an author of both papers (p.1).
+- [Dream to Control: Learning Behaviors by Latent Imagination](2020-dreamer.md) (Dreamer, 2020) learns the same world model but replaces online planning with an action model and a value model trained in imagination. It re-runs PlaNet with a fixed action repeat as a baseline, so its PlaNet scores differ from the ones above (see the Dreamer page).
 
 ## Background
 

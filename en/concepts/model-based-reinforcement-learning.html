@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="source-hash" content="1c80a0c02b7d">
+<meta name="source-hash" content="89209fcc30fc">
 <title>Model-based reinforcement learning · Paper Wiki</title>
 <link rel="stylesheet" href="../../assets/style.css">
 </head>
@@ -15,7 +15,7 @@
 <main class="page page-concept">
   <p class="page-kind"><span class="tag tag-concept">Concept</span></p>
   <h1>Model-based reinforcement learning</h1>
-  <p class="meta">model-based RL, MBRL · 2 sources</p>
+  <p class="meta">model-based RL, MBRL · 3 sources</p>
   <article class="content">
 <h2>One-line definition</h2>
 <p>Reinforcement learning that learns or uses a model of how the environment responds to actions, and uses that model to decide how to act or to learn how to act.</p>
@@ -26,12 +26,16 @@
 <p><a href="../sources/2018-world-models.html">World Models</a> learns a world model without rewards and then trains a small controller that uses the model, first as a source of features (p.5) and then as a complete replacement for the environment (p.7). The paper presents itself as a simplified demonstration of RNN-based world model and controller ideas from a series of papers between 1990 and 2015 (p.2).</p>
 <h3>Learning Latent Dynamics for Planning from Pixels (2019)</h3>
 <p><a href="../sources/2019-planet.html">PlaNet</a> is purely model-based: it has no policy or value network and chooses every action by planning with its learned model (p.3). The paper lists the benefits it expects from planning with learned models: a richer training signal, no need to propagate rewards through Bellman backups, better performance from more search compute, and dynamics that can transfer to other tasks (p.1). It reaches the performance of strong model-free agents with about 200 times fewer episodes on average (p.2).</p>
+<h3>Dream to Control: Learning Behaviors by Latent Imagination (2020)</h3>
+<p><a href="../sources/2020-dreamer.html">Dreamer</a> follows the classical agent structure of dynamics learning, behavior learning and environment interaction, with behavior learned inside the latent space of the world model (p.2). It argues that world models can interpolate past experience and offer analytic gradients of multi-step returns, which model-free actor-critics trained online or by experience replay cannot (p.1). With 5 million environment steps, it exceeds the final performance that the model-free D4PG reaches after 100 million steps (p.6, Fig. 6).</p>
 <h3>Comparing the sources</h3>
 <ul>
 <li><a href="../sources/2018-world-models.html">World Models</a> uses its model to train a policy ahead of time; at decision time the controller reacts to the model's hidden state without planning ahead (p.6).</li>
 <li><a href="../sources/2019-planet.html">PlaNet</a> has no policy and uses its model only at decision time, by searching over action sequences (p.3).</li>
 <li>Both warn that a purely deterministic model is easy to exploit: <a href="../sources/2018-world-models.html">World Models</a> for its controller (p.9) and <a href="../sources/2019-planet.html">PlaNet</a> for its planner (p.4, Fig. 2).</li>
-<li>PlaNet cites World Models as a hybrid agent that learns from imagined experience; this side-by-side comparison is this Wiki's own summary.</li>
+<li><a href="../sources/2020-dreamer.html">Dreamer</a> returns to training a policy ahead of time, like World Models, but with gradients instead of evolution and with a value model that looks beyond the imagination horizon (p.5).</li>
+<li>Dreamer reports that planning only within a fixed horizon, as PlaNet does, is shortsighted on tasks that need long-horizon credit assignment (p.7, Fig. 7). PlaNet itself pointed to the missing value function as a limitation (see the PlaNet page), so this is agreement rather than conflict.</li>
+<li>PlaNet and Dreamer cite World Models, and Dreamer builds on PlaNet; this side-by-side comparison is this Wiki's own summary.</li>
 </ul>
 <h2>Related concepts</h2>
 <ul>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="source-hash" content="44d5148a35ac">
+<meta name="source-hash" content="dc7836dd6770">
 <title>Variational autoencoder · Paper Wiki</title>
 <link rel="stylesheet" href="../../assets/style.css">
 </head>
@@ -15,7 +15,7 @@
 <main class="page page-concept">
   <p class="page-kind"><span class="tag tag-concept">Concept</span></p>
   <h1>Variational autoencoder</h1>
-  <p class="meta">VAE, ConvVAE, convolutional variational autoencoder · 2 sources</p>
+  <p class="meta">VAE, ConvVAE, convolutional variational autoencoder · 3 sources</p>
   <article class="content">
 <h2>One-line definition</h2>
 <p>A neural network that encodes an input into a small random latent vector and learns to decode that vector back into the input.</p>
@@ -29,6 +29,8 @@
 <p><a href="../sources/2018-world-models.html">World Models</a> uses a convolutional VAE as the V model to compress each frame into a latent vector z (p.3). Frames are resized to 64x64 pixels and passed through four convolutional layers; z has 32 dimensions in Car Racing and 64 in Doom (p.13). The VAE is trained for one epoch on random-policy data with an L2 reconstruction loss plus a KL loss (p.13). The authors note that the Gaussian prior also makes the world model more robust to unrealistic latent vectors produced by M (p.13). Because V is trained without rewards, it can keep task-irrelevant details and miss relevant ones (p.12).</p>
 <h3>Learning Latent Dynamics for Planning from Pixels (2019)</h3>
 <p><a href="../sources/2019-planet.html">PlaNet</a> describes its recurrent state-space model as a kind of sequential VAE or non-linear Kalman filter (p.3). It reuses the convolutional encoder and deconvolutional decoder of World Models (p.12), but its encoder infers the latent state from the whole history of observations and actions, not from a single frame (p.3). The KL term is not penalized below 3 free nats (p.12).</p>
+<h3>Dream to Control: Learning Behaviors by Latent Imagination (2020)</h3>
+<p><a href="../sources/2020-dreamer.html">Dreamer</a> trains its world model with the variational lower bound (ELBO), or more generally a variational information bottleneck, made of reconstruction terms for images and rewards and a KL regularizer (p.6, Eq. 10). It reuses the convolutional encoder and decoder of World Models (p.14). Reconstruction is compared with a contrastive objective that avoids predicting pixels; reconstruction works better on most tasks (p.8, Fig. 8).</p>
 <h3>Comparing the sources</h3>
 <ul>
 <li><a href="../sources/2018-world-models.html">World Models</a> trains the VAE on its own, frame by frame, before the dynamics model, which the authors found more practical than end-to-end training (p.4).</li>
@@ -38,7 +40,8 @@
 <p><strong>Explainer:</strong> When everything is trained together, the compressed picture is shaped not only to redraw the frame but also to be easy to predict from the previous step.</p>
 </blockquote>
 <ul>
-<li>PlaNet reuses the World Models networks (see the PlaNet source page); this comparison is this Wiki's own summary.</li>
+<li><a href="../sources/2020-dreamer.html">Dreamer</a> keeps PlaNet's joint training and adds a direct comparison showing that reconstruction is not the only option, though it is the best one in its experiments (p.8, Fig. 8).</li>
+<li>PlaNet and Dreamer reuse the World Models networks (see their source pages); this comparison is this Wiki's own summary.</li>
 </ul>
 <h2>Related concepts</h2>
 <ul>

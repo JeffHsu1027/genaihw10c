@@ -3,7 +3,7 @@ title: "World model"
 aliases: [dynamics model, environment model, predictive model of the environment]
 updated: 2026-11-24
 areas: [world-model, reinforcement-learning]
-sources: [2018-world-models, 2019-planet]
+sources: [2018-world-models, 2019-planet, 2020-dreamer]
 ---
 
 ## One-line definition
@@ -26,13 +26,18 @@ An agent that can predict the consequences of its actions does not have to try e
 
 [PlaNet](../sources/2019-planet.md) calls its world model a latent dynamics model: a transition model, an observation model, a reward model and an encoder, built as a recurrent state-space model (p.3). Because the model also predicts rewards, the planner can score action sequences purely in latent space without generating images (p.3). The model is trained on data that the agent keeps collecting by planning with the partially trained model, not only on random data (p.3).
 
+### Dream to Control: Learning Behaviors by Latent Imagination (2020)
+
+[Dreamer](../sources/2020-dreamer.md) uses the same world model as PlaNet and describes it as summarizing the agent's experience so that complex behaviors can be learned from it (p.1). The world model predicts rewards from actions and past observations, and any learning objective for it can be combined with Dreamer (p.2). The paper compares three objectives for learning it: image reconstruction works best, contrastive estimation solves about half of the tasks, and reward prediction alone is not enough (p.8, Fig. 8).
+
 ### Comparing the sources
 
 - Both learn a compressed latent state from pixels and a transition model over it: [World Models](../sources/2018-world-models.md) with a VAE and an MDN-RNN (p.2, Fig. 4), [PlaNet](../sources/2019-planet.md) with a recurrent state-space model (p.4, Eq. 4).
 - [World Models](../sources/2018-world-models.md) trains its model once on random-policy data, and in Car Racing the model never sees rewards (p.5).
 - [PlaNet](../sources/2019-planet.md) predicts rewards with the model and keeps retraining it on data collected by its own plans (p.3).
 - Both warn that a purely deterministic model is easy to exploit: [World Models](../sources/2018-world-models.md) for its controller (p.9) and [PlaNet](../sources/2019-planet.md) for its planner (p.4, Fig. 2). This is agreement, not conflict.
-- PlaNet cites World Models (see the PlaNet source page); this side-by-side comparison is this Wiki's own summary.
+- [Dreamer](../sources/2020-dreamer.md) keeps PlaNet's world model and changes only how behavior is derived from it, which shows that the same model can serve planning or policy learning (p.8).
+- PlaNet and Dreamer cite World Models (see their source pages); this side-by-side comparison is this Wiki's own summary.
 
 ## Related concepts
 

@@ -9,10 +9,10 @@ pages: 20
 added: 2026-11-24
 updated: 2026-11-24
 areas: [world-model, reinforcement-learning]
-status: read
+status: to-read
 concepts: [model-based-reinforcement-learning, world-model, recurrent-state-space-model, latent-overshooting, latent-space-planning, variational-autoencoder]
 topics: [world-models]
-translated_from: "36877d136c59"
+translated_from: "96ab35d35231"
 ---
 
 ## 一句話總結
@@ -31,6 +31,9 @@ PlaNet（Deep Planning Network）是一個純粹[基於模型](../concepts/model
 - **訓練目標**：模型（包括類似[變分自編碼器](../concepts/variational-autoencoder.md)的編碼器）以變分下界訓練，由重建項，以及編碼器後驗與轉移先驗之間的 KL 項組成 (p.4, Eq. 3)。
 - **[潛在超前預測](../concepts/latent-overshooting.md)（latent overshooting）**：一種推廣後的目標函數，直接在潛在空間訓練各種距離的多步預測，不需要額外解碼出影像 (p.5)。
 - **[規劃](../concepts/latent-space-planning.md)**：每一步都用交叉熵方法（cross entropy method，CEM）在模型中搜尋最佳的動作序列，只執行第一個動作，做法如同模型預測控制（model-predictive control） (p.3)。每個候選序列的分數，是在潛在空間中把模型往前推演並加總預測的獎勵，因此規劃時完全不產生影像 (p.3)。
+
+> **後續變更：** [Dreamer](2020-dreamer.md) 保留這個世界模型，但改用在想像中學到的動作模型與價值模型取代線上規劃，在需要長期規劃的任務上比較不短視 (p.7, Fig. 7)。
+
 - **資料收集**：先用少數隨機動作的種子回合開始，接著交替進行模型訓練，以及用規劃（加上少量高斯探索雜訊）收集新回合；每個選定的動作會重複執行好幾次 (p.3)。
 
 > **解說（Explainer）：** PlaNet 不是學反射動作，而是每一步都先想再動：在模型裡想像許多可能的行動計畫，留下最有希望的幾個、加以修正，最後只執行最佳計畫的第一步。
@@ -53,6 +56,9 @@ PlaNet（Deep Planning Network）是一個純粹[基於模型](../concepts/model
 ## 限制與未解問題
 
 - 規劃器只看得到規劃視野內的獎勵；作者建議學習價值函數來涵蓋視野之外的獎勵 (p.8)。
+
+> **後續變更：** [Dreamer](2020-dreamer.md) 在想像中學習了這樣的價值函數，以 λ-return 目標值納入視野之外的獎勵 (p.4, Eq. 6)。
+
 - 動作重複次數是人工固定的；學習時間上的抽象（可能透過階層式模型）留待未來研究 (p.8)。
 - 每一步都要評估數千個動作序列，因此所有計算都必須留在潛在空間 (p.3)。以梯度為基礎的規劃可能讓代理人更有效率 (p.8)。
 - 模型靠重建影像來訓練；不靠重建的表示學習，可能有助於視覺更多樣的任務 (p.8)。
@@ -71,6 +77,7 @@ PlaNet（Deep Planning Network）是一個純粹[基於模型](../concepts/model
 ## 與其他來源的關係
 
 - [World Models](2018-world-models.md)：PlaNet 沿用 World Models 的卷積編碼器與反卷積解碼器 (p.12)，並把 World Models 列為從想像經驗學習策略的混合式代理人 (p.17)。World Models 在夢境中訓練小型控制器，PlaNet 則完全沒有策略，每一步都用模型重新規劃 (p.3)。David Ha 是兩篇論文的共同作者 (p.1)。
+- [Dream to Control: Learning Behaviors by Latent Imagination](2020-dreamer.md)（Dreamer，2020）學習相同的世界模型，但改用在想像中訓練的動作模型與價值模型取代線上規劃。它以固定的動作重複重新執行 PlaNet 作為基準，因此其中的 PlaNet 分數與上方不同（見 Dreamer 頁）。
 
 ## 背景資料
 

@@ -3,8 +3,8 @@ title: "潛在超前預測（Latent overshooting）"
 aliases: [overshooting, 超前預測, 多步潛在目標]
 updated: 2026-11-24
 areas: [world-model]
-sources: [2019-planet]
-translated_from: "915135069984"
+sources: [2019-planet, 2020-dreamer]
+translated_from: "af39107f48fa"
 ---
 
 ## 一句話定義
@@ -20,6 +20,15 @@ translated_from: "915135069984"
 ### Learning Latent Dynamics for Planning from Pixels（2019）
 
 [PlaNet](../sources/2019-planet.md) 提出潛在超前預測，作為標準變分下界的推廣：訓練一直到最大距離為止的每一種距離的預測，每種距離各有一個權重 (pp.5-6, Eq. 7)。它與觀測超前預測做對比：後者把每個多步預測都解碼成影像，在影像領域通常太昂貴 (p.5, Fig. 3)。距離較長時，後驗分布的梯度會被截斷，讓預測往有資訊的後驗靠攏，而不是反過來 (p.6)。實驗中，潛在超前預測大幅改善了一個叫 DRNN 的模型，卻讓 RSSM 的表現略微下降 (p.14, Fig. 8)。因此最終的 PlaNet 代理人並沒有使用它 (p.12)。
+
+### Dream to Control: Learning Behaviors by Latent Imagination（2020）
+
+[Dreamer](../sources/2020-dreamer.md) 表示學習世界模型時並不需要潛在超前預測 (p.14)。
+
+### 來源之間的比較
+
+- [PlaNet](../sources/2019-planet.md) 發現超前預測能幫助其他模型，但對 RSSM 沒有幫助 (p.14, Fig. 8)。
+- [Dreamer](../sources/2020-dreamer.md) 使用同樣的 RSSM，也沒有使用它 (p.14)。兩篇說法一致；Dreamer 建立在 PlaNet 之上，這段整理是本 Wiki 的。
 
 ## 相關概念
 

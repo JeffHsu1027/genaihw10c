@@ -3,8 +3,8 @@ title: "基於模型的強化學習（Model-based reinforcement learning）"
 aliases: [model-based RL, MBRL, 模型式強化學習]
 updated: 2026-11-24
 areas: [reinforcement-learning, world-model]
-sources: [2018-world-models, 2019-planet]
-translated_from: "4af7567cce1d"
+sources: [2018-world-models, 2019-planet, 2020-dreamer]
+translated_from: "fb9108239022"
 ---
 
 ## 一句話定義
@@ -25,12 +25,18 @@ translated_from: "4af7567cce1d"
 
 [PlaNet](../sources/2019-planet.md) 是純粹基於模型的代理人：沒有策略網路或價值網路，每個動作都靠學到的模型規劃 (p.3)。論文列出用學習模型規劃預期的好處：更豐富的訓練訊號、不需透過 Bellman 備份傳遞獎勵、增加搜尋計算就能提升表現，以及動態模型可轉移到其他任務 (p.1)。它以平均約少 200 倍的回合，達到強大無模型代理人的表現 (p.2)。
 
+### Dream to Control: Learning Behaviors by Latent Imagination（2020）
+
+[Dreamer](../sources/2020-dreamer.md) 採用動態學習、行為學習與環境互動這套經典的代理人結構，而行為是在世界模型的潛在空間中學習 (p.2)。它主張世界模型能在過去經驗之間內插，並提供多步報酬的解析梯度，這是線上或用經驗回放訓練的無模型 actor-critic 做不到的 (p.1)。它用 500 萬環境步，就超越無模型的 D4PG 在 1 億步後的最終表現 (p.6, Fig. 6)。
+
 ### 來源之間的比較
 
 - [World Models](../sources/2018-world-models.md) 事先用模型訓練策略；做決定時，控制器根據模型的隱藏狀態直接反應，不往前規劃 (p.6)。
 - [PlaNet](../sources/2019-planet.md) 沒有策略，只在做決定的當下用模型搜尋動作序列 (p.3)。
 - 兩篇都警告純確定性的模型容易被利用：[World Models](../sources/2018-world-models.md) 是被控制器利用 (p.9)，[PlaNet](../sources/2019-planet.md) 是被規劃器利用 (p.4, Fig. 2)。
-- PlaNet 把 World Models 列為從想像經驗學習的混合式代理人；這段並列比較是本 Wiki 的整理。
+- [Dreamer](../sources/2020-dreamer.md) 回到像 World Models 一樣事先訓練策略，但改用梯度而非演化，並加上能看見想像視野之外的價值模型 (p.5)。
+- Dreamer 指出像 PlaNet 那樣只在固定視野內規劃，在需要長期功勞分配的任務上很短視 (p.7, Fig. 7)。PlaNet 自己也把缺少價值函數列為限制（見 PlaNet 頁），所以這是說法一致，不是衝突。
+- PlaNet 與 Dreamer 都引用 World Models，Dreamer 也建立在 PlaNet 之上；這段並列比較是本 Wiki 的整理。
 
 ## 相關概念
 

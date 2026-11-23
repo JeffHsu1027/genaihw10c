@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="source-hash" content="a6cb6141abf3">
+<meta name="source-hash" content="d35c2ae4b596">
 <title>潛在空間規劃（Latent space planning） · 論文 Wiki</title>
 <link rel="stylesheet" href="../../assets/style.css">
 </head>
@@ -15,7 +15,7 @@
 <main class="page page-concept">
   <p class="page-kind"><span class="tag tag-concept">概念</span></p>
   <h1>潛在空間規劃（Latent space planning）</h1>
-  <p class="meta">在潛在空間規劃, 線上規劃, 模型預測控制, MPC, CEM 規劃 · 1 個來源</p>
+  <p class="meta">在潛在空間規劃, 線上規劃, 模型預測控制, MPC, CEM 規劃 · 2 個來源</p>
   <article class="content">
 <h2>一句話定義</h2>
 <p>在學到的潛在動態模型裡搜尋候選動作序列、以預測的獎勵評分來選擇動作，過程中不產生觀測畫面。</p>
@@ -27,11 +27,20 @@
 <h2>各來源怎麼說</h2>
 <h3>Learning Latent Dynamics for Planning from Pixels（2019）</h3>
 <p><a href="../sources/2019-planet.html">PlaNet</a> 在模型中用 CEM 規劃，並像模型預測控制一樣每一步都重新規劃 (p.3)。每次收到新觀測後，動作序列的信念都從平均為零、變異數為一重新開始，以避免陷入局部最佳 (p.3)。每個候選序列只用一條抽樣軌跡評分，把計算預算留給更多不同的序列 (p.3)。設定為規劃視野 12、迭代 10 次、1000 個候選、以最好的 100 個重新擬合 (p.12)。用 CEM 反覆修正，在所有任務上都勝過從 1000 個隨機序列中挑最好的一個 (p.6, Fig. 5)。在 cheetah 上使用真實模擬器時，視野 6 太短，最佳視野約為 8，視野太長反而因搜尋空間變大而變差 (p.20, Fig. 12)。由於 PlaNet 沒有價值函數，視野之外的獎勵都被忽略，作者建議學習一個價值函數 (p.8)。</p>
+<h3>Dream to Control: Learning Behaviors by Latent Imagination（2020）</h3>
+<p><a href="../sources/2020-dreamer.html">Dreamer</a> 在同一個世界模型上，比較它學到的動作與價值模型和 PlaNet 的線上規劃 (p.4, Fig. 4)。規劃和沒有價值的動作模型一樣，只考慮視野內的獎勵，因此很短視，只在 walker 這類反應式任務成功 (p.7, Fig. 7)。Dreamer 的訓練也更快：每一百萬環境步約 3 小時，PlaNet 的線上規劃則需要 11 小時 (p.8)。</p>
+<h3>來源之間的比較</h3>
+<ul>
+<li><a href="../sources/2019-planet.html">PlaNet</a> 主張規劃只要投入更多搜尋計算就能進步，而且學到的動態可以跨任務轉移 (p.1)。</li>
+<li><a href="../sources/2020-dreamer.html">Dreamer</a> 顯示沒有價值函數時，在固定視野內規劃很短視，並改用學到的策略與價值取代 (p.7, Fig. 7)。</li>
+<li>兩者並不衝突：<a href="../sources/2019-planet.html">PlaNet</a> 早已把缺少價值函數列為限制 (p.8)。Dreamer 建立在 PlaNet 之上，這段整理是本 Wiki 的。</li>
+</ul>
 <h2>相關概念</h2>
 <ul>
 <li><a href="model-based-reinforcement-learning.html">基於模型的強化學習（Model-based reinforcement learning）</a>：規劃是使用學習模型的一種方式。</li>
 <li><a href="recurrent-state-space-model.html">遞迴狀態空間模型（Recurrent state-space model）</a>：PlaNet 用來規劃的模型。</li>
 <li><a href="learning-in-imagination.html">在想像中學習（Learning in imagination）</a>：使用模型的另一種方式；它事先用想像的經驗訓練策略，規劃則是在做決定的當下搜尋。</li>
+<li><a href="actor-critic.html">Actor-critic（演員－評論家）</a>：Dreamer 用來取代規劃的學習型策略與價值。</li>
 </ul>
 <h2>背景資料</h2>
 <p>（尚無）</p>
