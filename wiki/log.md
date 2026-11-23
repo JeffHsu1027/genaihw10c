@@ -182,3 +182,27 @@
 - `raw/README.md`：填入公開連結（DOI 10.1038/s41586-025-08600-3）與來源頁。至此 `raw/` 中 7 個 PDF 全部 ingest 完成。
 - `build.py` 產生 56 個頁面，`check.py` 全部通過。
 
+## [2026-11-24] lint | 完整檢查（7 篇來源）
+
+- 範圍：7 個來源頁、20 個概念頁、1 個主題頁，中英各 28 頁。本次只回報，沒有修改任何 Wiki 頁面。
+- `check.py`：全部通過。
+- PDF 抽查（每個來源頁隨機抽 3 個帶出處的主張，固定亂數種子，對照該頁 PDF 文字層，共 21 項）：全部相符。
+  - `2018-world-models`：CMA-ES 適用參數量（p.4）、世界模型與控制器的分工（p.1）、能否取代真實環境的提問（p.6）。
+  - `2019-planet`：隨機與確定路徑都需要的引文（p.3）、最終代理人不需要 latent overshooting（p.5）、單一代理人學六個任務（p.6）。
+  - `2020-dreamer`：action repeat 2 最好（p.19）、λ-returns 的定義（p.4）、horizon 20 時 16/20 任務勝出且同段另寫 19 個任務（p.9，已標待確認）。
+  - `2021-dreamerv2`：discount 0.99 時在 Montezuma's Revenge 與 ICM 相當（p.17）、以類別變數取代 PlaNet 的高斯潛在變數（p.2）、批次 50 條長度 50 的序列（p.2）。
+  - `2023-dreamerv3`：世界模型元件與 straight-through 梯度（pp.3-4）、穩健性技巧與單一固定設定（p.1）、仍沿用 PlaNet 的 RSSM（p.3）。
+  - `2025-dreamer4`：三個訓練階段（p.4）、獎勵頭沿用 DreamerV3 的 symexp twohot（p.7）、記憶短且物品欄預測不精確（p.18）。
+  - `2025-wham`：同時建模世界與玩家動作（p.3）、Demonstrator 是概念原型（p.6）、使用者研究歸納出一致性、多樣性與持續性（p.1）。
+- 翻譯抽查（每個中文頁隨機抽 3 段與英文版逐段對照，共 84 段）：28 頁中英段落數全部相同；抽查段落的數字、出處、連結與意思都一致，沒有發現漏譯或譯錯。
+- 語意檢查結果（待擁有者決定是否修改）：
+  - 過時說法：主題頁 `world-models` 的 Overview 以「代理人」為中心描述世界模型，WHAM 加入後已不完全適用；概念頁 `world-model` 的 Explanation 只列兩種用途（特徵、模擬器），可補「供人類構思」與「離線訓練」。
+  - 缺少的反向交叉連結：`categorical-latents`→`vector-quantization`、`variational-autoencoder`→`vector-quantization`、`shortcut-forcing`→`autoregressive-transformer`、`model-based-reinforcement-learning`→`actor-critic`、`latent-space-planning`→`latent-overshooting`、`mixture-density-rnn`→`recurrent-state-space-model`、`learning-in-imagination`→`model-based-reinforcement-learning`、`autoregressive-transformer`→`action-conditioning`、`creativity-support`。其餘單向連結（如 `world-model`→`categorical-latents`）屬合理的上位到下位關係，不建議補。
+  - 主題頁 Key concepts 未列：`offline-reinforcement-learning`、`evolution-strategies`、`creativity-support`（後者屬 game-ai，可只在 Key terms 提及）。
+  - 多頁提到但沒有自己頁面的概念：free nats／free bits（PlaNet、Dreamer、DreamerV2、DreamerV3）、行為複製（behavior cloning，Dreamer 4）、Reinforce 與 PPO 等策略梯度方法、Atari 與 Minecraft 等基準。free nats／free bits 已在四篇來源出現，符合建立條件。
+  - 別名重疊：`categorical-latents` 的別名 straight-through gradients 也被 DreamerV2 用於 actor 梯度，容易混淆。
+  - 未標記的衝突或取代：沒有發現。Dreamer 不用 target network、DreamerV2 改用，已在比較段寫成設計差異。
+  - Explainer：逐一檢查，沒有發現扭曲原意。
+  - 待確認（論文內部不一致，無法由 Wiki 解決）：Dreamer p.9 任務數 19 或 20；DreamerV2 discount 0.999（p.2）與 0.995（p.19）；DreamerV3 想像 horizon 16（p.5）與 15（p.21）。
+  - 建議可補的論文：Genie（Dreamer 4 與 WHAM 都引用）、MuZero（DreamerV2、DreamerV3 引用）、IRIS 或 DIAMOND（transformer／擴散世界模型），以及預定的第 8、9 篇。
+  - 規則缺口：附錄圖號如 `Fig. A.2` 不符合出處格式，目前只能標頁碼。
