@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="source-hash" content="cc9488480b74">
+<title>世界模型（World models） · 論文 Wiki</title>
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="site-name" href="../index.html">論文 Wiki</a>
+  <a class="lang-switch" href="../../en/topics/world-models.html" hreflang="en">English</a>
+</header>
+<main class="page page-topic">
+  <p class="page-kind"><span class="tag tag-topic">主題</span></p>
+  <h1>世界模型（World models）</h1>
+  <p class="meta">世界模型 · 1 個來源</p>
+  <article class="content">
+<h2>概述</h2>
+<p>世界模型是學出來的模擬器：讓代理人能預測環境會如何回應自己的行動。相關研究關心的是：如何從原始觀測學到這樣的模型、如何用它來選擇動作或訓練策略，以及如何避免代理人利用模型的錯誤。這個主題頁逐篇整理這條研究脈絡。</p>
+<h2>發展脈絡</h2>
+<ul>
+<li>2018：<a href="../sources/2018-world-models.html">World Models</a> 把代理人拆成大型非監督式世界模型與小型控制器，並證明完全在模型夢境中訓練的策略可以在真實遊戲中運作 (p.7)。</li>
+</ul>
+<h2>來源</h2>
+<table>
+<thead>
+<tr>
+<th>年份</th>
+<th>標題</th>
+<th>狀態</th>
+<th>一句話總結</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2018</td>
+<td><a href="../sources/2018-world-models.html">World Models</a></td>
+<td>已讀</td>
+<td>由 VAE 加 MDN-RNN 組成的世界模型，搭配演化訓練的小型控制器；策略可以在模型的夢境中訓練。</td>
+</tr>
+</tbody>
+</table>
+<h2>關鍵概念</h2>
+<ul>
+<li><a href="../concepts/world-model.html">世界模型（World model）</a>：預測環境如何變化的學習模型。</li>
+<li><a href="../concepts/variational-autoencoder.html">變分自編碼器（Variational autoencoder）</a>：把觀測壓縮成小的潛在向量。</li>
+<li><a href="../concepts/mixture-density-rnn.html">混合密度遞迴神經網路（Mixture density RNN）</a>：預測下一個潛在狀態的機率分布。</li>
+<li><a href="../concepts/learning-in-imagination.html">在想像中學習（Learning in imagination）</a>：用世界模型產生的經驗訓練策略。</li>
+</ul>
+<h2>術語表</h2>
+<ul>
+<li><strong>潛在向量（latent vector）</strong>：概括一次觀測的一小串數字。</li>
+<li><strong>Rollout</strong>：代理人在環境中從一回合開始到結束的一次執行。</li>
+<li><strong>控制器／策略（controller / policy）</strong>：代理人中負責選擇動作的部分。</li>
+<li><strong>基於模型的強化學習（model-based reinforcement learning）</strong>：會學習或使用環境模型的強化學習。</li>
+<li><strong>模型被利用（model exploitation）</strong>：代理人找到只因模型出錯才得高分的行為。</li>
+<li><strong>溫度（temperature）</strong>：調整模型抽樣隨機程度的參數。</li>
+</ul>
+<h2>未解問題</h2>
+<ul>
+<li>在隨機策略無法涵蓋的環境中，代理人要如何充分探索來改進世界模型？<a href="../sources/2018-world-models.html">World Models</a> 提出由好奇心驅動的迭代流程，但沒有實驗驗證 (pp.10-11)。</li>
+<li>在想像中訓練的策略要如何避免利用模型的錯誤？<a href="../sources/2018-world-models.html">World Models</a> 只用隨機模型與可調溫度部分解決了這個問題 (p.10)。</li>
+</ul>
+<h2>背景資料</h2>
+<p>（尚無）</p>
+  </article>
+</main>
+<footer class="site-footer"><a href="../index.html">回首頁</a></footer>
+</body>
+</html>

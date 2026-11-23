@@ -1,0 +1,64 @@
+# 更新紀錄
+
+只能往下新增，不可修改既有紀錄。標題格式：`## [YYYY-MM-DD] 類型 | 標題`，類型為 `ingest`、`query`、`lint`、`rules`（`setup` 只用於第一筆）。
+
+## [2026-11-24] setup | 建立專案
+
+- 依 `docs/requirements.md`（擁有者已確認）建立 `AGENTS.md`、`CLAUDE.md`、`README.md`、`requirements.txt`、`.nojekyll`。
+- 範本：`templates/` 下來源、概念、主題頁的中英 Markdown 範本，以及 `page.html`、`home.html`、`landing.html`；樣式表 `assets/style.css`。
+- 腳本：`scripts/build.py`、`scripts/check.py`、`scripts/common.py`。
+- Wiki：`wiki/areas.yml`（world-model、reinforcement-learning、game-ai）、空的 `wiki/en/index.md` 與 `wiki/zh/index.md`。
+- `raw/README.md` 列出 `raw/` 現有的 7 個 PDF，公開連結與來源頁待 ingest 時填入。
+- 尚未 ingest 任何論文。
+
+## [2026-11-24] rules | 簡報規則移出 AGENTS.md
+
+- 依擁有者要求，把 `AGENTS.md` 中與教學簡報有關的內容（簡報讀者、語言、只讀 Wiki、進入階段 2 的條件、`decks/` 資料夾）移到新檔 `docs/slides-plan.md`，建完 Wiki 後才執行。
+- `docs/slides-plan.md` 同時整理了 `docs/decisions.md` 第 7 節的簡報 graph 與關卡 G1–G4。
+- `docs/requirements.md` 新增 P23，並更新第 8 節對照表。
+- 沒有修改任何 Wiki 頁面。
+
+## [2026-11-24] rules | 簡報計畫加入課堂 loop / graph 規格與繳交清單
+
+- 依第 10 週講義〈把你的工作拆成 AI 能做的流程〉，在 `docs/slides-plan.md` 補上：每個節點只能看什麼、改什麼；loop 五件事與剎車；每輪只修報告列出的問題；錯在哪關退回哪關；大圈少、小圈快。
+- 核對完整作業需求後補上遺漏：開始條件加上「全 Wiki 至少 ingest 5 篇」。`docs/requirements.md` 新增 P24 與第 9 節「與 Karpathy 原文的差異」草稿。
+- `AGENTS.md` 與 Wiki 頁面都沒有修改。
+
+## [2026-11-24] ingest | World Models
+
+- 閱讀範圍：PDF 第 1–21 頁全文（正文 pp.1-12、附錄 A.1–A.5 pp.13-15、參考文獻 pp.16-21）。`status: read`（擁有者確認）。
+- 新增來源頁：`2018-world-models`（areas：world-model、reinforcement-learning）。
+- 新增主題頁：`world-models`（第一篇 ingest 時建立，依 `AGENTS.md` 第 3 節）。
+- 新增概念頁（5 個，達每篇上限）：
+  - `world-model`（把握度高：論文主題）
+  - `variational-autoencoder`（高：V 元件，pp.3、13）
+  - `mixture-density-rnn`（高：M 元件，pp.3、14）
+  - `evolution-strategies`（高：以 CMA-ES 訓練 C，pp.4、12、14）
+  - `learning-in-imagination`（中：在夢境中訓練是核心貢獻，但名稱由本 Wiki 取，別名含 dream training、latent imagination，以便之後與 Dreamer 系列共用）
+- 更新既有頁面：無（第一篇來源）。
+- 刻意不連結：`model-based-reinforcement-learning` 暫不建頁（本篇提到但非其貢獻，等 PlaNet 進來有兩篇來源再建）；不加 `game-ai` 領域（遊戲只是測試環境，擁有者同意）；迭代訓練與好奇心探索只寫在來源頁（論文未做實驗）；Learning to Think、PILCO 等不在 Wiki 中，`Relation to other sources` 寫無。
+- 取代與衝突：無。
+- `raw/README.md`：填入公開連結（arXiv 1803.10122，PDF 第 1 頁）與來源頁。
+- 以上頁面皆有中英版；`build.py` 產生 14 個頁面，`check.py` 全部通過。
+
+## [2026-11-24] rules | 試跑後調整規則
+
+- 依 World Models 試跑時發現的問題，經擁有者同意修改：
+  - 概念頁上限：每篇仍以新建 5 個為上限，超過時須在 ingest 計畫中逐項說明理由、擁有者同意才可破例（`AGENTS.md` §4）。
+  - `index.md` 概念頁排序：依英文標題字母順序，中文版沿用英文版順序（`AGENTS.md` §3、中英 `index.md` 開頭說明）。
+  - 首頁卡片摘要：`build.py` 改取第一個區塊的第一句，太長時英文在字的邊界截斷，避免切在字中間。
+  - 頁碼上限：來源頁 frontmatter 新增 `pages`（PDF 總頁數，ingest 時填）；`check.py` 檢查來源頁的出處不超過它，概念頁與主題頁的出處則對照同一行最近連到的來源頁（`AGENTS.md` §5、`templates/source.*.md`、`scripts/check.py`）。
+- 補上 `2018-world-models` 的 `pages: 22`，中文版與中文 `index.md` 重新取得雜湊。
+- 新增 `.claude/launch.json`（本機預覽伺服器 `python -m http.server 8000`），用來在瀏覽器檢查網頁排版。
+
+## [2026-11-24] rules | 讀檔時去掉 BOM
+
+- 測試時發現檔案開頭有 BOM（部分編輯器存 UTF-8 時會加）時，`check.py` 讀不到 frontmatter。經擁有者同意，`scripts/common.py` 改用 `utf-8-sig` 讀檔，自動去掉 BOM。
+- 既有檔案沒有 BOM，雜湊不受影響；`build.py`、`check.py` 全部通過。
+
+## [2026-11-24] rules | AI 自動 commit
+
+- 依擁有者要求取代 `docs/decisions.md` D11：AI 可以執行 git。`AGENTS.md` 新增 7.6，修改 7.1 第 13 步與 §10；`docs/slides-plan.md` 第 6 節同步修改；`docs/requirements.md` 新增 P26。
+- 規則：每個階段性步驟在 build、check 通過後自動 commit；commit 前確認沒有 PDF 與機密；push 只在擁有者明確說「push」時執行；不可 force push 或改寫歷史。
+- 依擁有者指示，把目前尚未 commit 的工作分成兩個 commit：規則與工具、World Models ingest。
+

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="source-hash" content="3ce9c71ba799">
+<title>混合密度遞迴神經網路（Mixture density RNN） · 論文 Wiki</title>
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="site-name" href="../index.html">論文 Wiki</a>
+  <a class="lang-switch" href="../../en/concepts/mixture-density-rnn.html" hreflang="en">English</a>
+</header>
+<main class="page page-concept">
+  <p class="page-kind"><span class="tag tag-concept">概念</span></p>
+  <h1>混合密度遞迴神經網路（Mixture density RNN）</h1>
+  <p class="meta">MDN-RNN, 混合密度網路, MDN · 1 個來源</p>
+  <article class="content">
+<h2>一句話定義</h2>
+<p>一種遞迴神經網路，輸出層給出高斯混合分布的參數，因此預測的是下一個值的機率分布，而不是單一數值。</p>
+<h2>說明</h2>
+<p>遞迴網路帶著一個概括過去的隱藏狀態。混合密度輸出層把這個狀態轉成好幾個高斯成分的權重、平均值與變異數。從混合分布抽樣，可以從同樣的過去得到明顯不同的結果，這是單一高斯分布做不好的。溫度參數調整抽樣的隨機程度：溫度低時預測幾乎是決定性的，溫度高時結果更多樣。</p>
+<h2>各來源怎麼說</h2>
+<h3>World Models（2018）</h3>
+<p><a href="../sources/2018-world-models.html">World Models</a> 用輸出層為混合密度網路的 LSTM 當作 M 模型，根據目前的動作、潛在向量與隱藏狀態，預測下一個潛在向量的分布 (p.3)。混合分布適合處理離散的隨機事件，例如怪物要不要發射火球 (p.9)。實作上使用 5 個高斯混合成分，Car Racing 用 256 個隱藏單元、Doom 用 512 個，訓練 20 個 epoch (p.14)。在 Doom 中，模型也預測代理人是否死亡，機率超過 50% 時就結束這一回合 (p.14)。溫度非常低時，模型會塌縮到單一模態，怪物不再發射火球，夢境也就無法用來訓練 (p.9)。</p>
+<h2>相關概念</h2>
+<ul>
+<li><a href="world-model.html">世界模型（World model）</a>：MDN-RNN 是世界模型中負責預測的一半。</li>
+<li><a href="variational-autoencoder.html">變分自編碼器（Variational autoencoder）</a>：定義了 MDN-RNN 要預測的潛在向量。</li>
+<li><a href="learning-in-imagination.html">在想像中學習（Learning in imagination）</a>：從 MDN-RNN 抽樣就能產生想像中的環境。</li>
+</ul>
+<h2>背景資料</h2>
+<p>（尚無）</p>
+  </article>
+</main>
+<footer class="site-footer"><a href="../index.html">回首頁</a></footer>
+</body>
+</html>

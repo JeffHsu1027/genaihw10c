@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="source-hash" content="ac4765754564">
+<title>演化策略（Evolution strategies） · 論文 Wiki</title>
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="site-name" href="../index.html">論文 Wiki</a>
+  <a class="lang-switch" href="../../en/concepts/evolution-strategies.html" hreflang="en">English</a>
+</header>
+<main class="page page-concept">
+  <p class="page-kind"><span class="tag tag-concept">概念</span></p>
+  <h1>演化策略（Evolution strategies）</h1>
+  <p class="meta">ES, CMA-ES, 共變異數矩陣調適演化策略 · 1 個來源</p>
+  <article class="content">
+<h2>一句話定義</h2>
+<p>一類黑箱最佳化方法：對一群候選解反覆抽樣、評分、保留較好的，過程中不需要計算梯度。</p>
+<h2>說明</h2>
+<p>每一代抽樣出許多組參數，實際執行並評分，再把抽樣分布移向得分最高的那些。CMA-ES 還會調整抽樣分布的共變異數，學到參數空間中哪些方向比較重要。因為只需要最後的分數，演化策略能應付稀疏或延遲的獎勵，也很容易平行執行，但參數非常多時效率會變差。</p>
+<h2>各來源怎麼說</h2>
+<h3>World Models（2018）</h3>
+<p><a href="../sources/2018-world-models.html">World Models</a> 用 CMA-ES 訓練小型控制器，因為這個方法適合最多幾千個參數的解空間 (p.4)。作者指出，演化策略只需要最後的累積獎勵，而且容易平行化 (p.12)。族群大小為 64，每個候選解的適應度是它在 16 次 rollout 中的平均獎勵 (p.14)。在 Car Racing 中，最佳代理人在 1800 代之後，於 1024 次 rollout 中達到平均 900.46 分 (p.14)。</p>
+<h2>相關概念</h2>
+<ul>
+<li><a href="learning-in-imagination.html">在想像中學習（Learning in imagination）</a>：在 VizDoom 中，每個候選控制器都在想像的環境裡評分。</li>
+</ul>
+<h2>背景資料</h2>
+<p>（尚無）</p>
+  </article>
+</main>
+<footer class="site-footer"><a href="../index.html">回首頁</a></footer>
+</body>
+</html>

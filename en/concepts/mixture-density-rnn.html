@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="source-hash" content="8bfd069e4053">
+<title>Mixture density RNN · Paper Wiki</title>
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="site-name" href="../index.html">Paper Wiki</a>
+  <a class="lang-switch" href="../../zh/concepts/mixture-density-rnn.html" hreflang="zh-Hant">中文</a>
+</header>
+<main class="page page-concept">
+  <p class="page-kind"><span class="tag tag-concept">Concept</span></p>
+  <h1>Mixture density RNN</h1>
+  <p class="meta">MDN-RNN, mixture density network, MDN · 1 source</p>
+  <article class="content">
+<h2>One-line definition</h2>
+<p>A recurrent neural network whose output layer gives the parameters of a mixture of Gaussians, so it predicts a probability distribution over the next value instead of a single value.</p>
+<h2>Explanation</h2>
+<p>A recurrent network carries a hidden state that summarizes the past. A mixture density output layer turns that state into the weights, means and variances of several Gaussian components. Sampling from the mixture can produce clearly different outcomes from the same past, which a single Gaussian cannot do well. A temperature parameter scales the randomness of sampling: a low temperature gives nearly deterministic predictions, a high temperature gives more varied ones.</p>
+<h2>What each source says</h2>
+<h3>World Models (2018)</h3>
+<p><a href="../sources/2018-world-models.html">World Models</a> uses an LSTM with a mixture density output layer as the M model, predicting the distribution of the next latent vector from the current action, latent vector and hidden state (p.3). The mixture is useful for discrete random events, such as whether a monster decides to shoot a fireball (p.9). The implementation uses 5 Gaussian mixtures, 256 hidden units for Car Racing and 512 for Doom, and 20 training epochs (p.14). In Doom, the model also predicts whether the agent dies, and the episode ends when that probability is above 50% (p.14). At a very low temperature the model collapses to one mode and the monsters stop shooting, which makes the dream useless for training (p.9).</p>
+<h2>Related concepts</h2>
+<ul>
+<li><a href="world-model.html">World model</a>: the MDN-RNN is the prediction half of the world model.</li>
+<li><a href="variational-autoencoder.html">Variational autoencoder</a>: defines the latent vectors that the MDN-RNN predicts.</li>
+<li><a href="learning-in-imagination.html">Learning in imagination</a>: sampling from the MDN-RNN generates the imagined environment.</li>
+</ul>
+<h2>Background</h2>
+<p>(None yet)</p>
+  </article>
+</main>
+<footer class="site-footer"><a href="../index.html">Back to home</a></footer>
+</body>
+</html>

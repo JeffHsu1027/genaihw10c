@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="source-hash" content="f9aa0a8fe3ee">
+<title>變分自編碼器（Variational autoencoder） · 論文 Wiki</title>
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="site-name" href="../index.html">論文 Wiki</a>
+  <a class="lang-switch" href="../../en/concepts/variational-autoencoder.html" hreflang="en">English</a>
+</header>
+<main class="page page-concept">
+  <p class="page-kind"><span class="tag tag-concept">概念</span></p>
+  <h1>變分自編碼器（Variational autoencoder）</h1>
+  <p class="meta">VAE, ConvVAE, 卷積變分自編碼器 · 1 個來源</p>
+  <article class="content">
+<h2>一句話定義</h2>
+<p>一種神經網路，把輸入編碼成一個小而帶有隨機性的潛在向量，並學會把這個向量解碼回原本的輸入。</p>
+<h2>說明</h2>
+<p>編碼器輸出一個高斯分布的平均值與分散程度，從中抽樣出潛在向量，再由解碼器根據這個樣本重建輸入。訓練時要在重建品質與「讓潛在分布接近一個簡單的先驗分布」之間取得平衡。這個先驗限制了每個潛在向量能攜帶的資訊量，也讓潛在空間保持平滑，相近的向量會解碼出相似的輸入。</p>
+<blockquote class="note note-explainer">
+<p><strong>解說（Explainer）：</strong> 可以把潛在向量想成一段對圖片的簡短描述，詳細到別人能照著它把圖重畫出來。</p>
+</blockquote>
+<h2>各來源怎麼說</h2>
+<h3>World Models（2018）</h3>
+<p><a href="../sources/2018-world-models.html">World Models</a> 用卷積 VAE 當作 V 模型，把每張畫面壓縮成潛在向量 z (p.3)。畫面先縮成 64x64 像素，再經過四層卷積層；Car Racing 的 z 是 32 維，Doom 是 64 維 (p.13)。VAE 以隨機策略收集的資料、用 L2 重建損失加上 KL 損失訓練一個 epoch (p.13)。作者指出，高斯先驗也讓世界模型對 M 產生的不合理潛在向量更穩健 (p.13)。因為 V 的訓練不看獎勵，它可能保留與任務無關的細節，卻漏掉有關的部分 (p.12)。</p>
+<h2>相關概念</h2>
+<ul>
+<li><a href="world-model.html">世界模型（World model）</a>：VAE 是世界模型中負責壓縮的一半。</li>
+<li><a href="mixture-density-rnn.html">混合密度遞迴神經網路（Mixture density RNN）</a>：預測由 VAE 定義的下一個潛在向量。</li>
+</ul>
+<h2>背景資料</h2>
+<p>（尚無）</p>
+  </article>
+</main>
+<footer class="site-footer"><a href="../index.html">回首頁</a></footer>
+</body>
+</html>
