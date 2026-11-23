@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="{{lang}}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="source-hash" content="{{source_hash}}">
+<title>{{title}} · {{site_name}}</title>
+<link rel="stylesheet" href="{{root}}assets/style.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="site-name" href="{{home}}">{{site_name}}</a>
+  <a class="lang-switch" href="{{switch_href}}" hreflang="{{switch_lang}}">{{switch_label}}</a>
+</header>
+<main class="page page-{{kind}}">
+  <p class="page-kind"><span class="tag tag-{{kind}}">{{kind_label}}</span></p>
+  <h1>{{title}}</h1>
+{{meta}}
+  <article class="content">
+{{content}}
+  </article>
+</main>
+<footer class="site-footer"><a href="{{home}}">{{home_label}}</a></footer>
+</body>
+</html>

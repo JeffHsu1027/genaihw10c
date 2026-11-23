@@ -1,0 +1,11 @@
+# 領域清單：frontmatter 的 areas / area 只能使用這裡的 slug。
+# 順序即首頁的分區順序。新增或修改前依 AGENTS.md 7.4 先提議，並在 wiki/log.md 記一筆 rules。
+world-model:
+  en: World models
+  zh: 世界模型
+reinforcement-learning:
+  en: Reinforcement learning
+  zh: 強化學習
+game-ai:
+  en: Game AI
+  zh: 遊戲 AI
