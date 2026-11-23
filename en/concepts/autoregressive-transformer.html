@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="source-hash" content="9c266e505843">
+<title>Autoregressive transformer · Paper Wiki</title>
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="site-name" href="../index.html">Paper Wiki</a>
+  <a class="lang-switch" href="../../zh/concepts/autoregressive-transformer.html" hreflang="zh-Hant">中文</a>
+</header>
+<main class="page page-concept">
+  <p class="page-kind"><span class="tag tag-concept">Concept</span></p>
+  <h1>Autoregressive transformer</h1>
+  <p class="meta">decoder-only transformer, causal transformer, next-token prediction, GPT-style model · 1 source</p>
+  <article class="content">
+<h2>One-line definition</h2>
+<p>A transformer that generates a sequence one token at a time, each time predicting the next token from all the tokens before it.</p>
+<h2>Explanation</h2>
+<p>A causal attention mask lets each position see only earlier positions, so the model can be trained on whole sequences at once to predict every next token. At generation time, it samples a token, appends it, and repeats. This is the design behind large language models, and it works for any data that can be written as a sequence of tokens, including images that have been quantized and actions that have been discretized. Because each new token depends on the tokens before it, changing an earlier token changes everything that follows.</p>
+<h2>What each source says</h2>
+<h3>World and Human Action Models towards gameplay ideation (2025)</h3>
+<p><a href="../sources/2025-wham.html">WHAM</a> trains a decoder-only transformer to predict the next token in a sequence of interleaved image and controller-action tokens, with no explicit marker telling it whether an image or action token comes next (p.4, Fig. 2). It is built on a modified nanoGPT implementation of GPT-2 (p.10). Generating by sampling one token at a time allows image or action tokens to be modified during generation, which enables prompting through edited frames or chosen actions (p.3). The largest model has 1.6B parameters and a context of 5,560 tokens, or one second of gameplay (p.4, Fig. 2).</p>
+<h2>Related concepts</h2>
+<ul>
+<li><a href="vector-quantization.html">Vector quantization</a>: produces the image tokens the transformer predicts.</li>
+<li><a href="world-model.html">World model</a>: WHAM uses this architecture as its world model.</li>
+<li><a href="shortcut-forcing.html">Shortcut forcing</a>: a different transformer world model design, which generates each frame with a few denoising steps instead of token by token.</li>
+</ul>
+<h2>Background</h2>
+<p>(None yet)</p>
+  </article>
+</main>
+<footer class="site-footer"><a href="../index.html">Back to home</a></footer>
+</body>
+</html>

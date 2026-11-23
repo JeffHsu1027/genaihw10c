@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="source-hash" content="377100483084">
+<title>Vector quantization · Paper Wiki</title>
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="site-name" href="../index.html">Paper Wiki</a>
+  <a class="lang-switch" href="../../zh/concepts/vector-quantization.html" hreflang="zh-Hant">中文</a>
+</header>
+<main class="page page-concept">
+  <p class="page-kind"><span class="tag tag-concept">Concept</span></p>
+  <h1>Vector quantization</h1>
+  <p class="meta">VQGAN, VQ-VAE, ViT-VQGAN, discrete image tokens, image tokenizer · 1 source</p>
+  <article class="content">
+<h2>One-line definition</h2>
+<p>Compressing an input such as an image into a short sequence of entries from a learned codebook, so that it can be represented as discrete tokens.</p>
+<h2>Explanation</h2>
+<p>An encoder turns the input into a grid of vectors, and each vector is replaced by the closest entry in a learned codebook; the index of that entry becomes a token. A decoder learns to rebuild the input from the tokens. VQGAN-style models add perceptual and adversarial losses so that the reconstructions look sharp. The result lets images be handled like words in a sentence, which makes them easy to combine with other discrete data and to model with the same sequence models used for text. The number of tokens per image trades reconstruction quality against sequence length and speed.</p>
+<h2>What each source says</h2>
+<h3>World and Human Action Models towards gameplay ideation (2025)</h3>
+<p><a href="../sources/2025-wham.html">WHAM</a> frames gameplay as a sequence of discrete tokens and uses a VQGAN image encoder to turn each frame into tokens (p.3). The smaller models use a VQGAN of about 60M parameters that maps 128 by 128 images to 256 tokens from a vocabulary of 4,096 (p.10). The 1.6B model uses a ViT-VQGAN of about 300M parameters that maps 300 by 180 images to 540 tokens from a vocabulary of 16,384 (p.10). The number of tokens per image is a key hyperparameter that trades image quality against generation speed and context length (p.3). The higher-resolution tokenizer raises the ceiling on reconstruction quality and improves FVD (p.4).</p>
+<h2>Related concepts</h2>
+<ul>
+<li><a href="autoregressive-transformer.html">Autoregressive transformer</a>: models the token sequences produced by the quantizer.</li>
+<li><a href="variational-autoencoder.html">Variational autoencoder</a>: a related autoencoder with continuous, not discrete, latents.</li>
+<li><a href="categorical-latents.html">Categorical latents</a>: another discrete representation, sampled inside a world model rather than looked up from a codebook.</li>
+</ul>
+<h2>Background</h2>
+<p>(None yet)</p>
+  </article>
+</main>
+<footer class="site-footer"><a href="../index.html">Back to home</a></footer>
+</body>
+</html>

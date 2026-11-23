@@ -2,8 +2,8 @@
 title: "World models"
 area: world-model
 updated: 2026-11-24
-sources: [2018-world-models, 2019-planet, 2020-dreamer, 2021-dreamerv2, 2023-dreamerv3, 2025-dreamer4]
-concepts: [world-model, model-based-reinforcement-learning, variational-autoencoder, mixture-density-rnn, recurrent-state-space-model, learning-in-imagination, latent-space-planning, latent-overshooting, actor-critic, categorical-latents, kl-balancing, symlog-predictions, return-normalization, shortcut-forcing, action-conditioning]
+sources: [2018-world-models, 2019-planet, 2020-dreamer, 2021-dreamerv2, 2023-dreamerv3, 2025-dreamer4, 2025-wham]
+concepts: [world-model, model-based-reinforcement-learning, variational-autoencoder, mixture-density-rnn, recurrent-state-space-model, learning-in-imagination, latent-space-planning, latent-overshooting, actor-critic, categorical-latents, kl-balancing, symlog-predictions, return-normalization, shortcut-forcing, action-conditioning, vector-quantization, autoregressive-transformer]
 ---
 
 ## Overview
@@ -18,6 +18,7 @@ World models are learned simulators: models that let an agent predict how its en
 - 2021: [DreamerV2](../sources/2021-dreamerv2.md) switches to categorical latents and KL balancing and becomes the first agent to reach human-level Atari performance by learning purely inside a separately trained world model (p.1).
 - 2023: [DreamerV3](../sources/2023-dreamerv3.md) adds robustness techniques so that one fixed configuration outperforms specialized methods on more than 150 tasks, and becomes the first algorithm to collect diamonds in Minecraft from scratch (p.1).
 - 2025: [Dreamer 4](../sources/2025-dreamer4.md) switches to a scalable transformer world model trained by shortcut forcing and becomes the first agent to obtain diamonds in Minecraft purely from offline data (p.1).
+- 2025: [WHAM](../sources/2025-wham.md) uses a transformer world model of a 3D game not to train an agent but to support game designers, and evaluates it for consistency, diversity and persistency (p.1).
 
 ## Sources
 
@@ -29,6 +30,7 @@ World models are learned simulators: models that let an agent predict how its en
 | 2021 | [Mastering Atari with Discrete World Models (DreamerV2)](../sources/2021-dreamerv2.md) | to-read | Dreamer with categorical latents and KL balancing; human-level Atari from learning only inside the world model. |
 | 2023 | [Mastering Diverse Domains through World Models (DreamerV3)](../sources/2023-dreamerv3.md) | to-read | Robustness techniques let one fixed configuration master many domains, including diamonds in Minecraft. |
 | 2025 | [Training Agents Inside of Scalable World Models (Dreamer 4)](../sources/2025-dreamer4.md) | to-read | A fast transformer world model; diamonds in Minecraft learned purely offline by training in imagination. |
+| 2025 | [World and Human Action Models towards gameplay ideation (WHAM)](../sources/2025-wham.md) | read | A world and human-action model of a 3D game, built and evaluated to support creative ideation. |
 
 ## Key concepts
 
@@ -47,6 +49,8 @@ World models are learned simulators: models that let an agent predict how its en
 - [Return normalization](../concepts/return-normalization.md): scaling returns so one exploration setting fits every environment.
 - [Shortcut forcing](../concepts/shortcut-forcing.md): generating each video frame in a few denoising steps.
 - [Action conditioning](../concepts/action-conditioning.md): making predicted futures depend on the agent's actions.
+- [Vector quantization](../concepts/vector-quantization.md): turning images into discrete tokens.
+- [Autoregressive transformer](../concepts/autoregressive-transformer.md): generating a sequence one token at a time.
 
 ## Key terms
 
@@ -78,6 +82,9 @@ World models are learned simulators: models that let an agent predict how its en
 - **Behavior cloning**: training a policy to imitate the actions recorded in a dataset.
 - **Offline reinforcement learning**: improving a policy from a fixed dataset without interacting with the environment.
 - **FVD (Fréchet Video Distance)**: a measure of how close generated videos are to real ones; lower is better.
+- **VQGAN**: an image tokenizer that maps image patches to entries of a learned codebook and is trained to reconstruct sharp images.
+- **Next-token prediction**: training a model to guess the next element of a sequence from all earlier elements.
+- **Wasserstein distance**: a measure of how much one probability distribution must be moved to match another.
 
 ## Open questions
 
@@ -98,6 +105,7 @@ World models are learned simulators: models that let an agent predict how its en
 - Can world models be pretrained on unlabeled data such as internet videos, or shared across domains? [DreamerV3](../sources/2023-dreamerv3.md) names these as future directions (p.11).
 - How much memory does a world model need? [Dreamer 4](../sources/2025-dreamer4.md) keeps 9.6 seconds of context, much more than earlier Minecraft models, but still forgets beyond that and blurs inventory items (p.13).
 - Can action conditioning learned from a little labeled data scale to general web videos? [Dreamer 4](../sources/2025-dreamer4.md) shows transfer to unseen parts of Minecraft and names web videos as the next step (p.15).
+- How should world models meant for people be evaluated, rather than world models meant for agents? [WHAM](../sources/2025-wham.md) proposes consistency, diversity and persistency, but tests them on a single game with a one-second context (p.10).
 
 ## Background
 

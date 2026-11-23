@@ -166,3 +166,19 @@
 - `raw/README.md`：填入公開連結（arXiv 2509.24527）與來源頁。
 - `build.py` 產生 48 個頁面，`check.py` 全部通過。
 
+## [2026-11-24] ingest | World and Human Action Models towards gameplay ideation
+
+- 閱讀範圍：PDF 第 1–23 頁的文字層（正文 pp.1-7、參考文獻 pp.8、12、方法 pp.9-12、延伸資料圖 pp.13-23）。PDF 有 127 MB，依 decisions.md 只讀文字層；延伸資料圖多為影像，只讀到圖說，Table 1 的細項數字未能從文字層取得，只使用正文與表說中的數字。
+- `status: read`（擁有者指定 World Models 與 WHAM 為已讀）。
+- 新增來源頁：`2025-wham`（Nature 2025；areas：world-model、game-ai，是第一篇 game-ai 來源；pages: 23）。
+- 新增概念頁（3 個）：
+  - `creativity-support`（把握度高：核心貢獻，pp.2-3；area：game-ai）
+  - `vector-quantization`（高：VQGAN 影像 token 化，pp.3、10）
+  - `autoregressive-transformer`（高：交錯影像與動作 token 的下一個 token 預測，p.3）
+- 更新既有頁面：`world-model`（新增 WHAM 小節；比較段註明 WHAM 是唯一不給代理人用的世界模型，並把 Dreamer 4 與 WHAM 並列為本 Wiki 的觀察）、`action-conditioning`（新增 WHAM 小節與比較段）、`2018-world-models` 與 `2021-dreamerv2`（WHAM 在 p.3 引用兩篇）、`world-models` 主題頁、中英 `index.md`（遊戲 AI 區首次有內容）。
+- 寫作時自行核對並修正兩處頁碼：「不是可直接整合的工具」在 p.9（概念原型在 p.6），模型大小一句橫跨 pp.3-4。
+- 取代與衝突：無。
+- 刻意不連結：`learning-in-imagination`、`actor-critic`、`offline-reinforcement-learning`、`model-based-reinforcement-learning`（WHAM 不訓練代理人）；`variational-autoencoder`（VQGAN 非變分，只在 `vector-quantization` 相關概念中提及）；`2025-dreamer4`（互不引用，只在 `world-model` 比較段並列）；規模定律只寫在來源頁。
+- `raw/README.md`：填入公開連結（DOI 10.1038/s41586-025-08600-3）與來源頁。至此 `raw/` 中 7 個 PDF 全部 ingest 完成。
+- `build.py` 產生 56 個頁面，`check.py` 全部通過。
+

@@ -12,7 +12,7 @@ areas: [world-model, reinforcement-learning]
 status: to-read
 concepts: [categorical-latents, kl-balancing, world-model, recurrent-state-space-model, actor-critic, learning-in-imagination, model-based-reinforcement-learning, variational-autoencoder]
 topics: [world-models]
-translated_from: "aac84d768f41"
+translated_from: "16f198dc6afc"
 ---
 
 ## 一句話總結
@@ -78,6 +78,7 @@ DreamerV2 對 Dreamer 做了幾項小修改，主要是[類別潛在變數](../c
 
 - [Dream to Control: Learning Behaviors by Latent Imagination](2020-dreamer.md)：DreamerV2 是 Dreamer 的演進版，本篇稱原版為 DreamerV1 (p.2)。附錄 C 列出所有修改，也包括沒有幫助的嘗試，例如二元潛在變數與在 GRU 中加入層正規化 (p.18)。
 - [Mastering Diverse Domains through World Models](2023-dreamerv3.md)（DreamerV3，2023）是下一代。它保留類別潛在變數與 KL 平衡，但加入穩定技術，讓一組設定能用在許多領域，而不只是 Atari。
+- [World and Human Action Models towards gameplay ideation](2025-wham.md)（WHAM，2025）把本篇列為遞迴狀態空間世界模型的例子，自己則改用建立在離散 token 上的 transformer。
 - [Learning Latent Dynamics for Planning from Pixels](2019-planet.md)：DreamerV2 建立在 PlaNet 提出的世界模型上，並把它的高斯潛在變數換成類別變數 (p.2)。
 
 ## 背景資料

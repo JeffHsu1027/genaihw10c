@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="source-hash" content="7435b564f70f">
+<meta name="source-hash" content="41c160b0ca1d">
 <title>World model · Paper Wiki</title>
 <link rel="stylesheet" href="../../assets/style.css">
 </head>
@@ -15,7 +15,7 @@
 <main class="page page-concept">
   <p class="page-kind"><span class="tag tag-concept">Concept</span></p>
   <h1>World model</h1>
-  <p class="meta">dynamics model, environment model, predictive model of the environment · 6 sources</p>
+  <p class="meta">dynamics model, environment model, predictive model of the environment · 7 sources</p>
   <article class="content">
 <h2>One-line definition</h2>
 <p>A learned model of an environment that predicts what will happen next, usually given the current state and an action.</p>
@@ -37,6 +37,8 @@
 <p><a href="../sources/2023-dreamerv3.html">DreamerV3</a> describes the world model as giving the agent rich perception and the ability to imagine the future, and notes that learning and using world models robustly had been an open problem (p.2). Its performance rests mainly on the unsupervised reconstruction loss of the world model rather than on reward and value gradients, which the authors see as an opening for pretraining on unsupervised data (p.10). Larger world models, from 12 million to 400 million parameters, both score higher and need less environment interaction (p.10, Fig. 6).</p>
 <h3>Training Agents Inside of Scalable World Models (2025)</h3>
 <p><a href="../sources/2025-dreamer4.html">Dreamer 4</a> describes world models as learning general knowledge from videos and simulating experience for training behaviors in imagination (p.1). It argues that earlier world-model agents were accurate only in narrow environments, while large controllable video models still missed precise object interactions and were too slow (p.2). Its transformer world model, with 2B parameters, runs in real time on one GPU (p.9). Players complete 14 of 16 Minecraft tasks inside it, compared with 5 of 16 for the large Oasis model (p.13). Its memory is still short and its inventory predictions imprecise (p.18).</p>
+<h3>World and Human Action Models towards gameplay ideation (2025)</h3>
+<p><a href="../sources/2025-wham.html">WHAM</a> places itself in the line of world models that capture environment dynamics with recurrent networks, recurrent state-space models and transformers (p.3). It models the dynamics of a 3D multiplayer game from human gameplay data, predicting both game frames and players' controller actions (p.3). Rather than training an agent, it uses the world model to support human creative ideation, and evaluates it for consistency, diversity and persistency of user edits (p.3). The 1.6B model generates consistent gameplay for up to 2 minutes (p.4).</p>
 <h3>Comparing the sources</h3>
 <ul>
 <li>Both learn a compressed latent state from pixels and a transition model over it: <a href="../sources/2018-world-models.html">World Models</a> with a VAE and an MDN-RNN (p.2, Fig. 4), <a href="../sources/2019-planet.html">PlaNet</a> with a recurrent state-space model (p.4, Eq. 4).</li>
@@ -47,7 +49,9 @@
 <li><a href="../sources/2021-dreamerv2.html">DreamerV2</a> keeps the same overall design but changes the latent variables and the KL term, which is enough to move from simple control tasks to human-level Atari (p.2).</li>
 <li><a href="../sources/2021-dreamerv2.html">DreamerV2</a> and <a href="../sources/2023-dreamerv3.html">DreamerV3</a> agree that image reconstruction, not reward prediction, is the main learning signal for the world model (p.10).</li>
 <li><a href="../sources/2025-dreamer4.html">Dreamer 4</a> replaces the recurrent world model used from PlaNet to DreamerV3 with a transformer, because the recurrent design was efficient but hard to scale to diverse data (p.29).</li>
-<li>PlaNet, Dreamer, DreamerV2, DreamerV3 and Dreamer 4 cite World Models (see their source pages); this side-by-side comparison is this Wiki's own summary.</li>
+<li><a href="../sources/2025-wham.html">WHAM</a> is the only source here whose world model is not used by an agent to act; the model serves people who explore game ideas (p.3).</li>
+<li><a href="../sources/2025-dreamer4.html">Dreamer 4</a> and <a href="../sources/2025-wham.html">WHAM</a> are both large transformer world models of 3D games trained on human gameplay, one used for agents in Minecraft and one for ideation in Bleeding Edge. They do not cite each other; this pairing is this Wiki's observation.</li>
+<li>PlaNet, Dreamer, DreamerV2, DreamerV3, Dreamer 4 and WHAM cite World Models (see their source pages); this side-by-side comparison is this Wiki's own summary.</li>
 </ul>
 <h2>Related concepts</h2>
 <ul>
@@ -57,6 +61,8 @@
 <li><a href="categorical-latents.html">Categorical latents</a>: discrete latent states used in DreamerV2's world model.</li>
 <li><a href="shortcut-forcing.html">Shortcut forcing</a>: the objective of Dreamer 4's transformer world model.</li>
 <li><a href="action-conditioning.html">Action conditioning</a>: making predictions depend on the agent's actions.</li>
+<li><a href="autoregressive-transformer.html">Autoregressive transformer</a>: the token-by-token architecture of WHAM's world model.</li>
+<li><a href="creativity-support.html">Creativity support</a>: WHAM's use of a world model to help people generate ideas.</li>
 <li><a href="model-based-reinforcement-learning.html">Model-based reinforcement learning</a>: reinforcement learning that uses a world model.</li>
 <li><a href="learning-in-imagination.html">Learning in imagination</a>: training an agent inside a world model.</li>
 </ul>

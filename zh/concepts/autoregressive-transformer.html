@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="source-hash" content="1f25e5835e7b">
+<title>自迴歸 transformer（Autoregressive transformer） · 論文 Wiki</title>
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="site-name" href="../index.html">論文 Wiki</a>
+  <a class="lang-switch" href="../../en/concepts/autoregressive-transformer.html" hreflang="en">English</a>
+</header>
+<main class="page page-concept">
+  <p class="page-kind"><span class="tag tag-concept">概念</span></p>
+  <h1>自迴歸 transformer（Autoregressive transformer）</h1>
+  <p class="meta">decoder-only transformer, 因果 transformer, 下一個 token 預測, GPT 類模型 · 1 個來源</p>
+  <article class="content">
+<h2>一句話定義</h2>
+<p>一次產生一個 token 的 transformer，每次都根據之前所有 token 預測下一個 token。</p>
+<h2>說明</h2>
+<p>因果注意力遮罩讓每個位置只能看到較早的位置，因此模型可以一次用整段序列訓練，預測每一個下一個 token。生成時，它抽樣出一個 token、接到序列後面，再重複這個過程。這是大型語言模型背後的設計，任何能寫成 token 序列的資料都適用，包括量化過的影像與離散化的動作。因為每個新 token 都取決於之前的 token，改變較早的 token 就會改變之後的所有內容。</p>
+<h2>各來源怎麼說</h2>
+<h3>World and Human Action Models towards gameplay ideation（2025）</h3>
+<p><a href="../sources/2025-wham.html">WHAM</a> 訓練一個 decoder-only transformer，預測影像與手把動作 token 交錯序列中的下一個 token，而且沒有明確的標記告訴它下一個該是影像還是動作 token (p.4, Fig. 2)。它建立在修改過的 nanoGPT（GPT-2 的實作）上 (p.10)。一次抽樣一個 token 的生成方式，讓影像或動作 token 能在生成途中被修改，因此可以透過編輯過的畫面或選定的動作來提示模型 (p.3)。最大的模型有 1.6B 個參數，脈絡為 5,560 個 token，也就是一秒的遊玩過程 (p.4, Fig. 2)。</p>
+<h2>相關概念</h2>
+<ul>
+<li><a href="vector-quantization.html">向量量化（Vector quantization）</a>：產生 transformer 要預測的影像 token。</li>
+<li><a href="world-model.html">世界模型（World model）</a>：WHAM 以這種架構作為世界模型。</li>
+<li><a href="shortcut-forcing.html">Shortcut forcing</a>：另一種 transformer 世界模型設計，每格畫面用幾個去噪步驟生成，而不是逐個 token 生成。</li>
+</ul>
+<h2>背景資料</h2>
+<p>（尚無）</p>
+  </article>
+</main>
+<footer class="site-footer"><a href="../index.html">回首頁</a></footer>
+</body>
+</html>

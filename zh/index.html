@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="source-hash" content="cb53e53b4a4d">
+<meta name="source-hash" content="1067863e0eac">
 <title>論文 Wiki</title>
 <link rel="stylesheet" href="../assets/style.css">
 </head>
@@ -18,25 +18,28 @@
 <section class="area" id="world-model">
 <h2>世界模型</h2>
 <h3>主題</h3>
-<div class="cards"><a class="card card-topic" href="topics/world-models.html"><span class="tag tag-topic">主題</span><h4>世界模型（World models）</h4><p class="card-meta">6 個來源</p><p>世界模型是學出來的模擬器：讓代理人能預測環境會如何回應自己的行動。</p></a></div>
+<div class="cards"><a class="card card-topic" href="topics/world-models.html"><span class="tag tag-topic">主題</span><h4>世界模型（World models）</h4><p class="card-meta">7 個來源</p><p>世界模型是學出來的模擬器：讓代理人能預測環境會如何回應自己的行動。</p></a></div>
 <h3>來源</h3>
 <div class="cards"><a class="card card-source" href="sources/2018-world-models.html"><span class="tag tag-source">來源</span> <span class="status status-read">已讀</span><h4>World Models</h4><p class="card-meta">David Ha, Jürgen Schmidhuber · 2018</p><p>把代理人（agent）拆成兩部分：一個大型的世界模型，不靠獎勵就學會壓縮並預測自己看到的畫面；以及一個很小的控制器，根據世界模型提供的特徵行動。</p></a>
 <a class="card card-source" href="sources/2019-planet.html"><span class="tag tag-source">來源</span> <span class="status status-to-read">未讀</span><h4>Learning Latent Dynamics for Planning from Pixels</h4><p class="card-meta">Danijar Hafner et al. · 2019</p><p>PlaNet（Deep Planning Network）是一個純粹基於模型的代理人：從影像學出潛在的世界模型，每一個動作都靠在潛在空間中快速的線上規劃來決定，不使用策略網路或價值網路。</p></a>
 <a class="card card-source" href="sources/2020-dreamer.html"><span class="tag tag-source">來源</span> <span class="status status-to-read">未讀</span><h4>Dream to Control: Learning Behaviors by Latent Imagination</h4><p class="card-meta">Danijar Hafner et al. · 2020</p><p>Dreamer 先從影像學出世界模型，再完全靠潛在想像學習行為：在想像的軌跡上訓練一個 actor-critic，並把解析的價值梯度沿著學到的動態模型反向傳播來改進 actor。</p></a>
 <a class="card card-source" href="sources/2021-dreamerv2.html"><span class="tag tag-source">來源</span> <span class="status status-to-read">未讀</span><h4>Mastering Atari with Discrete World Models</h4><p class="card-meta">Danijar Hafner et al. · 2021</p><p>DreamerV2 對 Dreamer 做了幾項小修改，主要是類別潛在變數與 KL 平衡，成為第一個完全在另外訓練的世界模型裡學習行為、就在 Atari 評測上達到人類水準的代理人。</p></a>
 <a class="card card-source" href="sources/2023-dreamerv3.html"><span class="tag tag-source">來源</span> <span class="status status-to-read">未讀</span><h4>Mastering Diverse Domains through World Models</h4><p class="card-meta">Danijar Hafner et al. · 2023</p><p>DreamerV3 加入一組穩定學習的技術，例如 symlog 預測、報酬正規化，以及搭配 free bits 的 KL 平衡，讓一個以世界模型為核心、只用一組固定設定的代理人，在 150 多個任務上勝過專門的方法，並從零開始在 Minecraft 中挖到鑽石。</p></a>
-<a class="card card-source" href="sources/2025-dreamer4.html"><span class="tag tag-source">來源</span> <span class="status status-to-read">未讀</span><h4>Training Agents Inside of Scalable World Models</h4><p class="card-meta">Danijar Hafner, Wilson Yan, Timothy Lillicrap · 2025</p><p>Dreamer 4 把早期 Dreamer 的遞迴世界模型換成以 shortcut forcing 訓練、可擴展的 transformer 世界模型，並成為第一個完全只靠離線資料、透過在世界模型裡做強化學習、不與環境互動就在 Minecraft 拿到鑽石的代理人。</p></a></div>
+<a class="card card-source" href="sources/2025-dreamer4.html"><span class="tag tag-source">來源</span> <span class="status status-to-read">未讀</span><h4>Training Agents Inside of Scalable World Models</h4><p class="card-meta">Danijar Hafner, Wilson Yan, Timothy Lillicrap · 2025</p><p>Dreamer 4 把早期 Dreamer 的遞迴世界模型換成以 shortcut forcing 訓練、可擴展的 transformer 世界模型，並成為第一個完全只靠離線資料、透過在世界模型裡做強化學習、不與環境互動就在 Minecraft 拿到鑽石的代理人。</p></a>
+<a class="card card-source" href="sources/2025-wham.html"><span class="tag tag-source">來源</span> <span class="status status-read">已讀</span><h4>World and Human Action Models towards gameplay ideation</h4><p class="card-meta">Anssi Kanervisto et al. · 2025</p><p>一項針對遊戲開發者的使用者研究，歸納出生成模型要支援創作發想需要的三種能力：一致性、多樣性與持續性；論文接著打造並以這三項標準評估 WHAM，一個能同時生成遊戲 Bleeding Edge 畫面與玩家手把動作的世界模型。</p></a></div>
 <h3>概念</h3>
 <div class="cards"><a class="card card-concept" href="concepts/kl-balancing.html"><span class="tag tag-concept">概念</span><h4>KL 平衡（KL balancing）</h4><p class="card-meta">2 個來源</p><p>訓練潛在動態模型的一種方式：後驗與先驗之間的 KL 項，更新先驗的速度比更新後驗快。</p></a>
 <a class="card card-concept" href="concepts/shortcut-forcing.html"><span class="tag tag-concept">概念</span><h4>Shortcut forcing</h4><p class="card-meta">1 個來源</p><p>影片世界模型的一種訓練目標：結合讓序列中每一格畫面有各自雜訊程度的 diffusion forcing，以及學會跨大步去噪的 shortcut model，讓每一格新畫面只需幾次網路計算就能生成。</p></a>
 <a class="card card-concept" href="concepts/symlog-predictions.html"><span class="tag tag-concept">概念</span><h4>Symlog 預測（Symlog predictions）</h4><p class="card-meta">2 個來源</p><p>預測量級未知的數值的一種方法：讓網路學習目標值經過類似對數壓縮後的版本，或改成在指數間隔的分箱上做分類，而不是直接學原始數值。</p></a>
-<a class="card card-concept" href="concepts/world-model.html"><span class="tag tag-concept">概念</span><h4>世界模型（World model）</h4><p class="card-meta">6 個來源</p><p>一個從經驗中學到的環境模型，用來預測接下來會發生什麼，通常以目前的狀態與動作為條件。</p></a>
-<a class="card card-concept" href="concepts/action-conditioning.html"><span class="tag tag-concept">概念</span><h4>動作條件（Action conditioning）</h4><p class="card-meta">1 個來源</p><p>讓世界模型的預測取決於所採取的動作，使得從同一個情境出發的不同動作，會導向相應不同的預測未來。</p></a>
+<a class="card card-concept" href="concepts/world-model.html"><span class="tag tag-concept">概念</span><h4>世界模型（World model）</h4><p class="card-meta">7 個來源</p><p>一個從經驗中學到的環境模型，用來預測接下來會發生什麼，通常以目前的狀態與動作為條件。</p></a>
+<a class="card card-concept" href="concepts/action-conditioning.html"><span class="tag tag-concept">概念</span><h4>動作條件（Action conditioning）</h4><p class="card-meta">2 個來源</p><p>讓世界模型的預測取決於所採取的動作，使得從同一個情境出發的不同動作，會導向相應不同的預測未來。</p></a>
+<a class="card card-concept" href="concepts/vector-quantization.html"><span class="tag tag-concept">概念</span><h4>向量量化（Vector quantization）</h4><p class="card-meta">1 個來源</p><p>把影像等輸入壓縮成一小串「學到的碼本（codebook）中的條目」，讓它能以離散 token 表示。</p></a>
 <a class="card card-concept" href="concepts/learning-in-imagination.html"><span class="tag tag-concept">概念</span><h4>在想像中學習（Learning in imagination）</h4><p class="card-meta">5 個來源</p><p>用學到的世界模型所產生的經驗來訓練代理人的策略，而不是用真實環境產生的經驗。</p></a>
 <a class="card card-concept" href="concepts/model-based-reinforcement-learning.html"><span class="tag tag-concept">概念</span><h4>基於模型的強化學習（Model-based reinforcement learning）</h4><p class="card-meta">6 個來源</p><p>會學習或使用「環境如何回應動作」的模型，並用這個模型來決定如何行動或學習如何行動的強化學習。</p></a>
 <a class="card card-concept" href="concepts/mixture-density-rnn.html"><span class="tag tag-concept">概念</span><h4>混合密度遞迴神經網路（Mixture density RNN）</h4><p class="card-meta">1 個來源</p><p>一種遞迴神經網路，輸出層給出高斯混合分布的參數，因此預測的是下一個值的機率分布，而不是單一數值。</p></a>
 <a class="card card-concept" href="concepts/latent-space-planning.html"><span class="tag tag-concept">概念</span><h4>潛在空間規劃（Latent space planning）</h4><p class="card-meta">2 個來源</p><p>在學到的潛在動態模型裡搜尋候選動作序列、以預測的獎勵評分來選擇動作，過程中不產生觀測畫面。</p></a>
 <a class="card card-concept" href="concepts/latent-overshooting.html"><span class="tag tag-concept">概念</span><h4>潛在超前預測（Latent overshooting）</h4><p class="card-meta">2 個來源</p><p>潛在序列模型的一種訓練目標：除了一步預測之外，也訓練多步預測，做法是在潛在空間中把預測拉向由真實觀測推斷出的狀態。</p></a>
+<a class="card card-concept" href="concepts/autoregressive-transformer.html"><span class="tag tag-concept">概念</span><h4>自迴歸 transformer（Autoregressive transformer）</h4><p class="card-meta">1 個來源</p><p>一次產生一個 token 的 transformer，每次都根據之前所有 token 預測下一個 token。</p></a>
 <a class="card card-concept" href="concepts/variational-autoencoder.html"><span class="tag tag-concept">概念</span><h4>變分自編碼器（Variational autoencoder）</h4><p class="card-meta">5 個來源</p><p>一種神經網路，把輸入編碼成一個小而帶有隨機性的潛在向量，並學會把這個向量解碼回原本的輸入。</p></a>
 <a class="card card-concept" href="concepts/recurrent-state-space-model.html"><span class="tag tag-concept">概念</span><h4>遞迴狀態空間模型（Recurrent state-space model）</h4><p class="card-meta">5 個來源</p><p>一種潛在動態模型，狀態分成兩部分：由遞迴網路往前傳遞的確定性部分，以及每一步抽樣的隨機部分。</p></a>
 <a class="card card-concept" href="concepts/categorical-latents.html"><span class="tag tag-concept">概念</span><h4>類別潛在變數（Categorical latents）</h4><p class="card-meta">2 個來源</p><p>由多個類別變數組成的潛在表示，每個變數從一組固定的類別中取一個，用來取代連續的高斯變數。</p></a></div>
@@ -53,13 +56,20 @@
 <h3>概念</h3>
 <div class="cards"><a class="card card-concept" href="concepts/actor-critic.html"><span class="tag tag-concept">概念</span><h4>Actor-critic（演員－評論家）</h4><p class="card-meta">4 個來源</p><p>一種有兩個學習元件的強化學習方法：負責選動作的 actor（策略），以及估計 actor 從每個狀態出發能得到多少未來獎勵的 critic（價值函數）。</p></a>
 <a class="card card-concept" href="concepts/symlog-predictions.html"><span class="tag tag-concept">概念</span><h4>Symlog 預測（Symlog predictions）</h4><p class="card-meta">2 個來源</p><p>預測量級未知的數值的一種方法：讓網路學習目標值經過類似對數壓縮後的版本，或改成在指數間隔的分箱上做分類，而不是直接學原始數值。</p></a>
-<a class="card card-concept" href="concepts/world-model.html"><span class="tag tag-concept">概念</span><h4>世界模型（World model）</h4><p class="card-meta">6 個來源</p><p>一個從經驗中學到的環境模型，用來預測接下來會發生什麼，通常以目前的狀態與動作為條件。</p></a>
+<a class="card card-concept" href="concepts/world-model.html"><span class="tag tag-concept">概念</span><h4>世界模型（World model）</h4><p class="card-meta">7 個來源</p><p>一個從經驗中學到的環境模型，用來預測接下來會發生什麼，通常以目前的狀態與動作為條件。</p></a>
 <a class="card card-concept" href="concepts/learning-in-imagination.html"><span class="tag tag-concept">概念</span><h4>在想像中學習（Learning in imagination）</h4><p class="card-meta">5 個來源</p><p>用學到的世界模型所產生的經驗來訓練代理人的策略，而不是用真實環境產生的經驗。</p></a>
 <a class="card card-concept" href="concepts/model-based-reinforcement-learning.html"><span class="tag tag-concept">概念</span><h4>基於模型的強化學習（Model-based reinforcement learning）</h4><p class="card-meta">6 個來源</p><p>會學習或使用「環境如何回應動作」的模型，並用這個模型來決定如何行動或學習如何行動的強化學習。</p></a>
 <a class="card card-concept" href="concepts/return-normalization.html"><span class="tag tag-concept">概念</span><h4>報酬正規化（Return normalization）</h4><p class="card-meta">2 個來源</p><p>以穩健估計的報酬範圍來縮放訓練策略所用的報酬，讓「追求獎勵」與「探索」之間的平衡不受環境獎勵尺度影響。</p></a>
 <a class="card card-concept" href="concepts/evolution-strategies.html"><span class="tag tag-concept">概念</span><h4>演化策略（Evolution strategies）</h4><p class="card-meta">1 個來源</p><p>一類黑箱最佳化方法：對一群候選解反覆抽樣、評分、保留較好的，過程中不需要計算梯度。</p></a>
 <a class="card card-concept" href="concepts/latent-space-planning.html"><span class="tag tag-concept">概念</span><h4>潛在空間規劃（Latent space planning）</h4><p class="card-meta">2 個來源</p><p>在學到的潛在動態模型裡搜尋候選動作序列、以預測的獎勵評分來選擇動作，過程中不產生觀測畫面。</p></a>
 <a class="card card-concept" href="concepts/offline-reinforcement-learning.html"><span class="tag tag-concept">概念</span><h4>離線強化學習（Offline reinforcement learning）</h4><p class="card-meta">1 個來源</p><p>只從事先收集好的固定資料集做強化學習，學習期間不讓代理人與環境互動。</p></a></div>
+</section>
+<section class="area" id="game-ai">
+<h2>遊戲 AI</h2>
+<h3>來源</h3>
+<div class="cards"><a class="card card-source" href="sources/2025-wham.html"><span class="tag tag-source">來源</span> <span class="status status-read">已讀</span><h4>World and Human Action Models towards gameplay ideation</h4><p class="card-meta">Anssi Kanervisto et al. · 2025</p><p>一項針對遊戲開發者的使用者研究，歸納出生成模型要支援創作發想需要的三種能力：一致性、多樣性與持續性；論文接著打造並以這三項標準評估 WHAM，一個能同時生成遊戲 Bleeding Edge 畫面與玩家手把動作的世界模型。</p></a></div>
+<h3>概念</h3>
+<div class="cards"><a class="card card-concept" href="concepts/creativity-support.html"><span class="tag tag-concept">概念</span><h4>創作支援（Creativity support）</h4><p class="card-meta">1 個來源</p><p>以「多能幫助人想出並修改點子」來設計與評估 AI 系統，而不是以它自己能完成多少任務來評估。</p></a></div>
 </section>
 </main>
 <footer class="site-footer"><a href="../index.html">選擇語言</a></footer>

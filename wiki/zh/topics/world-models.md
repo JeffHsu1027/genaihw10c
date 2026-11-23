@@ -2,9 +2,9 @@
 title: "世界模型（World models）"
 area: world-model
 updated: 2026-11-24
-sources: [2018-world-models, 2019-planet, 2020-dreamer, 2021-dreamerv2, 2023-dreamerv3, 2025-dreamer4]
-concepts: [world-model, model-based-reinforcement-learning, variational-autoencoder, mixture-density-rnn, recurrent-state-space-model, learning-in-imagination, latent-space-planning, latent-overshooting, actor-critic, categorical-latents, kl-balancing, symlog-predictions, return-normalization, shortcut-forcing, action-conditioning]
-translated_from: "7de4af9756a8"
+sources: [2018-world-models, 2019-planet, 2020-dreamer, 2021-dreamerv2, 2023-dreamerv3, 2025-dreamer4, 2025-wham]
+concepts: [world-model, model-based-reinforcement-learning, variational-autoencoder, mixture-density-rnn, recurrent-state-space-model, learning-in-imagination, latent-space-planning, latent-overshooting, actor-critic, categorical-latents, kl-balancing, symlog-predictions, return-normalization, shortcut-forcing, action-conditioning, vector-quantization, autoregressive-transformer]
+translated_from: "afb5dd0766fc"
 ---
 
 ## 概述
@@ -19,6 +19,7 @@ translated_from: "7de4af9756a8"
 - 2021：[DreamerV2](../sources/2021-dreamerv2.md) 改用類別潛在變數與 KL 平衡，成為第一個完全在另外訓練的世界模型裡學習、就在 Atari 達到人類水準的代理人 (p.1)。
 - 2023：[DreamerV3](../sources/2023-dreamerv3.md) 加入穩定技術，讓一組固定設定在 150 多個任務上勝過專門的方法，並成為第一個從零開始在 Minecraft 挖到鑽石的演算法 (p.1)。
 - 2025：[Dreamer 4](../sources/2025-dreamer4.md) 改用以 shortcut forcing 訓練、可擴展的 transformer 世界模型，成為第一個完全只靠離線資料就在 Minecraft 拿到鑽石的代理人 (p.1)。
+- 2025：[WHAM](../sources/2025-wham.md) 把 3D 遊戲的 transformer 世界模型用來支援遊戲設計師而非訓練代理人，並以一致性、多樣性與持續性評估 (p.1)。
 
 ## 來源
 
@@ -30,6 +31,7 @@ translated_from: "7de4af9756a8"
 | 2021 | [Mastering Atari with Discrete World Models (DreamerV2)](../sources/2021-dreamerv2.md) | 未讀 | 加上類別潛在變數與 KL 平衡的 Dreamer；只在世界模型裡學習就達到 Atari 人類水準。 |
 | 2023 | [Mastering Diverse Domains through World Models (DreamerV3)](../sources/2023-dreamerv3.md) | 未讀 | 穩定技術讓一組固定設定精通許多領域，包括在 Minecraft 挖到鑽石。 |
 | 2025 | [Training Agents Inside of Scalable World Models (Dreamer 4)](../sources/2025-dreamer4.md) | 未讀 | 快速的 transformer 世界模型；只靠離線資料在想像中訓練，就在 Minecraft 拿到鑽石。 |
+| 2025 | [World and Human Action Models towards gameplay ideation (WHAM)](../sources/2025-wham.md) | 已讀 | 3D 遊戲的世界與人類動作模型，為支援創作發想而打造並評估。 |
 
 ## 關鍵概念
 
@@ -48,6 +50,8 @@ translated_from: "7de4af9756a8"
 - [報酬正規化（Return normalization）](../concepts/return-normalization.md)：縮放報酬，讓一組探索設定適用每個環境。
 - [Shortcut forcing](../concepts/shortcut-forcing.md)：只用幾個去噪步驟生成每一格影片畫面。
 - [動作條件（Action conditioning）](../concepts/action-conditioning.md)：讓預測的未來取決於代理人的動作。
+- [向量量化（Vector quantization）](../concepts/vector-quantization.md)：把影像轉成離散 token。
+- [自迴歸 transformer（Autoregressive transformer）](../concepts/autoregressive-transformer.md)：一次產生一個 token 來生成序列。
 
 ## 術語表
 
@@ -79,6 +83,9 @@ translated_from: "7de4af9756a8"
 - **行為克隆（behavior cloning）**：訓練策略去模仿資料集中記錄的動作。
 - **離線強化學習（offline reinforcement learning）**：只用固定資料集改進策略，不與環境互動。
 - **FVD（Fréchet Video Distance）**：衡量生成影片與真實影片有多接近的指標，越低越好。
+- **VQGAN**：把影像區塊對應到學到的碼本條目、並被訓練成能重建清晰影像的影像 tokenizer。
+- **下一個 token 預測（next-token prediction）**：訓練模型根據之前所有元素猜出序列的下一個元素。
+- **Wasserstein 距離（Wasserstein distance）**：衡量一個機率分布需要移動多少才能變成另一個分布。
 
 ## 未解問題
 
@@ -99,6 +106,7 @@ translated_from: "7de4af9756a8"
 - 世界模型能不能在網路影片這類無標記資料上預訓練，或在不同領域之間共用？[DreamerV3](../sources/2023-dreamerv3.md) 把這些列為未來方向 (p.11)。
 - 世界模型需要多長的記憶？[Dreamer 4](../sources/2025-dreamer4.md) 保留 9.6 秒的脈絡，遠多於先前的 Minecraft 模型，但超過這個長度仍會遺忘，物品欄也會模糊 (p.13)。
 - 從少量標註資料學到的動作條件，能否擴展到一般的網路影片？[Dreamer 4](../sources/2025-dreamer4.md) 顯示它能轉移到 Minecraft 中沒見過的部分，並把網路影片列為下一步 (p.15)。
+- 給人使用的世界模型（而不是給代理人用的）應該如何評估？[WHAM](../sources/2025-wham.md) 提出一致性、多樣性與持續性，但只在單一遊戲、一秒脈絡下測試 (p.10)。
 
 ## 背景資料
 

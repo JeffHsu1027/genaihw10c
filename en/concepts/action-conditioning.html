@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="source-hash" content="5abc4170a0ff">
+<meta name="source-hash" content="6dc61ff55c6c">
 <title>Action conditioning · Paper Wiki</title>
 <link rel="stylesheet" href="../../assets/style.css">
 </head>
@@ -15,7 +15,7 @@
 <main class="page page-concept">
   <p class="page-kind"><span class="tag tag-concept">Concept</span></p>
   <h1>Action conditioning</h1>
-  <p class="meta">action-conditioned video prediction, action grounding, learning from unlabeled videos · 1 source</p>
+  <p class="meta">action-conditioned video prediction, action grounding, learning from unlabeled videos · 2 sources</p>
   <article class="content">
 <h2>One-line definition</h2>
 <p>Making a world model's predictions depend on the actions taken, so that different actions from the same situation lead to correspondingly different predicted futures.</p>
@@ -27,11 +27,19 @@
 <h2>What each source says</h2>
 <h3>Training Agents Inside of Scalable World Models (2025)</h3>
 <p><a href="../sources/2025-dreamer4.html">Dreamer 4</a> encodes each action component, such as mouse and keyboard, into tokens, and uses only a learned embedding when a video has no actions, so labeled and unlabeled videos can be mixed (p.5). Trained on all 2541 hours of VPT videos but with actions for only 100 hours, it reaches 85% of the PSNR and 100% of the SSIM of a model trained with all actions (p.14). When actions are given only for the Overworld, the action conditioning transfers to the Nether and End, which appear only in unlabeled videos, reaching 76% of the PSNR and 80% of the SSIM (p.15). The authors conclude that world models can absorb most of their knowledge from unlabeled videos, which points toward learning from web videos (p.14).</p>
+<h3>World and Human Action Models towards gameplay ideation (2025)</h3>
+<p><a href="../sources/2025-wham.html">WHAM</a> discretizes Xbox controller actions, splitting each joystick axis into 11 buckets, and interleaves them with image tokens (p.3). It not only conditions frames on actions but also predicts the players' actions, so it models both the world and human behavior (p.3). Users can steer generation by supplying controller actions or by editing frames, which is the basis of its persistency evaluation (p.3).</p>
+<h3>Comparing the sources</h3>
+<ul>
+<li><a href="../sources/2025-dreamer4.html">Dreamer 4</a> studies how few labeled actions are needed and shows that most knowledge can come from unlabeled video (p.14).</li>
+<li><a href="../sources/2025-wham.html">WHAM</a> trains on fully labeled gameplay and also predicts the actions, treating player behavior as part of what the model generates (p.3). The two papers do not cite each other; this comparison is this Wiki's own.</li>
+</ul>
 <h2>Related concepts</h2>
 <ul>
 <li><a href="world-model.html">World model</a>: action conditioning is what turns a video model into a world model.</li>
 <li><a href="shortcut-forcing.html">Shortcut forcing</a>: the objective of the action-conditioned dynamics model in Dreamer 4.</li>
 <li><a href="offline-reinforcement-learning.html">Offline reinforcement learning</a>: the world model is trained on logged actions only.</li>
+<li><a href="autoregressive-transformer.html">Autoregressive transformer</a>: WHAM interleaves action tokens with image tokens.</li>
 </ul>
 <h2>Background</h2>
 <p>(None yet)</p>

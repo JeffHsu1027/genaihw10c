@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="source-hash" content="18201093195d">
+<title>World and Human Action Models towards gameplay ideation · 論文 Wiki</title>
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="site-name" href="../index.html">論文 Wiki</a>
+  <a class="lang-switch" href="../../en/sources/2025-wham.html" hreflang="en">English</a>
+</header>
+<main class="page page-source">
+  <p class="page-kind"><span class="tag tag-source">來源</span></p>
+  <h1>World and Human Action Models towards gameplay ideation</h1>
+  <p class="meta">Anssi Kanervisto et al. · 2025 · Nature (doi:10.1038/s41586-025-08600-3) · <a href="https://doi.org/10.1038/s41586-025-08600-3">論文連結</a></p>
+  <p class="meta"><span class="status status-read">已讀</span> · <a href="../topics/world-models.html">世界模型（World models）</a></p>
+  <article class="content">
+<h2>一句話總結</h2>
+<p>一項針對遊戲開發者的使用者研究，歸納出生成模型要<a href="../concepts/creativity-support.html">支援創作發想</a>需要的三種能力：一致性、多樣性與持續性；論文接著打造並以這三項標準評估 WHAM，一個能同時生成遊戲 Bleeding Edge 畫面與玩家手把動作的<a href="../concepts/world-model.html">世界模型</a> (p.1)。</p>
+<h2>研究問題</h2>
+<p>生成式 AI 常常達不到創作者的需求，尤其是在反覆微調與發散思考上 (p.1)。哪些模型能力對支援遊戲開發中的創作發想最重要？只用遊玩資料訓練的生成模型能不能提供這些能力 (pp.1-2)？</p>
+<h2>方法</h2>
+<ul>
+<li><strong>使用者研究</strong>：對 8 間遊戲工作室的 27 位創作者進行半結構式訪談，讓他們操作一個想像中生成式 AI 功能的設計探針（design probe），再對逐字稿做主題分析 (p.9)。歸納出兩個主題：發散思考必須與遊戲世界保持一致，以及創作者需要掌控反覆修改的過程 (p.2)。</li>
+<li><strong>三種能力</strong>：一致性（生成的序列隨時間符合遊戲機制）、多樣性（多個有意義的不同發展）、持續性（使用者對畫面或動作的修改會保留在之後的畫面中） (p.3)。</li>
+<li><strong>模型</strong>：用 <a href="../concepts/vector-quantization.html">VQGAN 編碼器</a>把影像轉成離散 token，手把動作也離散化，再用 decoder-only 的<a href="../concepts/autoregressive-transformer.html">自迴歸 transformer</a> 預測影像與動作交錯序列中的下一個 token (p.3)。因為是逐個 token 生成，生成途中可以修改 token，這正是持續性的來源 (p.3)。</li>
+<li><strong><a href="../concepts/action-conditioning.html">動作</a></strong>：Xbox 手把的按鈕本來就是離散的，兩支搖桿的 x 與 y 位置則各離散成 11 格 (p.3)。WHAM 同時建模世界與人類玩家的動作 (p.3)。</li>
+<li><strong>資料</strong>：約 500,000 場匿名遊玩紀錄，超過 7 年的遊玩時間，涵蓋 Bleeding Edge 全部 7 張地圖；這是一款四對四的 3D 線上對戰遊戲；另有只含單一地圖、1 年遊玩量的篩選子集 (p.3)。</li>
+<li><strong>模型大小</strong>：最大的 WHAM 是有 1.6B 個參數、脈絡 1 秒的 transformer，每張 300 乘 180 的影像編碼成 540 個 token；較小的模型從 15M 到 894M 個參數，使用 128 乘 128 的影像與 256 個 token (pp.3-4)。</li>
+</ul>
+<blockquote class="note note-explainer">
+<p><strong>解說（Explainer）：</strong> WHAM 處理遊玩影片的方式，就像語言模型處理文字：每格畫面被切成類似字詞的 token，手把輸入再加成更多 token，模型則不斷猜下一個 token。</p>
+</blockquote>
+<p>實作細節：1.6B 模型的脈絡為 5,560 個 token，相當於十格畫面，訓練 200k 次更新，每批 2.5M 個 token (p.10)。它的影像 tokenizer 是約 300M 參數的 ViT-VQGAN，詞彙量 16,384 (p.10)。資料降採樣到 10 Hz，完整資料集約有 1.4B 格畫面 (p.10)。訓練損失隨模型大小、資料與計算量穩定下降，894M 模型的最終損失是根據 15M 到 206M 的模型預測出來的 (p.10)。</p>
+<h2>主要結果</h2>
+<ul>
+<li>以 Fréchet Video Distance 對照保留的人類遊玩資料來衡量，一致性隨模型大小與計算量提升 (p.4, Fig. 3)。</li>
+<li>1.6B 的 WHAM 能生成長達 2 分鐘、保持一致的遊玩片段 (p.4)。</li>
+<li>FVD 與訓練損失的相關係數為 0.77，FVD 越低，人類判斷的一致性也越高 (p.10)。</li>
+<li>多樣性以生成動作分布與人類動作分布之間的 Wasserstein 距離衡量，在訓練過程中逐漸接近人與人之間的基準 (p.5, Fig. 4)。</li>
+<li>1.6B 模型在多樣性上略差於 894M 模型，作者認為是較多的影像 token 稀釋了動作損失；把動作損失權重提高十倍後就有改善 (p.5)。</li>
+<li>持續性：以一張編輯過的畫面提示時，每種插入的元素留存率都低於 60%；以五張編輯過的畫面提示時，留存率達到 85% 以上 (p.7, Table 1)。</li>
+<li>在持續性研究中，兩位標註者對共同標註的影片有 90% 的一致 (p.11)。</li>
+<li>作者釋出 WHAM 權重、一份評估用樣本資料，以及 WHAM Demonstrator：一個用來探索生成遊玩分支的概念原型 (p.6)。</li>
+</ul>
+<h2>限制與未解問題</h2>
+<ul>
+<li>模型只在單一遊戲上展示，完整訓練資料也無法公開，因為遊戲仍在商業營運中 (p.12)。</li>
+<li>脈絡只有 1 秒，也就是十格畫面 (p.10)。</li>
+<li>小的編輯、與背景對比不明顯的編輯，或放在不尋常位置的編輯，持續性低很多 (p.12)。</li>
+<li>多樣性只透過玩家動作的邊際分布評估，不是所有可能的遊戲結果 (p.5)。</li>
+<li>WHAM Demonstrator 是概念原型，不是完整的使用者體驗 (p.6)；作者也表明目標不是做出能直接整合進遊戲開發流程的工具 (p.9)。</li>
+</ul>
+<h2>相關概念</h2>
+<ul>
+<li><a href="../concepts/creativity-support.html">創作支援</a>：三種能力與其評估方式。</li>
+<li><a href="../concepts/vector-quantization.html">向量量化</a>：把影像轉成離散 token 的方式。</li>
+<li><a href="../concepts/autoregressive-transformer.html">自迴歸 transformer</a>：預測下一個 token 的序列模型。</li>
+<li><a href="../concepts/world-model.html">世界模型</a>：WHAM 建模一款 3D 遊戲的動態。</li>
+<li><a href="../concepts/action-conditioning.html">動作條件</a>：生成以手把動作為條件，也預測手把動作。</li>
+</ul>
+<h2>與其他來源的關係</h2>
+<ul>
+<li><a href="2018-world-models.html">World Models</a>：WHAM 在世界模型相關研究脈絡的開頭引用本篇 (p.3)。</li>
+<li><a href="2021-dreamerv2.html">Mastering Atari with Discrete World Models</a>：WHAM 把 DreamerV2 列為以遞迴狀態空間模型捕捉環境動態的例子 (p.3)。</li>
+</ul>
+<h2>背景資料</h2>
+<ul>
+<li><a href="https://huggingface.co/microsoft/wham">WHAM 的 Hugging Face 頁面</a>：論文中提供、釋出的模型權重、樣本資料與 WHAM Demonstrator。</li>
+</ul>
+  </article>
+</main>
+<footer class="site-footer"><a href="../index.html">回首頁</a></footer>
+</body>
+</html>

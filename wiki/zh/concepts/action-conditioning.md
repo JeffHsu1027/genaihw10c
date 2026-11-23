@@ -3,8 +3,8 @@ title: "動作條件（Action conditioning）"
 aliases: [以動作為條件的影片預測, 動作接地, 從無標註影片學習]
 updated: 2026-11-24
 areas: [world-model]
-sources: [2025-dreamer4]
-translated_from: "169b9daa687e"
+sources: [2025-dreamer4, 2025-wham]
+translated_from: "d462498518bd"
 ---
 
 ## 一句話定義
@@ -23,11 +23,21 @@ translated_from: "169b9daa687e"
 
 [Dreamer 4](../sources/2025-dreamer4.md) 把滑鼠、鍵盤等每個動作成分各自編碼成 token，影片沒有動作時只使用一個學到的嵌入，因此能混合使用有標註與無標註的影片 (p.5)。用 VPT 全部 2541 小時的影片訓練、但只有 100 小時附動作時，它達到全部附動作模型 85% 的 PSNR 與 100% 的 SSIM (p.14)。只提供 Overworld 的動作時，動作條件能轉移到只出現在無標註影片中的 Nether 與 End，達到 76% 的 PSNR 與 80% 的 SSIM (p.15)。作者的結論是，世界模型的知識大部分可以從無標註影片吸收，這指向從網路影片學習的方向 (p.14)。
 
+### World and Human Action Models towards gameplay ideation（2025）
+
+[WHAM](../sources/2025-wham.md) 把 Xbox 手把動作離散化，每支搖桿的每個軸分成 11 格，再與影像 token 交錯排列 (p.3)。它不只以動作為條件生成畫面，也會預測玩家的動作，因此同時建模世界與人類行為 (p.3)。使用者可以提供手把動作或編輯畫面來引導生成，這是它持續性評估的基礎 (p.3)。
+
+### 來源之間的比較
+
+- [Dreamer 4](../sources/2025-dreamer4.md) 研究需要多少有標註的動作，並顯示大部分知識可以來自無標註影片 (p.14)。
+- [WHAM](../sources/2025-wham.md) 使用全部附動作的遊玩資料訓練，並且也預測動作，把玩家行為視為模型生成內容的一部分 (p.3)。兩篇互不引用；這段比較是本 Wiki 的整理。
+
 ## 相關概念
 
 - [世界模型（World model）](world-model.md)：動作條件把影片模型變成世界模型。
 - [Shortcut forcing](shortcut-forcing.md)：Dreamer 4 中以動作為條件的動態模型所用的訓練目標。
 - [離線強化學習（Offline reinforcement learning）](offline-reinforcement-learning.md)：世界模型只用記錄下來的動作訓練。
+- [自迴歸 transformer（Autoregressive transformer）](autoregressive-transformer.md)：WHAM 把動作 token 與影像 token 交錯排列。
 
 ## 背景資料
 

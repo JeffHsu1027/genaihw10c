@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="source-hash" content="47b798bd39ac">
+<title>向量量化（Vector quantization） · 論文 Wiki</title>
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="site-name" href="../index.html">論文 Wiki</a>
+  <a class="lang-switch" href="../../en/concepts/vector-quantization.html" hreflang="en">English</a>
+</header>
+<main class="page page-concept">
+  <p class="page-kind"><span class="tag tag-concept">概念</span></p>
+  <h1>向量量化（Vector quantization）</h1>
+  <p class="meta">VQGAN, VQ-VAE, ViT-VQGAN, 離散影像 token, 影像 tokenizer · 1 個來源</p>
+  <article class="content">
+<h2>一句話定義</h2>
+<p>把影像等輸入壓縮成一小串「學到的碼本（codebook）中的條目」，讓它能以離散 token 表示。</p>
+<h2>說明</h2>
+<p>編碼器把輸入轉成一格格的向量，每個向量再換成碼本中最接近的條目，該條目的索引就成為一個 token。解碼器則學習從 token 重建輸入。VQGAN 類的模型再加上感知損失與對抗損失，讓重建的影像更清晰。結果是影像可以像句子中的字詞一樣處理，容易與其他離散資料結合，也能用處理文字的同一類序列模型來建模。每張影像用多少 token，是在重建品質與序列長度、速度之間的取捨。</p>
+<h2>各來源怎麼說</h2>
+<h3>World and Human Action Models towards gameplay ideation（2025）</h3>
+<p><a href="../sources/2025-wham.html">WHAM</a> 把遊玩過程視為離散 token 的序列，並用 VQGAN 影像編碼器把每格畫面轉成 token (p.3)。較小的模型使用約 60M 參數的 VQGAN，把 128 乘 128 的影像對應到詞彙量 4,096 中的 256 個 token (p.10)。1.6B 模型使用約 300M 參數的 ViT-VQGAN，把 300 乘 180 的影像對應到詞彙量 16,384 中的 540 個 token (p.10)。每張影像的 token 數是關鍵超參數，在影像品質與生成速度、脈絡長度之間取捨 (p.3)。較高解析度的 tokenizer 提高了重建品質的上限，也改善了 FVD (p.4)。</p>
+<h2>相關概念</h2>
+<ul>
+<li><a href="autoregressive-transformer.html">自迴歸 transformer（Autoregressive transformer）</a>：為量化器產生的 token 序列建模。</li>
+<li><a href="variational-autoencoder.html">變分自編碼器（Variational autoencoder）</a>：相關的自編碼器，但潛在變數是連續的，而非離散的。</li>
+<li><a href="categorical-latents.html">類別潛在變數（Categorical latents）</a>：另一種離散表示，是在世界模型內部抽樣，而不是從碼本查表。</li>
+</ul>
+<h2>背景資料</h2>
+<p>（尚無）</p>
+  </article>
+</main>
+<footer class="site-footer"><a href="../index.html">回首頁</a></footer>
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="source-hash" content="3bd5b47301cd">
+<meta name="source-hash" content="880ed8722961">
 <title>世界模型（World models） · 論文 Wiki</title>
 <link rel="stylesheet" href="../../assets/style.css">
 </head>
@@ -15,7 +15,7 @@
 <main class="page page-topic">
   <p class="page-kind"><span class="tag tag-topic">主題</span></p>
   <h1>世界模型（World models）</h1>
-  <p class="meta">世界模型 · 6 個來源</p>
+  <p class="meta">世界模型 · 7 個來源</p>
   <article class="content">
 <h2>概述</h2>
 <p>世界模型是學出來的模擬器：讓代理人能預測環境會如何回應自己的行動。相關研究關心的是：如何從原始觀測學到這樣的模型、如何用它來選擇動作或訓練策略，以及如何避免代理人利用模型的錯誤。這個主題頁逐篇整理這條研究脈絡。</p>
@@ -27,6 +27,7 @@
 <li>2021：<a href="../sources/2021-dreamerv2.html">DreamerV2</a> 改用類別潛在變數與 KL 平衡，成為第一個完全在另外訓練的世界模型裡學習、就在 Atari 達到人類水準的代理人 (p.1)。</li>
 <li>2023：<a href="../sources/2023-dreamerv3.html">DreamerV3</a> 加入穩定技術，讓一組固定設定在 150 多個任務上勝過專門的方法，並成為第一個從零開始在 Minecraft 挖到鑽石的演算法 (p.1)。</li>
 <li>2025：<a href="../sources/2025-dreamer4.html">Dreamer 4</a> 改用以 shortcut forcing 訓練、可擴展的 transformer 世界模型，成為第一個完全只靠離線資料就在 Minecraft 拿到鑽石的代理人 (p.1)。</li>
+<li>2025：<a href="../sources/2025-wham.html">WHAM</a> 把 3D 遊戲的 transformer 世界模型用來支援遊戲設計師而非訓練代理人，並以一致性、多樣性與持續性評估 (p.1)。</li>
 </ul>
 <h2>來源</h2>
 <table>
@@ -75,6 +76,12 @@
 <td>未讀</td>
 <td>快速的 transformer 世界模型；只靠離線資料在想像中訓練，就在 Minecraft 拿到鑽石。</td>
 </tr>
+<tr>
+<td>2025</td>
+<td><a href="../sources/2025-wham.html">World and Human Action Models towards gameplay ideation (WHAM)</a></td>
+<td>已讀</td>
+<td>3D 遊戲的世界與人類動作模型，為支援創作發想而打造並評估。</td>
+</tr>
 </tbody>
 </table>
 <h2>關鍵概念</h2>
@@ -94,6 +101,8 @@
 <li><a href="../concepts/return-normalization.html">報酬正規化（Return normalization）</a>：縮放報酬，讓一組探索設定適用每個環境。</li>
 <li><a href="../concepts/shortcut-forcing.html">Shortcut forcing</a>：只用幾個去噪步驟生成每一格影片畫面。</li>
 <li><a href="../concepts/action-conditioning.html">動作條件（Action conditioning）</a>：讓預測的未來取決於代理人的動作。</li>
+<li><a href="../concepts/vector-quantization.html">向量量化（Vector quantization）</a>：把影像轉成離散 token。</li>
+<li><a href="../concepts/autoregressive-transformer.html">自迴歸 transformer（Autoregressive transformer）</a>：一次產生一個 token 來生成序列。</li>
 </ul>
 <h2>術語表</h2>
 <ul>
@@ -125,6 +134,9 @@
 <li><strong>行為克隆（behavior cloning）</strong>：訓練策略去模仿資料集中記錄的動作。</li>
 <li><strong>離線強化學習（offline reinforcement learning）</strong>：只用固定資料集改進策略，不與環境互動。</li>
 <li><strong>FVD（Fréchet Video Distance）</strong>：衡量生成影片與真實影片有多接近的指標，越低越好。</li>
+<li><strong>VQGAN</strong>：把影像區塊對應到學到的碼本條目、並被訓練成能重建清晰影像的影像 tokenizer。</li>
+<li><strong>下一個 token 預測（next-token prediction）</strong>：訓練模型根據之前所有元素猜出序列的下一個元素。</li>
+<li><strong>Wasserstein 距離（Wasserstein distance）</strong>：衡量一個機率分布需要移動多少才能變成另一個分布。</li>
 </ul>
 <h2>未解問題</h2>
 <ul>
@@ -149,6 +161,7 @@
 <li>世界模型能不能在網路影片這類無標記資料上預訓練，或在不同領域之間共用？<a href="../sources/2023-dreamerv3.html">DreamerV3</a> 把這些列為未來方向 (p.11)。</li>
 <li>世界模型需要多長的記憶？<a href="../sources/2025-dreamer4.html">Dreamer 4</a> 保留 9.6 秒的脈絡，遠多於先前的 Minecraft 模型，但超過這個長度仍會遺忘，物品欄也會模糊 (p.13)。</li>
 <li>從少量標註資料學到的動作條件，能否擴展到一般的網路影片？<a href="../sources/2025-dreamer4.html">Dreamer 4</a> 顯示它能轉移到 Minecraft 中沒見過的部分，並把網路影片列為下一步 (p.15)。</li>
+<li>給人使用的世界模型（而不是給代理人用的）應該如何評估？<a href="../sources/2025-wham.html">WHAM</a> 提出一致性、多樣性與持續性，但只在單一遊戲、一秒脈絡下測試 (p.10)。</li>
 </ul>
 <h2>背景資料</h2>
 <p>（尚無）</p>

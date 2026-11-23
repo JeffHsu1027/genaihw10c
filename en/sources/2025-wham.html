@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="source-hash" content="47929b4015ae">
+<title>World and Human Action Models towards gameplay ideation · Paper Wiki</title>
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="site-name" href="../index.html">Paper Wiki</a>
+  <a class="lang-switch" href="../../zh/sources/2025-wham.html" hreflang="zh-Hant">中文</a>
+</header>
+<main class="page page-source">
+  <p class="page-kind"><span class="tag tag-source">Source</span></p>
+  <h1>World and Human Action Models towards gameplay ideation</h1>
+  <p class="meta">Anssi Kanervisto et al. · 2025 · Nature (doi:10.1038/s41586-025-08600-3) · <a href="https://doi.org/10.1038/s41586-025-08600-3">Paper</a></p>
+  <p class="meta"><span class="status status-read">Read</span> · <a href="../topics/world-models.html">World models</a></p>
+  <article class="content">
+<h2>One-line summary</h2>
+<p>A user study with game developers identifies consistency, diversity and persistency as the capabilities a generative model needs to <a href="../concepts/creativity-support.html">support creative ideation</a>, and WHAM, a <a href="../concepts/world-model.html">world model</a> that generates both game visuals and player controller actions for the game Bleeding Edge, is built and evaluated against these three criteria (p.1).</p>
+<h2>Research question</h2>
+<p>Generative AI often falls short of what creative professionals need, in particular for iterative tweaking and divergent thinking (p.1). Which model capabilities matter for supporting creative ideation in game development, and can a generative model trained only on gameplay data provide them (pp.1-2)?</p>
+<h2>Method</h2>
+<ul>
+<li><strong>User study</strong>: semi-structured interviews with 27 creatives from 8 game studios, who explored a design probe of imagined generative AI features; transcripts were analysed thematically (p.9). Two themes emerged: divergent thinking must stay consistent with the game world, and creatives need control over an iterative process (p.2).</li>
+<li><strong>Three capabilities</strong>: consistency (generated sequences follow the game's mechanics over time), diversity (several meaningfully different continuations), and persistency (user edits to frames or actions are kept in later frames) (p.3).</li>
+<li><strong>Model</strong>: images are turned into discrete tokens with a <a href="../concepts/vector-quantization.html">VQGAN encoder</a>, controller actions are discretized, and a decoder-only <a href="../concepts/autoregressive-transformer.html">autoregressive transformer</a> predicts the next token of the interleaved image and action sequence (p.3). Because generation is token by token, tokens can be edited mid-generation, which is what makes persistency possible (p.3).</li>
+<li><strong><a href="../concepts/action-conditioning.html">Actions</a></strong>: Xbox controller buttons are discrete, and the x and y positions of both joysticks are discretized into 11 buckets (p.3). WHAM models both the world and the human player's actions (p.3).</li>
+<li><strong>Data</strong>: about 500,000 anonymized gameplay sessions, more than 7 years of play, across all 7 maps of Bleeding Edge, a 3D four-versus-four online combat game; a filtered subset covers 1 year of play on one map (p.3).</li>
+<li><strong>Model sizes</strong>: the largest WHAM is a 1.6B-parameter transformer with a 1-second context, encoding each 300 by 180 image into 540 tokens; smaller models from 15M to 894M parameters use 128 by 128 images with 256 tokens (pp.3-4).</li>
+</ul>
+<blockquote class="note note-explainer">
+<p><strong>Explainer:</strong> WHAM treats a gameplay video the way a language model treats text: each frame is chopped into word-like tokens, the controller input is added as more tokens, and the model keeps guessing the next token.</p>
+</blockquote>
+<p>Implementation details: the 1.6B model's context is 5,560 tokens, equal to ten frames, and it was trained for 200k updates with 2.5M tokens per batch (p.10). Its image tokenizer is a ViT-VQGAN of about 300M parameters with a vocabulary of 16,384 (p.10). Data are downsampled to 10 Hz, giving roughly 1.4B frames for the full dataset (p.10). Training losses improve predictably with model size, data and compute, and the final loss of the 894M model was predicted from models between 15M and 206M parameters (p.10).</p>
+<h2>Key results</h2>
+<ul>
+<li>Consistency, measured by Fréchet Video Distance against held-out human gameplay, improves with model size and compute (p.4, Fig. 3).</li>
+<li>The 1.6B WHAM generates consistent gameplay sequences of up to 2 minutes (p.4).</li>
+<li>FVD correlates with the training loss with a coefficient of 0.77, and lower FVD matches higher human-judged consistency (p.10).</li>
+<li>Diversity, measured as the Wasserstein distance between generated and human action distributions, approaches the human-to-human baseline during training (p.5, Fig. 4).</li>
+<li>The 1.6B model is slightly worse than the 894M model on diversity, which the authors attribute to more image tokens drowning out the action loss; weighting the action loss ten times higher improves it (p.5).</li>
+<li>Persistency: with one edited frame as the prompt, each inserted element persists less than 60% of the time, but with five edited frames it persists 85% of the time or more (p.7, Table 1).</li>
+<li>In the persistency study, two annotators agreed on 90% of the videos they both labelled (p.11).</li>
+<li>The authors release the WHAM weights, a sample evaluation dataset and the WHAM Demonstrator, a concept prototype for exploring generated gameplay branches (p.6).</li>
+</ul>
+<h2>Limitations and open questions</h2>
+<ul>
+<li>The model is shown on a single game, and the full training data cannot be shared, because the game is still commercially available (p.12).</li>
+<li>The context is only 1 second, or ten frames (p.10).</li>
+<li>Persistency is much lower for small edits, edits with little contrast to the background, or edits in unusual locations (p.12).</li>
+<li>Diversity is evaluated only through the marginal distribution of player actions, not the full space of possible game outcomes (p.5).</li>
+<li>The WHAM Demonstrator is a concept prototype, not a full-fledged user experience (p.6), and the authors state that their goal is not a tool ready to be integrated into game development workflows (p.9).</li>
+</ul>
+<h2>Related concepts</h2>
+<ul>
+<li><a href="../concepts/creativity-support.html">Creativity support</a>: the three capabilities and their evaluation.</li>
+<li><a href="../concepts/vector-quantization.html">Vector quantization</a>: how images are turned into discrete tokens.</li>
+<li><a href="../concepts/autoregressive-transformer.html">Autoregressive transformer</a>: the sequence model that predicts the next token.</li>
+<li><a href="../concepts/world-model.html">World model</a>: WHAM models the dynamics of a 3D game.</li>
+<li><a href="../concepts/action-conditioning.html">Action conditioning</a>: generation is conditioned on, and also predicts, controller actions.</li>
+</ul>
+<h2>Relation to other sources</h2>
+<ul>
+<li><a href="2018-world-models.html">World Models</a>: WHAM cites this paper at the start of its line of related work on world models (p.3).</li>
+<li><a href="2021-dreamerv2.html">Mastering Atari with Discrete World Models</a>: WHAM cites DreamerV2 as an example of recurrent state-space world models for capturing environment dynamics (p.3).</li>
+</ul>
+<h2>Background</h2>
+<ul>
+<li><a href="https://huggingface.co/microsoft/wham">WHAM on Hugging Face</a>: released model weights, sample data and the WHAM Demonstrator, linked from the paper.</li>
+</ul>
+  </article>
+</main>
+<footer class="site-footer"><a href="../index.html">Back to home</a></footer>
+</body>
+</html>

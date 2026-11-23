@@ -15,7 +15,9 @@ Catalog of every page, grouped by area (see `wiki/areas.yml`). In each area: the
 - [Mastering Atari with Discrete World Models](sources/2021-dreamerv2.md) — DreamerV2: categorical latents and KL balancing; human-level Atari learned purely inside a world model. (to-read)
 - [Mastering Diverse Domains through World Models](sources/2023-dreamerv3.md) — DreamerV3: robustness techniques for one fixed configuration across 150+ tasks; diamonds in Minecraft. (to-read)
 - [Training Agents Inside of Scalable World Models](sources/2025-dreamer4.md) — Dreamer 4: a fast transformer world model; diamonds in Minecraft learned purely offline. (to-read)
+- [World and Human Action Models towards gameplay ideation](sources/2025-wham.md) — WHAM: a transformer world model of a 3D game, evaluated for supporting creative ideation.
 - [Action conditioning](concepts/action-conditioning.md) — Making a world model's predictions depend on the agent's actions.
+- [Autoregressive transformer](concepts/autoregressive-transformer.md) — A transformer that generates a sequence one token at a time.
 - [Categorical latents](concepts/categorical-latents.md) — Latent states made of discrete categorical variables instead of Gaussians.
 - [KL balancing](concepts/kl-balancing.md) — Training the prior of a latent model faster than its posterior.
 - [Latent overshooting](concepts/latent-overshooting.md) — Training a latent model on multi-step predictions in latent space.
@@ -27,6 +29,7 @@ Catalog of every page, grouped by area (see `wiki/areas.yml`). In each area: the
 - [Shortcut forcing](concepts/shortcut-forcing.md) — Training a video world model to generate each frame in a few denoising steps.
 - [Symlog predictions](concepts/symlog-predictions.md) — Predicting targets of unknown scale through a symmetric log transform or twohot bins.
 - [Variational autoencoder](concepts/variational-autoencoder.md) — Encodes an input into a small random latent vector and decodes it back.
+- [Vector quantization](concepts/vector-quantization.md) — Compressing an input into discrete tokens from a learned codebook.
 - [World model](concepts/world-model.md) — A learned model that predicts how an environment changes.
 
 ## Reinforcement learning
@@ -49,4 +52,5 @@ Catalog of every page, grouped by area (see `wiki/areas.yml`). In each area: the
 
 ## Game AI
 
-(None yet)
+- [World and Human Action Models towards gameplay ideation](sources/2025-wham.md) — WHAM: a transformer world model of a 3D game, evaluated for supporting creative ideation.
+- [Creativity support](concepts/creativity-support.md) — Designing and evaluating AI by how well it helps people generate and refine ideas.

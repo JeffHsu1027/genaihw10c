@@ -1,6 +1,6 @@
 ---
 title: 目錄
-translated_from: "9416304fbe38"
+translated_from: "f7e0836b0c93"
 ---
 
 # 目錄
@@ -16,7 +16,9 @@ translated_from: "9416304fbe38"
 - [Mastering Atari with Discrete World Models](sources/2021-dreamerv2.md) — DreamerV2：類別潛在變數與 KL 平衡；只在世界模型裡學習就達到 Atari 人類水準。（未讀）
 - [Mastering Diverse Domains through World Models](sources/2023-dreamerv3.md) — DreamerV3：穩定技術讓一組固定設定跨 150 多個任務；在 Minecraft 挖到鑽石。（未讀）
 - [Training Agents Inside of Scalable World Models](sources/2025-dreamer4.md) — Dreamer 4：快速的 transformer 世界模型；只靠離線資料就在 Minecraft 拿到鑽石。（未讀）
+- [World and Human Action Models towards gameplay ideation](sources/2025-wham.md) — WHAM：3D 遊戲的 transformer 世界模型，以支援創作發想為目標評估。
 - [動作條件（Action conditioning）](concepts/action-conditioning.md) — 讓世界模型的預測取決於代理人的動作。
+- [自迴歸 transformer（Autoregressive transformer）](concepts/autoregressive-transformer.md) — 一次產生一個 token 的 transformer。
 - [類別潛在變數（Categorical latents）](concepts/categorical-latents.md) — 用離散類別變數而非高斯分布組成的潛在狀態。
 - [KL 平衡（KL balancing）](concepts/kl-balancing.md) — 訓練潛在模型時，先驗更新得比後驗快。
 - [潛在超前預測（Latent overshooting）](concepts/latent-overshooting.md) — 在潛在空間用多步預測訓練潛在模型。
@@ -28,6 +30,7 @@ translated_from: "9416304fbe38"
 - [Shortcut forcing](concepts/shortcut-forcing.md) — 訓練影片世界模型只用幾個去噪步驟生成每一格畫面。
 - [Symlog 預測（Symlog predictions）](concepts/symlog-predictions.md) — 以對稱對數轉換或 twohot 分箱預測量級未知的目標。
 - [變分自編碼器（Variational autoencoder）](concepts/variational-autoencoder.md) — 把輸入編碼成小而隨機的潛在向量，再解碼回來。
+- [向量量化（Vector quantization）](concepts/vector-quantization.md) — 把輸入壓縮成學到的碼本中的離散 token。
 - [世界模型（World model）](concepts/world-model.md) — 預測環境如何變化的學習模型。
 
 ## 強化學習
@@ -50,4 +53,5 @@ translated_from: "9416304fbe38"
 
 ## 遊戲 AI
 
-（尚無）
+- [World and Human Action Models towards gameplay ideation](sources/2025-wham.md) — WHAM：3D 遊戲的 transformer 世界模型，以支援創作發想為目標評估。
+- [創作支援（Creativity support）](concepts/creativity-support.md) — 以幫助人產生與修改點子的程度來設計與評估 AI。

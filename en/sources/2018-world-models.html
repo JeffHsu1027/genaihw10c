@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="source-hash" content="6aa08ed2317c">
+<meta name="source-hash" content="a6a3d129131f">
 <title>World Models · Paper Wiki</title>
 <link rel="stylesheet" href="../../assets/style.css">
 </head>
@@ -69,6 +69,7 @@
 <li><a href="2019-planet.html">Learning Latent Dynamics for Planning from Pixels</a> (PlaNet, 2019) cites this paper, reuses its convolutional encoder and decoder, and counts it among hybrid agents that learn a policy from imagined experience. Instead of training a controller inside a dream, PlaNet plans with its learned model at every step. David Ha is an author of both papers.</li>
 <li><a href="2020-dreamer.html">Dream to Control: Learning Behaviors by Latent Imagination</a> (Dreamer, 2020) also cites this paper, describing it as evolving linear controllers in imagination, and reuses its convolutional encoder and decoder. Like this paper, Dreamer trains its behavior inside the learned model, but with gradients and a value model instead of evolution strategies.</li>
 <li><a href="2025-dreamer4.html">Training Agents Inside of Scalable World Models</a> (Dreamer 4, 2025) cites this paper as one of the first world models accurate enough for planning from pixels. Like this paper's VizDoom agent, Dreamer 4 trains its policy without touching the real game, but from a large human dataset rather than random play.</li>
+<li><a href="2025-wham.html">World and Human Action Models towards gameplay ideation</a> (WHAM, 2025) cites this paper at the start of its line of related world-model work. It also learns a generative model of a game, but uses it to support human game designers instead of training an agent.</li>
 </ul>
 <h2>Background</h2>
 <ul>

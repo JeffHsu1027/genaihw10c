@@ -77,6 +77,7 @@ Implementation details: the world model has about 20 million trainable parameter
 
 - [Dream to Control: Learning Behaviors by Latent Imagination](2020-dreamer.md): DreamerV2 is an evolution of Dreamer, called DreamerV1 in this paper (p.2). Appendix C lists every change, including the ones that did not help, such as binary latents and layer normalization in the GRU (p.18).
 - [Mastering Diverse Domains through World Models](2023-dreamerv3.md) (DreamerV3, 2023) is the next generation. It keeps categorical latents and KL balancing but adds robustness techniques so that one configuration works across many domains, not only Atari.
+- [World and Human Action Models towards gameplay ideation](2025-wham.md) (WHAM, 2025) cites this paper as an example of recurrent state-space world models, and uses a transformer over discrete tokens instead.
 - [Learning Latent Dynamics for Planning from Pixels](2019-planet.md): DreamerV2 builds on the world model introduced by PlaNet and replaces its Gaussian latents with categorical variables (p.2).
 
 ## Background

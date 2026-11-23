@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="source-hash" content="3ce302a60d3d">
+<title>Creativity support · Paper Wiki</title>
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="site-name" href="../index.html">Paper Wiki</a>
+  <a class="lang-switch" href="../../zh/concepts/creativity-support.html" hreflang="zh-Hant">中文</a>
+</header>
+<main class="page page-concept">
+  <p class="page-kind"><span class="tag tag-concept">Concept</span></p>
+  <h1>Creativity support</h1>
+  <p class="meta">creativity support tools, creative ideation, consistency diversity persistency · 1 source</p>
+  <article class="content">
+<h2>One-line definition</h2>
+<p>Designing and evaluating AI systems by how well they help people come up with and refine ideas, rather than by how well they complete a task on their own.</p>
+<h2>Explanation</h2>
+<p>Creative work usually alternates between opening up many options and narrowing them down through many small adjustments. A tool that supports this must offer varied suggestions, keep them coherent with the work's rules and style, and let the person steer the result directly. Generative models trained to produce one good answer from a prompt often miss these needs. Evaluating models against what creatives actually do can therefore point model development in a different direction than task-completion benchmarks.</p>
+<blockquote class="note note-explainer">
+<p><strong>Explainer:</strong> A good creative assistant is less like a vending machine that hands out one finished product and more like a sketching partner who offers rough variations and keeps your corrections.</p>
+</blockquote>
+<h2>What each source says</h2>
+<h3>World and Human Action Models towards gameplay ideation (2025)</h3>
+<p><a href="../sources/2025-wham.html">WHAM</a> interviews 27 game-development creatives and finds two needs: divergent thinking that stays consistent with the game world, and control over an iterative process (p.2). From these it derives three capabilities for generative models: consistency, diversity and persistency (p.3). It turns each into a measurable criterion, using Fréchet Video Distance for consistency, the Wasserstein distance to human actions for diversity, and human labelling of whether inserted elements survive for persistency (pp.4-5). The authors argue that model evaluation should be informed by the requirements of creatives, in contrast with the usual focus on measuring task completion (p.7).</p>
+<h2>Related concepts</h2>
+<ul>
+<li><a href="world-model.html">World model</a>: WHAM is the generative model evaluated against these criteria.</li>
+<li><a href="autoregressive-transformer.html">Autoregressive transformer</a>: token-by-token generation is what makes edits possible.</li>
+</ul>
+<h2>Background</h2>
+<p>(None yet)</p>
+  </article>
+</main>
+<footer class="site-footer"><a href="../index.html">Back to home</a></footer>
+</body>
+</html>
