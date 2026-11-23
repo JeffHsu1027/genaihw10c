@@ -85,7 +85,8 @@ PLACEHOLDERS = {
 
 CJK = re.compile(r"[　-〿㐀-䶿一-鿿豈-﫿＀-￯]")
 REF_ANY = re.compile(r"\(pp?\.[^)]*\)")
-REF_OK = re.compile(r"\((?:p\.\d+|pp\.\d+-\d+)(?:, (?:Fig\.|Table|Eq\.) ?[A-Z]?\d+[a-z]?)?\)")
+REF_OK = re.compile(r"\((?:p\.\d+|pp\.\d+-\d+)(?:, (?:Fig\.|Table|Eq\.|Alg\.) ?[A-Z]?\d+[a-z]?)?\)")
+SOURCE_LINK = re.compile(r"\]\((?:[^)]*/)?(\d{4}-[a-z0-9-]+)\.md")
 MD_LINK = re.compile(r"!?\[([^\]]*)\]\(([^)\s]+)(?:\s+\"[^\"]*\")?\)")
 AUTO_LINK = re.compile(r"<(https?://[^>\s]+)>")
 QUOTE = re.compile(r"\"([^\"\n]+)\"|“([^”\n]+)”")
@@ -427,7 +428,8 @@ def ref_pages(ref: str) -> list[int]:
 
 def check_page_bounds(lang: str, pages: dict[str, Page]) -> None:
     """出處頁碼不可超過來源頁的 pages。
-    來源頁：所有出處都屬於本篇。概念頁與主題頁：出處屬於同一行（或同一個 ### 小節中）最近連到的來源頁。"""
+    來源頁：出處屬於本篇，除非同一行連到另一篇來源頁（例如 Superseded 或與其他來源的關係），則屬於那一篇。
+    概念頁與主題頁：出處屬於同一行（或同一個小節中）最近連到的來源頁。"""
     cat = "格式"
     limits = {p.slug: p.fm.get("pages") for p in pages.values()
               if p.kind == "sources" and isinstance(p.fm.get("pages"), int)}
@@ -444,15 +446,12 @@ def check_page_bounds(lang: str, pages: dict[str, Page]) -> None:
         if page.error or page.kind == "index":
             continue
         text = strip_code(page.body_without_notes)
-        if page.kind == "sources":
-            for ref in REF_ANY.findall(text):
-                check_ref(page, ref, page.slug)
-            continue
-        current = None
+        own = page.slug if page.kind == "sources" else None
+        current = own
         for line in text.split("\n"):
-            if line.startswith("#"):
-                current = None
-            linked = re.findall(r"\]\([^)]*?sources/([a-z0-9-]+)\.md", line)
+            if line.startswith("#") or page.kind == "sources":
+                current = own
+            linked = [s for s in SOURCE_LINK.findall(line) if s in limits]
             if linked:
                 current = linked[-1]
             for ref in REF_ANY.findall(line):
