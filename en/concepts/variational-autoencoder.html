@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="source-hash" content="dc7836dd6770">
+<meta name="source-hash" content="41cbb250fa39">
 <title>Variational autoencoder · Paper Wiki</title>
 <link rel="stylesheet" href="../../assets/style.css">
 </head>
@@ -15,7 +15,7 @@
 <main class="page page-concept">
   <p class="page-kind"><span class="tag tag-concept">Concept</span></p>
   <h1>Variational autoencoder</h1>
-  <p class="meta">VAE, ConvVAE, convolutional variational autoencoder · 3 sources</p>
+  <p class="meta">VAE, ConvVAE, convolutional variational autoencoder · 4 sources</p>
   <article class="content">
 <h2>One-line definition</h2>
 <p>A neural network that encodes an input into a small random latent vector and learns to decode that vector back into the input.</p>
@@ -31,6 +31,8 @@
 <p><a href="../sources/2019-planet.html">PlaNet</a> describes its recurrent state-space model as a kind of sequential VAE or non-linear Kalman filter (p.3). It reuses the convolutional encoder and deconvolutional decoder of World Models (p.12), but its encoder infers the latent state from the whole history of observations and actions, not from a single frame (p.3). The KL term is not penalized below 3 free nats (p.12).</p>
 <h3>Dream to Control: Learning Behaviors by Latent Imagination (2020)</h3>
 <p><a href="../sources/2020-dreamer.html">Dreamer</a> trains its world model with the variational lower bound (ELBO), or more generally a variational information bottleneck, made of reconstruction terms for images and rewards and a KL regularizer (p.6, Eq. 10). It reuses the convolutional encoder and decoder of World Models (p.14). Reconstruction is compared with a contrastive objective that avoids predicting pixels; reconstruction works better on most tasks (p.8, Fig. 8).</p>
+<h3>Mastering Atari with Discrete World Models (2021)</h3>
+<p><a href="../sources/2021-dreamerv2.html">DreamerV2</a> states that its world model loss is the ELBO of an action-conditioned hidden Markov model, so the world model can be read as a sequential VAE whose posterior is the representation model and whose prior is the transition predictor (p.4). It replaces Gaussian latents with categorical ones trained by straight-through gradients (p.4). Its KL balancing is described as different from, and orthogonal to, scaling the KL term as in a β-VAE (p.4).</p>
 <h3>Comparing the sources</h3>
 <ul>
 <li><a href="../sources/2018-world-models.html">World Models</a> trains the VAE on its own, frame by frame, before the dynamics model, which the authors found more practical than end-to-end training (p.4).</li>
@@ -41,6 +43,7 @@
 </blockquote>
 <ul>
 <li><a href="../sources/2020-dreamer.html">Dreamer</a> keeps PlaNet's joint training and adds a direct comparison showing that reconstruction is not the only option, though it is the best one in its experiments (p.8, Fig. 8).</li>
+<li><a href="../sources/2021-dreamerv2.html">DreamerV2</a> keeps the variational view but changes two parts of it: the type of latent variable and how the KL term is weighted (p.4).</li>
 <li>PlaNet and Dreamer reuse the World Models networks (see their source pages); this comparison is this Wiki's own summary.</li>
 </ul>
 <h2>Related concepts</h2>
@@ -48,6 +51,8 @@
 <li><a href="world-model.html">World model</a>: the VAE is the compression half of the world model.</li>
 <li><a href="mixture-density-rnn.html">Mixture density RNN</a>: predicts the next latent vector that the VAE defines.</li>
 <li><a href="recurrent-state-space-model.html">Recurrent state-space model</a>: extends the VAE idea to sequences.</li>
+<li><a href="categorical-latents.html">Categorical latents</a>: a discrete alternative to Gaussian latents.</li>
+<li><a href="kl-balancing.html">KL balancing</a>: a change to how the KL term is trained.</li>
 </ul>
 <h2>Background</h2>
 <p>(None yet)</p>

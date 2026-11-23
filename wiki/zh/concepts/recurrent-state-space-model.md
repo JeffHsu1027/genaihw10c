@@ -3,8 +3,8 @@ title: "遞迴狀態空間模型（Recurrent state-space model）"
 aliases: [RSSM]
 updated: 2026-11-24
 areas: [world-model]
-sources: [2019-planet, 2020-dreamer]
-translated_from: "4da1ee318472"
+sources: [2019-planet, 2020-dreamer, 2021-dreamerv2]
+translated_from: "897b75cf162f"
 ---
 
 ## 一句話定義
@@ -27,10 +27,15 @@ translated_from: "4da1ee318472"
 
 [Dreamer](../sources/2020-dreamer.md) 以 PlaNet 的 RSSM 作為轉移模型，並把 RSSM 與作用在影像上的 CNN 結合成表示模型 (p.6)。它的潛在分布與 PlaNet 相同，是 30 維的對角高斯分布 (p.14)。在五張脈絡畫面之後只給動作，RSSM 往後預測 45 步仍夠準確，足以讓 Dreamer 在潛在空間中學習行為 (p.5, Fig. 5)。
 
+### Mastering Atari with Discrete World Models（2021）
+
+[DreamerV2](../sources/2021-dreamerv2.md) 保留 RSSM 的結構：GRU 計算確定性的遞迴狀態，後驗隨機狀態看得到目前的影像，先驗隨機狀態則在看不到影像時預測它 (pp.2-3)。不過隨機狀態改成 32 個各有 32 類的類別變數向量，不再是高斯分布 (p.3, Fig. 2)。RSSM 使用 600 個單元 (p.19)，在它的 GRU 中加入層正規化幾乎沒有幫助 (p.18)。
+
 ### 來源之間的比較
 
 - [PlaNet](../sources/2019-planet.md) 提出 RSSM 並用於規劃 (p.4)。
 - [Dreamer](../sources/2020-dreamer.md) 原封不動地沿用它來學習策略 (p.6)。因此同一個模型支援兩種不同的動作選擇方式；Dreamer 直接建立在 PlaNet 之上，這段整理是本 Wiki 的。
+- [DreamerV2](../sources/2021-dreamerv2.md) 保留確定性與隨機兩條路徑，但把高斯隨機狀態換成類別變數，在多數 Atari 遊戲上有幫助 (p.9)。
 
 ## 相關概念
 
@@ -38,6 +43,8 @@ translated_from: "4da1ee318472"
 - [變分自編碼器（Variational autoencoder）](variational-autoencoder.md)：RSSM 以序列 VAE 的方式訓練。
 - [潛在超前預測（Latent overshooting）](latent-overshooting.md)：用多步預測訓練這類模型的額外目標。
 - [混合密度遞迴神經網路（Mixture density RNN）](mixture-density-rnn.md)：另一種讓遞迴模型帶有隨機性的方法；它對輸出抽樣，RSSM 則對狀態的一部分抽樣。
+- [類別潛在變數（Categorical latents）](categorical-latents.md)：DreamerV2 使用的離散隨機狀態。
+- [KL 平衡（KL balancing）](kl-balancing.md)：訓練 RSSM 先驗的一種方式。
 
 ## 背景資料
 

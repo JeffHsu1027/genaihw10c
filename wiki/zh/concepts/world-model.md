@@ -3,8 +3,8 @@ title: "世界模型（World model）"
 aliases: [動態模型, 環境模型, dynamics model, environment model]
 updated: 2026-11-24
 areas: [world-model, reinforcement-learning]
-sources: [2018-world-models, 2019-planet, 2020-dreamer]
-translated_from: "73c853f09637"
+sources: [2018-world-models, 2019-planet, 2020-dreamer, 2021-dreamerv2]
+translated_from: "0a87ea873894"
 ---
 
 ## 一句話定義
@@ -31,6 +31,10 @@ translated_from: "73c853f09637"
 
 [Dreamer](../sources/2020-dreamer.md) 使用與 PlaNet 相同的世界模型，並把它描述為概括代理人的經驗，讓複雜的行為能從中學習 (p.1)。世界模型根據動作與過去的觀測預測獎勵，任何學習世界模型的目標函數都能與 Dreamer 搭配 (p.2)。論文比較三種學習目標：影像重建效果最好，對比式估計約能解決一半的任務，只預測獎勵則不夠 (p.8, Fig. 8)。
 
+### Mastering Atari with Discrete World Models（2021）
+
+[DreamerV2](../sources/2021-dreamerv2.md) 把世界模型描述為把代理人的經驗濃縮成一個預測模型，可以代替環境來學習行為 (p.2)。它的世界模型多了折扣預測器，讓想像軌跡能考慮回合結束，並使用類別潛在變數與 KL 平衡 (pp.3-4)。世界模型約有 2000 萬個參數 (p.4)，準確到只在其中學習的代理人就能在 Atari 上達到人類水準 (p.2)。世界模型依賴影像梯度：拿掉後表現崩潰，截斷獎勵梯度則影響不大 (p.9)。
+
 ### 來源之間的比較
 
 - 兩篇都從像素學出壓縮的潛在狀態與其上的轉移模型：[World Models](../sources/2018-world-models.md) 用 VAE 加 MDN-RNN (p.2, Fig. 4)，[PlaNet](../sources/2019-planet.md) 用遞迴狀態空間模型 (p.4, Eq. 4)。
@@ -38,13 +42,15 @@ translated_from: "73c853f09637"
 - [PlaNet](../sources/2019-planet.md) 讓模型預測獎勵，並持續用自己規劃收集的資料重新訓練模型 (p.3)。
 - 兩篇都警告純確定性的模型容易被利用：[World Models](../sources/2018-world-models.md) 是被控制器利用 (p.9)，[PlaNet](../sources/2019-planet.md) 是被規劃器利用 (p.4, Fig. 2)。這是兩篇說法一致，不是衝突。
 - [Dreamer](../sources/2020-dreamer.md) 保留 PlaNet 的世界模型，只改變從模型得出行為的方式，顯示同一個模型既能用於規劃，也能用於學習策略 (p.8)。
-- PlaNet 與 Dreamer 都引用了 World Models（見各自的來源頁）；這段並列比較是本 Wiki 的整理。
+- [DreamerV2](../sources/2021-dreamerv2.md) 保留相同的整體設計，只改變潛在變數與 KL 項，就足以從簡單的控制任務進展到 Atari 上的人類水準 (p.2)。
+- PlaNet、Dreamer 與 DreamerV2 都引用了 World Models（見各自的來源頁）；這段並列比較是本 Wiki 的整理。
 
 ## 相關概念
 
 - [變分自編碼器（Variational autoencoder）](variational-autoencoder.md)：為世界模型壓縮觀測。
 - [混合密度遞迴神經網路（Mixture density RNN）](mixture-density-rnn.md)：以機率分布預測下一個狀態。
 - [遞迴狀態空間模型（Recurrent state-space model）](recurrent-state-space-model.md)：同時具有確定性與隨機狀態的世界模型設計。
+- [類別潛在變數（Categorical latents）](categorical-latents.md)：DreamerV2 世界模型使用的離散潛在狀態。
 - [基於模型的強化學習（Model-based reinforcement learning）](model-based-reinforcement-learning.md)：使用世界模型的強化學習。
 - [在想像中學習（Learning in imagination）](learning-in-imagination.md)：在世界模型裡訓練代理人。
 

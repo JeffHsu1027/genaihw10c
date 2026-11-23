@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="source-hash" content="cdd852969815">
+<meta name="source-hash" content="4eee964ccb62">
 <title>World model · Paper Wiki</title>
 <link rel="stylesheet" href="../../assets/style.css">
 </head>
@@ -15,7 +15,7 @@
 <main class="page page-concept">
   <p class="page-kind"><span class="tag tag-concept">Concept</span></p>
   <h1>World model</h1>
-  <p class="meta">dynamics model, environment model, predictive model of the environment · 3 sources</p>
+  <p class="meta">dynamics model, environment model, predictive model of the environment · 4 sources</p>
   <article class="content">
 <h2>One-line definition</h2>
 <p>A learned model of an environment that predicts what will happen next, usually given the current state and an action.</p>
@@ -31,6 +31,8 @@
 <p><a href="../sources/2019-planet.html">PlaNet</a> calls its world model a latent dynamics model: a transition model, an observation model, a reward model and an encoder, built as a recurrent state-space model (p.3). Because the model also predicts rewards, the planner can score action sequences purely in latent space without generating images (p.3). The model is trained on data that the agent keeps collecting by planning with the partially trained model, not only on random data (p.3).</p>
 <h3>Dream to Control: Learning Behaviors by Latent Imagination (2020)</h3>
 <p><a href="../sources/2020-dreamer.html">Dreamer</a> uses the same world model as PlaNet and describes it as summarizing the agent's experience so that complex behaviors can be learned from it (p.1). The world model predicts rewards from actions and past observations, and any learning objective for it can be combined with Dreamer (p.2). The paper compares three objectives for learning it: image reconstruction works best, contrastive estimation solves about half of the tasks, and reward prediction alone is not enough (p.8, Fig. 8).</p>
+<h3>Mastering Atari with Discrete World Models (2021)</h3>
+<p><a href="../sources/2021-dreamerv2.html">DreamerV2</a> describes world models as summarizing an agent's experience into a predictive model that can replace the environment for learning behaviors (p.2). Its world model adds a discount predictor, so that imagined trajectories can account for episode ends, and uses categorical latents with KL balancing (pp.3-4). The world model has about 20 million parameters (p.4), and it is accurate enough for an agent that learns only inside it to reach human-level Atari performance (p.2). The world model relies on image gradients: without them performance collapses, while stopping reward gradients changes little (p.9).</p>
 <h3>Comparing the sources</h3>
 <ul>
 <li>Both learn a compressed latent state from pixels and a transition model over it: <a href="../sources/2018-world-models.html">World Models</a> with a VAE and an MDN-RNN (p.2, Fig. 4), <a href="../sources/2019-planet.html">PlaNet</a> with a recurrent state-space model (p.4, Eq. 4).</li>
@@ -38,13 +40,15 @@
 <li><a href="../sources/2019-planet.html">PlaNet</a> predicts rewards with the model and keeps retraining it on data collected by its own plans (p.3).</li>
 <li>Both warn that a purely deterministic model is easy to exploit: <a href="../sources/2018-world-models.html">World Models</a> for its controller (p.9) and <a href="../sources/2019-planet.html">PlaNet</a> for its planner (p.4, Fig. 2). This is agreement, not conflict.</li>
 <li><a href="../sources/2020-dreamer.html">Dreamer</a> keeps PlaNet's world model and changes only how behavior is derived from it, which shows that the same model can serve planning or policy learning (p.8).</li>
-<li>PlaNet and Dreamer cite World Models (see their source pages); this side-by-side comparison is this Wiki's own summary.</li>
+<li><a href="../sources/2021-dreamerv2.html">DreamerV2</a> keeps the same overall design but changes the latent variables and the KL term, which is enough to move from simple control tasks to human-level Atari (p.2).</li>
+<li>PlaNet, Dreamer and DreamerV2 cite World Models (see their source pages); this side-by-side comparison is this Wiki's own summary.</li>
 </ul>
 <h2>Related concepts</h2>
 <ul>
 <li><a href="variational-autoencoder.html">Variational autoencoder</a>: compresses observations for the world model.</li>
 <li><a href="mixture-density-rnn.html">Mixture density RNN</a>: predicts the next state as a probability distribution.</li>
 <li><a href="recurrent-state-space-model.html">Recurrent state-space model</a>: a world model design with deterministic and stochastic state.</li>
+<li><a href="categorical-latents.html">Categorical latents</a>: discrete latent states used in DreamerV2's world model.</li>
 <li><a href="model-based-reinforcement-learning.html">Model-based reinforcement learning</a>: reinforcement learning that uses a world model.</li>
 <li><a href="learning-in-imagination.html">Learning in imagination</a>: training an agent inside a world model.</li>
 </ul>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="source-hash" content="4b91ddf7c14c">
+<meta name="source-hash" content="00e9edbcc558">
 <title>World models · Paper Wiki</title>
 <link rel="stylesheet" href="../../assets/style.css">
 </head>
@@ -15,7 +15,7 @@
 <main class="page page-topic">
   <p class="page-kind"><span class="tag tag-topic">Topic</span></p>
   <h1>World models</h1>
-  <p class="meta">World models · 3 sources</p>
+  <p class="meta">World models · 4 sources</p>
   <article class="content">
 <h2>Overview</h2>
 <p>World models are learned simulators: models that let an agent predict how its environment will respond to its actions. Research on them asks how to learn such models from raw observations, how to use them to choose actions or to train policies, and how to stop agents from exploiting the model's mistakes. This topic page follows that line of work paper by paper.</p>
@@ -24,6 +24,7 @@
 <li>2018: <a href="../sources/2018-world-models.html">World Models</a> splits an agent into a large unsupervised world model and a tiny controller, and shows that a policy trained entirely inside the model's dream can work in the real game (p.7).</li>
 <li>2019: <a href="../sources/2019-planet.html">PlaNet</a> learns a recurrent state-space model with deterministic and stochastic parts and plans every action online in latent space, reaching strong model-free performance with about 200 times fewer episodes (p.2).</li>
 <li>2020: <a href="../sources/2020-dreamer.html">Dreamer</a> keeps PlaNet's world model but learns behavior purely in imagination with an actor-critic whose value model looks beyond the horizon, beating PlaNet and the model-free D4PG on average across 20 tasks (p.6, Fig. 6).</li>
+<li>2021: <a href="../sources/2021-dreamerv2.html">DreamerV2</a> switches to categorical latents and KL balancing and becomes the first agent to reach human-level Atari performance by learning purely inside a separately trained world model (p.1).</li>
 </ul>
 <h2>Sources</h2>
 <table>
@@ -54,6 +55,12 @@
 <td>to-read</td>
 <td>Learns an actor-critic purely in the latent imagination of PlaNet's world model, using value gradients through the dynamics.</td>
 </tr>
+<tr>
+<td>2021</td>
+<td><a href="../sources/2021-dreamerv2.html">Mastering Atari with Discrete World Models (DreamerV2)</a></td>
+<td>to-read</td>
+<td>Dreamer with categorical latents and KL balancing; human-level Atari from learning only inside the world model.</td>
+</tr>
 </tbody>
 </table>
 <h2>Key concepts</h2>
@@ -67,6 +74,8 @@
 <li><a href="../concepts/latent-space-planning.html">Latent space planning</a>: choosing actions by searching action sequences inside the model.</li>
 <li><a href="../concepts/latent-overshooting.html">Latent overshooting</a>: training a latent model on multi-step predictions.</li>
 <li><a href="../concepts/actor-critic.html">Actor-critic</a>: learning a policy together with a value function that estimates future rewards.</li>
+<li><a href="../concepts/categorical-latents.html">Categorical latents</a>: describing the latent state with discrete choices instead of Gaussians.</li>
+<li><a href="../concepts/kl-balancing.html">KL balancing</a>: training the prior of a latent model faster than its posterior.</li>
 </ul>
 <h2>Key terms</h2>
 <ul>
@@ -84,6 +93,10 @@
 <li><strong>Imagination horizon</strong>: how many steps ahead an agent rolls out its world model when imagining.</li>
 <li><strong>λ-return</strong>: a value target that blends estimates which trust real or imagined rewards for different numbers of steps before relying on the value function.</li>
 <li><strong>Reparameterization</strong>: writing a random sample as a fixed function of noise, so gradients can flow through the sampling step.</li>
+<li><strong>Straight-through estimator</strong>: a way to pass gradients through a discrete sample by treating the sampling step as if it were the identity in the backward pass.</li>
+<li><strong>Reinforce gradient</strong>: a policy gradient that increases the probability of sampled actions in proportion to how good they turned out; unbiased but noisy.</li>
+<li><strong>Sticky actions</strong>: an Atari evaluation setting in which the previous action is sometimes repeated at random, so agents cannot memorize exact action sequences.</li>
+<li><strong>Human-normalized score</strong>: a game score rescaled so that a reference human player, or the human world record, corresponds to one.</li>
 </ul>
 <h2>Open questions</h2>
 <ul>
@@ -97,6 +110,13 @@
 <ul>
 <li>Which objective should a world model be trained with? <a href="../sources/2020-dreamer.html">Dreamer</a> finds pixel reconstruction best and reward prediction alone insufficient, and expects better representation learning to be needed for visually complex environments (p.9).</li>
 <li>Can agents that learn purely through world models become competitive in discrete-action domains such as Atari? <a href="../sources/2020-dreamer.html">Dreamer</a> learns successful behaviors there but is not yet competitive (p.16).</li>
+</ul>
+<blockquote class="note note-superseded">
+<p><strong>Superseded:</strong> <a href="../sources/2021-dreamerv2.html">DreamerV2</a> reaches human-level performance on 55 Atari games (p.7, Table 1).</p>
+</blockquote>
+<ul>
+<li>Why do categorical latents work better than Gaussian ones? <a href="../sources/2021-dreamerv2.html">DreamerV2</a> only offers hypotheses (p.9).</li>
+<li>How can a reconstruction-based world model capture small but important objects? <a href="../sources/2021-dreamerv2.html">DreamerV2</a> fails on Video Pinball, where the ball is a single pixel (p.8).</li>
 </ul>
 <h2>Background</h2>
 <p>(None yet)</p>

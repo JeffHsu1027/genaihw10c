@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="source-hash" content="f31d5bfd8cdd">
+<meta name="source-hash" content="c939e13db95e">
 <title>Recurrent state-space model · Paper Wiki</title>
 <link rel="stylesheet" href="../../assets/style.css">
 </head>
@@ -15,7 +15,7 @@
 <main class="page page-concept">
   <p class="page-kind"><span class="tag tag-concept">Concept</span></p>
   <h1>Recurrent state-space model</h1>
-  <p class="meta">RSSM · 2 sources</p>
+  <p class="meta">RSSM · 3 sources</p>
   <article class="content">
 <h2>One-line definition</h2>
 <p>A latent dynamics model whose state has a deterministic part, carried forward by a recurrent network, and a stochastic part sampled at every step.</p>
@@ -29,10 +29,13 @@
 <p><a href="../sources/2019-planet.html">PlaNet</a> introduces the RSSM: an RNN updates the deterministic state from the previous deterministic state, stochastic state and action, the stochastic state is sampled from a Gaussian given the deterministic state, and observations and rewards are predicted from both (p.4, Eq. 4). All information about the observations must pass through the sampling step of the encoder, to avoid a deterministic shortcut from inputs to reconstructions (p.4). In the experiments, both paths are needed on every task, and without the stochastic part the agent does not learn at all (p.6, Fig. 4). The implementation uses a GRU with 200 units and a 30-dimensional stochastic state (p.12). Unlike a purely stochastic model, the RSSM is robust to the choice between ReLU and ELU activations (p.15, Fig. 9).</p>
 <h3>Dream to Control: Learning Behaviors by Latent Imagination (2020)</h3>
 <p><a href="../sources/2020-dreamer.html">Dreamer</a> implements its transition model as the RSSM of PlaNet, and builds the representation model by combining the RSSM with a CNN applied to the image (p.6). Its latent distributions are 30-dimensional diagonal Gaussians, as in PlaNet (p.14). Given only the actions after five context frames, the RSSM predicts 45 steps ahead accurately enough for Dreamer to learn behaviors in its latent space (p.5, Fig. 5).</p>
+<h3>Mastering Atari with Discrete World Models (2021)</h3>
+<p><a href="../sources/2021-dreamerv2.html">DreamerV2</a> keeps the RSSM structure: a GRU computes the deterministic recurrent state, a posterior stochastic state sees the current image, and a prior stochastic state predicts it without the image (pp.2-3). The stochastic state, however, becomes a vector of 32 categorical variables with 32 classes each instead of a Gaussian (p.3, Fig. 2). The RSSM uses 600 units (p.19), and adding layer normalization to its GRU gave little or no benefit (p.18).</p>
 <h3>Comparing the sources</h3>
 <ul>
 <li><a href="../sources/2019-planet.html">PlaNet</a> introduces the RSSM and uses it for planning (p.4).</li>
 <li><a href="../sources/2020-dreamer.html">Dreamer</a> reuses it unchanged for policy learning (p.6). The same model therefore supports two different ways of choosing actions; Dreamer builds directly on PlaNet, and this summary is this Wiki's own.</li>
+<li><a href="../sources/2021-dreamerv2.html">DreamerV2</a> keeps the deterministic and stochastic paths but swaps the Gaussian stochastic state for categorical variables, which helps on most Atari games (p.9).</li>
 </ul>
 <h2>Related concepts</h2>
 <ul>
@@ -40,6 +43,8 @@
 <li><a href="variational-autoencoder.html">Variational autoencoder</a>: the RSSM is trained like a sequential VAE.</li>
 <li><a href="latent-overshooting.html">Latent overshooting</a>: an extra objective for training such models on multi-step predictions.</li>
 <li><a href="mixture-density-rnn.html">Mixture density RNN</a>: another way to add randomness to a recurrent model; it samples the output, while the RSSM samples part of the state.</li>
+<li><a href="categorical-latents.html">Categorical latents</a>: the discrete stochastic state used in DreamerV2.</li>
+<li><a href="kl-balancing.html">KL balancing</a>: a way to train the RSSM prior.</li>
 </ul>
 <h2>Background</h2>
 <p>(None yet)</p>

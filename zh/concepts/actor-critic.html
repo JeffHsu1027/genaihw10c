@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="source-hash" content="7789d7bd7084">
+<meta name="source-hash" content="49cb78ce258e">
 <title>Actor-critic（演員－評論家） · 論文 Wiki</title>
 <link rel="stylesheet" href="../../assets/style.css">
 </head>
@@ -15,7 +15,7 @@
 <main class="page page-concept">
   <p class="page-kind"><span class="tag tag-concept">概念</span></p>
   <h1>Actor-critic（演員－評論家）</h1>
-  <p class="meta">演員評論家, 動作模型與價值模型, 策略與價值函數, λ-return, lambda-return · 1 個來源</p>
+  <p class="meta">演員評論家, 動作模型與價值模型, 策略與價值函數, λ-return, lambda-return · 2 個來源</p>
   <article class="content">
 <h2>一句話定義</h2>
 <p>一種有兩個學習元件的強化學習方法：負責選動作的 actor（策略），以及估計 actor 從每個狀態出發能得到多少未來獎勵的 critic（價值函數）。</p>
@@ -27,6 +27,15 @@
 <h2>各來源怎麼說</h2>
 <h3>Dream to Control: Learning Behaviors by Latent Imagination（2020）</h3>
 <p><a href="../sources/2020-dreamer.html">Dreamer</a> 完全在世界模型想像出的軌跡上訓練動作模型與價值模型 (p.4)。價值模型的目標值是 λ-return，把想像的獎勵與固定步數之後的價值估計混合起來 (p.4, Eq. 6)。動作模型把解析梯度穿過想像的狀態、獎勵與價值反向傳播來最大化這些目標值，這點不同於 A3C、PPO 這類 Reinforce 式方法，也不同於不穿過學到的轉移反向傳播的 DDPG 與 SAC (p.5)。沒有價值模型時，同一個代理人會變得短視，在需要長期功勞分配的任務上失敗 (p.7, Fig. 7)。價值目標使用折扣 0.99 與 λ 0.95，而且不需要目標網路或熵獎勵 (p.14)。</p>
+<h3>Mastering Atari with Discrete World Models（2021）</h3>
+<p><a href="../sources/2021-dreamerv2.html">DreamerV2</a> 也完全在想像的軌跡上訓練 actor 與 critic，想像視野為 15，並使用 λ 目標值 (p.5, Eq. 4)。Critic 使用每 100 次梯度更新同步一次的目標網路 (p.6)。Actor 的損失混合了無偏但雜訊大的 Reinforce 梯度，以及穿過動態模型、有偏但變異小的 straight-through 梯度，再加上熵正則項 (p.6, Eq. 6)。Atari 用 Reinforce 梯度效果好得多，連續控制則是穿過動態模型反向傳播好得多 (p.6)。只用 straight-through 梯度時，55 個 Atari 遊戲中有 44 個變差 (p.10)。</p>
+<h3>來源之間的比較</h3>
+<ul>
+<li><a href="../sources/2020-dreamer.html">Dreamer</a> 只靠把價值梯度穿過學到的動態模型反向傳播來訓練 actor，任務都是連續控制 (p.5)。</li>
+<li><a href="../sources/2021-dreamerv2.html">DreamerV2</a> 在連續控制上保留這種估計方式，但在 Atari 上主要依靠 Reinforce 梯度 (p.6)。兩篇並不衝突：最好的估計方式取決於領域。</li>
+<li><a href="../sources/2020-dreamer.html">Dreamer</a> 不需要目標網路或熵獎勵 (p.14)。</li>
+<li><a href="../sources/2021-dreamerv2.html">DreamerV2</a> 兩者都用，並以策略熵取代外加的動作雜訊來探索 (p.18)。這是版本之間的設計差異，不是互相矛盾的主張；DreamerV2 建立在 Dreamer 之上，這段整理是本 Wiki 的。</li>
+</ul>
 <h2>相關概念</h2>
 <ul>
 <li><a href="learning-in-imagination.html">在想像中學習（Learning in imagination）</a>：Dreamer 訓練 actor 與 critic 的地方。</li>

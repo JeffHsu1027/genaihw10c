@@ -3,8 +3,8 @@ title: "變分自編碼器（Variational autoencoder）"
 aliases: [VAE, ConvVAE, 卷積變分自編碼器]
 updated: 2026-11-24
 areas: [world-model]
-sources: [2018-world-models, 2019-planet, 2020-dreamer]
-translated_from: "f78778492534"
+sources: [2018-world-models, 2019-planet, 2020-dreamer, 2021-dreamerv2]
+translated_from: "c13bacbe1363"
 ---
 
 ## 一句話定義
@@ -31,6 +31,10 @@ translated_from: "f78778492534"
 
 [Dreamer](../sources/2020-dreamer.md) 以變分下界（ELBO），或更一般的變分資訊瓶頸，訓練世界模型，目標由影像與獎勵的重建項加上 KL 正則項組成 (p.6, Eq. 10)。它沿用 World Models 的卷積編碼器與解碼器 (p.14)。論文也把重建與一種不預測像素的對比式目標做比較，重建在多數任務上較好 (p.8, Fig. 8)。
 
+### Mastering Atari with Discrete World Models（2021）
+
+[DreamerV2](../sources/2021-dreamerv2.md) 指出它的世界模型損失是以動作為條件的隱藏馬可夫模型的 ELBO，因此世界模型可以看成序列 VAE：表示模型是後驗，轉移預測器是先驗 (p.4)。它把高斯潛在變數換成以 straight-through 梯度訓練的類別變數 (p.4)。它的 KL 平衡被描述為與 β-VAE 縮放 KL 項的做法不同、彼此獨立 (p.4)。
+
 ### 來源之間的比較
 
 - [World Models](../sources/2018-world-models.md) 先單獨、逐張畫面訓練 VAE，再訓練動態模型；作者認為這比端到端訓練實際 (p.4)。
@@ -39,6 +43,7 @@ translated_from: "f78778492534"
 > **解說（Explainer）：** 一起訓練時，壓縮後的畫面描述不只要能把畫面畫回來，也要容易從前一步預測出來。
 
 - [Dreamer](../sources/2020-dreamer.md) 保留 PlaNet 的聯合訓練，並直接比較出重建不是唯一的選擇，只是在它的實驗中最好的一種 (p.8, Fig. 8)。
+- [DreamerV2](../sources/2021-dreamerv2.md) 保留變分的觀點，但改了其中兩部分：潛在變數的類型，以及 KL 項的權重方式 (p.4)。
 - PlaNet 與 Dreamer 都沿用了 World Models 的網路（見各自的來源頁）；這段比較是本 Wiki 的整理。
 
 ## 相關概念
@@ -46,6 +51,8 @@ translated_from: "f78778492534"
 - [世界模型（World model）](world-model.md)：VAE 是世界模型中負責壓縮的一半。
 - [混合密度遞迴神經網路（Mixture density RNN）](mixture-density-rnn.md)：預測由 VAE 定義的下一個潛在向量。
 - [遞迴狀態空間模型（Recurrent state-space model）](recurrent-state-space-model.md)：把 VAE 的想法延伸到序列。
+- [類別潛在變數（Categorical latents）](categorical-latents.md)：高斯潛在變數的離散替代方案。
+- [KL 平衡（KL balancing）](kl-balancing.md)：改變 KL 項的訓練方式。
 
 ## 背景資料
 

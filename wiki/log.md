@@ -114,3 +114,21 @@
 - `raw/README.md`：填入公開連結（arXiv 1912.01603）與來源頁。
 - `build.py` 產生 28 個頁面，`check.py` 全部通過。
 
+## [2026-11-24] ingest | Mastering Atari with Discrete World Models
+
+- 閱讀範圍：PDF 第 1–26 頁全文（正文 pp.1-11、參考文獻 pp.12-15、附錄 A–K pp.16-26）。`status: to-read`（依擁有者原則）。
+- 新增來源頁：`2021-dreamerv2`（ICLR 2021；areas：world-model、reinforcement-learning；pages: 26）。
+- 新增概念頁（2 個）：
+  - `categorical-latents`（把握度高：核心修改，p.3；42 勝 8 負，p.9）
+  - `kl-balancing`（高：核心修改，p.4；44 勝 6 負，p.9）
+- 更新既有頁面（新增 DreamerV2 小節，比較段擴充）：`recurrent-state-space-model`、`actor-critic`、`learning-in-imagination`、`world-model`、`model-based-reinforcement-learning`、`variational-autoencoder`（皆為高）。
+- `actor-critic` 比較段：Atari 用 Reinforce、連續控制用穿過動態的梯度；DreamerV2 用目標網路與策略熵而 Dreamer 不需要。皆標為依領域或版本的設計差異，不是衝突。
+- 取代（Superseded）：`2020-dreamer` 三處（高斯潛在變數 → 類別變數，p.9；free nats → KL 平衡，p.18；Atari 不具競爭力 → 達到人類水準，p.7）；主題頁 Open questions 一處。
+- 來源關係：`2020-dreamer`、`2019-planet` 補上 DreamerV2。
+- 刻意不連結：`latent-space-planning`（DreamerV2 不規劃，只把 MuZero 當對比）；`latent-overshooting`（未提及）；`2018-world-models`（只在相關研究中被列出一次）。
+- 待確認：折扣 γ 在正文為 0.999（p.2），超參數表為 0.995（p.19），來源頁標 `(to be verified)`。
+- 規則不清楚之處：附錄圖表編號如 `Fig. A.2`、`Fig. G.1` 不符合出處格式（只允許 `Fig. 3` 這類），改為只標頁碼。
+- 寫作時被 `check.py` 擋下並修正：中文術語表「為 1」含數字，改為國字。
+- `raw/README.md`：填入公開連結（arXiv 2010.02193）與來源頁。
+- `build.py` 產生 34 個頁面，`check.py` 全部通過。
+

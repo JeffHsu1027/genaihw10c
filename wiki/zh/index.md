@@ -1,6 +1,6 @@
 ---
 title: 目錄
-translated_from: "d67a6fa47dba"
+translated_from: "5df98ed0c990"
 ---
 
 # 目錄
@@ -13,6 +13,9 @@ translated_from: "d67a6fa47dba"
 - [World Models](sources/2018-world-models.md) — 由 VAE 加 MDN-RNN 組成的世界模型，搭配演化訓練的小型控制器，部分訓練在自己的夢境中進行。
 - [Learning Latent Dynamics for Planning from Pixels](sources/2019-planet.md) — PlaNet：在遞迴狀態空間模型中用 CEM 規劃的純粹基於模型的代理人。（未讀）
 - [Dream to Control: Learning Behaviors by Latent Imagination](sources/2020-dreamer.md) — Dreamer：完全在世界模型的潛在想像中學習的 actor-critic。（未讀）
+- [Mastering Atari with Discrete World Models](sources/2021-dreamerv2.md) — DreamerV2：類別潛在變數與 KL 平衡；只在世界模型裡學習就達到 Atari 人類水準。（未讀）
+- [類別潛在變數（Categorical latents）](concepts/categorical-latents.md) — 用離散類別變數而非高斯分布組成的潛在狀態。
+- [KL 平衡（KL balancing）](concepts/kl-balancing.md) — 訓練潛在模型時，先驗更新得比後驗快。
 - [潛在超前預測（Latent overshooting）](concepts/latent-overshooting.md) — 在潛在空間用多步預測訓練潛在模型。
 - [潛在空間規劃（Latent space planning）](concepts/latent-space-planning.md) — 在學到的潛在模型裡搜尋動作序列來選擇動作。
 - [在想像中學習（Learning in imagination）](concepts/learning-in-imagination.md) — 用世界模型產生的經驗訓練策略。
@@ -27,6 +30,7 @@ translated_from: "d67a6fa47dba"
 - [World Models](sources/2018-world-models.md) — 由 VAE 加 MDN-RNN 組成的世界模型，搭配演化訓練的小型控制器，部分訓練在自己的夢境中進行。
 - [Learning Latent Dynamics for Planning from Pixels](sources/2019-planet.md) — PlaNet：在遞迴狀態空間模型中用 CEM 規劃的純粹基於模型的代理人。（未讀）
 - [Dream to Control: Learning Behaviors by Latent Imagination](sources/2020-dreamer.md) — Dreamer：完全在世界模型的潛在想像中學習的 actor-critic。（未讀）
+- [Mastering Atari with Discrete World Models](sources/2021-dreamerv2.md) — DreamerV2：類別潛在變數與 KL 平衡；只在世界模型裡學習就達到 Atari 人類水準。（未讀）
 - [Actor-critic（演員－評論家）](concepts/actor-critic.md) — 同時學習策略與估計未來獎勵的價值函數。
 - [演化策略（Evolution strategies）](concepts/evolution-strategies.md) — 不用梯度、對一群候選解做最佳化。
 - [潛在空間規劃（Latent space planning）](concepts/latent-space-planning.md) — 在學到的潛在模型裡搜尋動作序列來選擇動作。

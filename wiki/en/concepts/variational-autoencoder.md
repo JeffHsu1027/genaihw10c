@@ -3,7 +3,7 @@ title: "Variational autoencoder"
 aliases: [VAE, ConvVAE, convolutional variational autoencoder]
 updated: 2026-11-24
 areas: [world-model]
-sources: [2018-world-models, 2019-planet, 2020-dreamer]
+sources: [2018-world-models, 2019-planet, 2020-dreamer, 2021-dreamerv2]
 ---
 
 ## One-line definition
@@ -30,6 +30,10 @@ The encoder outputs the mean and spread of a Gaussian distribution, a latent vec
 
 [Dreamer](../sources/2020-dreamer.md) trains its world model with the variational lower bound (ELBO), or more generally a variational information bottleneck, made of reconstruction terms for images and rewards and a KL regularizer (p.6, Eq. 10). It reuses the convolutional encoder and decoder of World Models (p.14). Reconstruction is compared with a contrastive objective that avoids predicting pixels; reconstruction works better on most tasks (p.8, Fig. 8).
 
+### Mastering Atari with Discrete World Models (2021)
+
+[DreamerV2](../sources/2021-dreamerv2.md) states that its world model loss is the ELBO of an action-conditioned hidden Markov model, so the world model can be read as a sequential VAE whose posterior is the representation model and whose prior is the transition predictor (p.4). It replaces Gaussian latents with categorical ones trained by straight-through gradients (p.4). Its KL balancing is described as different from, and orthogonal to, scaling the KL term as in a β-VAE (p.4).
+
 ### Comparing the sources
 
 - [World Models](../sources/2018-world-models.md) trains the VAE on its own, frame by frame, before the dynamics model, which the authors found more practical than end-to-end training (p.4).
@@ -38,6 +42,7 @@ The encoder outputs the mean and spread of a Gaussian distribution, a latent vec
 > **Explainer:** When everything is trained together, the compressed picture is shaped not only to redraw the frame but also to be easy to predict from the previous step.
 
 - [Dreamer](../sources/2020-dreamer.md) keeps PlaNet's joint training and adds a direct comparison showing that reconstruction is not the only option, though it is the best one in its experiments (p.8, Fig. 8).
+- [DreamerV2](../sources/2021-dreamerv2.md) keeps the variational view but changes two parts of it: the type of latent variable and how the KL term is weighted (p.4).
 - PlaNet and Dreamer reuse the World Models networks (see their source pages); this comparison is this Wiki's own summary.
 
 ## Related concepts
@@ -45,6 +50,8 @@ The encoder outputs the mean and spread of a Gaussian distribution, a latent vec
 - [World model](world-model.md): the VAE is the compression half of the world model.
 - [Mixture density RNN](mixture-density-rnn.md): predicts the next latent vector that the VAE defines.
 - [Recurrent state-space model](recurrent-state-space-model.md): extends the VAE idea to sequences.
+- [Categorical latents](categorical-latents.md): a discrete alternative to Gaussian latents.
+- [KL balancing](kl-balancing.md): a change to how the KL term is trained.
 
 ## Background
 

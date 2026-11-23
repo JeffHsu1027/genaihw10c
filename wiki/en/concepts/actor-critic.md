@@ -3,7 +3,7 @@ title: "Actor-critic"
 aliases: [actor critic, action model and value model, policy and value function, lambda-return, λ-return]
 updated: 2026-11-24
 areas: [reinforcement-learning]
-sources: [2020-dreamer]
+sources: [2020-dreamer, 2021-dreamerv2]
 ---
 
 ## One-line definition
@@ -21,6 +21,17 @@ The critic learns to predict the return expected from a state, and the actor is 
 ### Dream to Control: Learning Behaviors by Latent Imagination (2020)
 
 [Dreamer](../sources/2020-dreamer.md) trains an action model and a value model entirely on trajectories imagined by its world model (p.4). The value model's targets are λ-returns that mix imagined rewards with value estimates beyond a fixed number of steps (p.4, Eq. 6). The action model maximizes these targets by backpropagating analytic gradients through the imagined states, rewards and values, which differs from Reinforce-style methods such as A3C and PPO and from DDPG and SAC, which do not backpropagate through learned transitions (p.5). Without the value model, the same agent becomes shortsighted and fails on tasks that need long-horizon credit assignment (p.7, Fig. 7). The value targets use a discount of 0.99 and λ of 0.95, and no target network or entropy bonus was needed (p.14).
+
+### Mastering Atari with Discrete World Models (2021)
+
+[DreamerV2](../sources/2021-dreamerv2.md) also trains its actor and critic purely on imagined trajectories, with a horizon of 15 and λ-targets (p.5, Eq. 4). The critic uses a target network that is updated every 100 gradient steps (p.6). The actor loss mixes Reinforce gradients, which are unbiased but noisy, with straight-through gradients through the dynamics, which are biased but low-variance, and adds an entropy regularizer (p.6, Eq. 6). Reinforce gradients work substantially better for Atari, while backpropagating through the dynamics works substantially better for continuous control (p.6). Using only straight-through gradients is worse on 44 of 55 Atari games (p.10).
+
+### Comparing the sources
+
+- [Dreamer](../sources/2020-dreamer.md) trains the actor only by backpropagating value gradients through the learned dynamics, on continuous control tasks (p.5).
+- [DreamerV2](../sources/2021-dreamerv2.md) keeps that estimator for continuous control but relies on Reinforce gradients for Atari (p.6). The two papers do not conflict: the best estimator depends on the domain.
+- [Dreamer](../sources/2020-dreamer.md) did not need a target network or an entropy bonus (p.14).
+- [DreamerV2](../sources/2021-dreamerv2.md) uses both, with policy entropy replacing external action noise for exploration (p.18). This is a design difference between versions, not a contradictory claim; DreamerV2 builds on Dreamer, and this summary is this Wiki's own.
 
 ## Related concepts
 

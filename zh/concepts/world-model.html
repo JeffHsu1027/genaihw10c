@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="source-hash" content="e11cf101b82d">
+<meta name="source-hash" content="c1cc64489510">
 <title>世界模型（World model） · 論文 Wiki</title>
 <link rel="stylesheet" href="../../assets/style.css">
 </head>
@@ -15,7 +15,7 @@
 <main class="page page-concept">
   <p class="page-kind"><span class="tag tag-concept">概念</span></p>
   <h1>世界模型（World model）</h1>
-  <p class="meta">動態模型, 環境模型, dynamics model, environment model · 3 個來源</p>
+  <p class="meta">動態模型, 環境模型, dynamics model, environment model · 4 個來源</p>
   <article class="content">
 <h2>一句話定義</h2>
 <p>一個從經驗中學到的環境模型，用來預測接下來會發生什麼，通常以目前的狀態與動作為條件。</p>
@@ -31,6 +31,8 @@
 <p><a href="../sources/2019-planet.html">PlaNet</a> 把它的世界模型稱為潛在動態模型：由轉移模型、觀測模型、獎勵模型與編碼器組成，架構是遞迴狀態空間模型 (p.3)。因為模型也預測獎勵，規劃器可以完全在潛在空間中為動作序列評分，不必產生影像 (p.3)。模型的訓練資料是代理人持續用尚未訓練完的模型規劃所收集的，而不只是隨機資料 (p.3)。</p>
 <h3>Dream to Control: Learning Behaviors by Latent Imagination（2020）</h3>
 <p><a href="../sources/2020-dreamer.html">Dreamer</a> 使用與 PlaNet 相同的世界模型，並把它描述為概括代理人的經驗，讓複雜的行為能從中學習 (p.1)。世界模型根據動作與過去的觀測預測獎勵，任何學習世界模型的目標函數都能與 Dreamer 搭配 (p.2)。論文比較三種學習目標：影像重建效果最好，對比式估計約能解決一半的任務，只預測獎勵則不夠 (p.8, Fig. 8)。</p>
+<h3>Mastering Atari with Discrete World Models（2021）</h3>
+<p><a href="../sources/2021-dreamerv2.html">DreamerV2</a> 把世界模型描述為把代理人的經驗濃縮成一個預測模型，可以代替環境來學習行為 (p.2)。它的世界模型多了折扣預測器，讓想像軌跡能考慮回合結束，並使用類別潛在變數與 KL 平衡 (pp.3-4)。世界模型約有 2000 萬個參數 (p.4)，準確到只在其中學習的代理人就能在 Atari 上達到人類水準 (p.2)。世界模型依賴影像梯度：拿掉後表現崩潰，截斷獎勵梯度則影響不大 (p.9)。</p>
 <h3>來源之間的比較</h3>
 <ul>
 <li>兩篇都從像素學出壓縮的潛在狀態與其上的轉移模型：<a href="../sources/2018-world-models.html">World Models</a> 用 VAE 加 MDN-RNN (p.2, Fig. 4)，<a href="../sources/2019-planet.html">PlaNet</a> 用遞迴狀態空間模型 (p.4, Eq. 4)。</li>
@@ -38,13 +40,15 @@
 <li><a href="../sources/2019-planet.html">PlaNet</a> 讓模型預測獎勵，並持續用自己規劃收集的資料重新訓練模型 (p.3)。</li>
 <li>兩篇都警告純確定性的模型容易被利用：<a href="../sources/2018-world-models.html">World Models</a> 是被控制器利用 (p.9)，<a href="../sources/2019-planet.html">PlaNet</a> 是被規劃器利用 (p.4, Fig. 2)。這是兩篇說法一致，不是衝突。</li>
 <li><a href="../sources/2020-dreamer.html">Dreamer</a> 保留 PlaNet 的世界模型，只改變從模型得出行為的方式，顯示同一個模型既能用於規劃，也能用於學習策略 (p.8)。</li>
-<li>PlaNet 與 Dreamer 都引用了 World Models（見各自的來源頁）；這段並列比較是本 Wiki 的整理。</li>
+<li><a href="../sources/2021-dreamerv2.html">DreamerV2</a> 保留相同的整體設計，只改變潛在變數與 KL 項，就足以從簡單的控制任務進展到 Atari 上的人類水準 (p.2)。</li>
+<li>PlaNet、Dreamer 與 DreamerV2 都引用了 World Models（見各自的來源頁）；這段並列比較是本 Wiki 的整理。</li>
 </ul>
 <h2>相關概念</h2>
 <ul>
 <li><a href="variational-autoencoder.html">變分自編碼器（Variational autoencoder）</a>：為世界模型壓縮觀測。</li>
 <li><a href="mixture-density-rnn.html">混合密度遞迴神經網路（Mixture density RNN）</a>：以機率分布預測下一個狀態。</li>
 <li><a href="recurrent-state-space-model.html">遞迴狀態空間模型（Recurrent state-space model）</a>：同時具有確定性與隨機狀態的世界模型設計。</li>
+<li><a href="categorical-latents.html">類別潛在變數（Categorical latents）</a>：DreamerV2 世界模型使用的離散潛在狀態。</li>
 <li><a href="model-based-reinforcement-learning.html">基於模型的強化學習（Model-based reinforcement learning）</a>：使用世界模型的強化學習。</li>
 <li><a href="learning-in-imagination.html">在想像中學習（Learning in imagination）</a>：在世界模型裡訓練代理人。</li>
 </ul>

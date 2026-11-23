@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="source-hash" content="1cc5902ef0a9">
+<meta name="source-hash" content="32e0806a88e7">
 <title>變分自編碼器（Variational autoencoder） · 論文 Wiki</title>
 <link rel="stylesheet" href="../../assets/style.css">
 </head>
@@ -15,7 +15,7 @@
 <main class="page page-concept">
   <p class="page-kind"><span class="tag tag-concept">概念</span></p>
   <h1>變分自編碼器（Variational autoencoder）</h1>
-  <p class="meta">VAE, ConvVAE, 卷積變分自編碼器 · 3 個來源</p>
+  <p class="meta">VAE, ConvVAE, 卷積變分自編碼器 · 4 個來源</p>
   <article class="content">
 <h2>一句話定義</h2>
 <p>一種神經網路，把輸入編碼成一個小而帶有隨機性的潛在向量，並學會把這個向量解碼回原本的輸入。</p>
@@ -31,6 +31,8 @@
 <p><a href="../sources/2019-planet.html">PlaNet</a> 把它的遞迴狀態空間模型描述為一種序列 VAE 或非線性卡爾曼濾波器 (p.3)。它沿用 World Models 的卷積編碼器與反卷積解碼器 (p.12)，但編碼器是從整段觀測與動作的歷史推斷潛在狀態，而不是只看單張畫面 (p.3)。KL 項低於 3 個 free nats 時不予懲罰 (p.12)。</p>
 <h3>Dream to Control: Learning Behaviors by Latent Imagination（2020）</h3>
 <p><a href="../sources/2020-dreamer.html">Dreamer</a> 以變分下界（ELBO），或更一般的變分資訊瓶頸，訓練世界模型，目標由影像與獎勵的重建項加上 KL 正則項組成 (p.6, Eq. 10)。它沿用 World Models 的卷積編碼器與解碼器 (p.14)。論文也把重建與一種不預測像素的對比式目標做比較，重建在多數任務上較好 (p.8, Fig. 8)。</p>
+<h3>Mastering Atari with Discrete World Models（2021）</h3>
+<p><a href="../sources/2021-dreamerv2.html">DreamerV2</a> 指出它的世界模型損失是以動作為條件的隱藏馬可夫模型的 ELBO，因此世界模型可以看成序列 VAE：表示模型是後驗，轉移預測器是先驗 (p.4)。它把高斯潛在變數換成以 straight-through 梯度訓練的類別變數 (p.4)。它的 KL 平衡被描述為與 β-VAE 縮放 KL 項的做法不同、彼此獨立 (p.4)。</p>
 <h3>來源之間的比較</h3>
 <ul>
 <li><a href="../sources/2018-world-models.html">World Models</a> 先單獨、逐張畫面訓練 VAE，再訓練動態模型；作者認為這比端到端訓練實際 (p.4)。</li>
@@ -41,6 +43,7 @@
 </blockquote>
 <ul>
 <li><a href="../sources/2020-dreamer.html">Dreamer</a> 保留 PlaNet 的聯合訓練，並直接比較出重建不是唯一的選擇，只是在它的實驗中最好的一種 (p.8, Fig. 8)。</li>
+<li><a href="../sources/2021-dreamerv2.html">DreamerV2</a> 保留變分的觀點，但改了其中兩部分：潛在變數的類型，以及 KL 項的權重方式 (p.4)。</li>
 <li>PlaNet 與 Dreamer 都沿用了 World Models 的網路（見各自的來源頁）；這段比較是本 Wiki 的整理。</li>
 </ul>
 <h2>相關概念</h2>
@@ -48,6 +51,8 @@
 <li><a href="world-model.html">世界模型（World model）</a>：VAE 是世界模型中負責壓縮的一半。</li>
 <li><a href="mixture-density-rnn.html">混合密度遞迴神經網路（Mixture density RNN）</a>：預測由 VAE 定義的下一個潛在向量。</li>
 <li><a href="recurrent-state-space-model.html">遞迴狀態空間模型（Recurrent state-space model）</a>：把 VAE 的想法延伸到序列。</li>
+<li><a href="categorical-latents.html">類別潛在變數（Categorical latents）</a>：高斯潛在變數的離散替代方案。</li>
+<li><a href="kl-balancing.html">KL 平衡（KL balancing）</a>：改變 KL 項的訓練方式。</li>
 </ul>
 <h2>背景資料</h2>
 <p>（尚無）</p>

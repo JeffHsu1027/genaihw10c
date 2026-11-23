@@ -3,8 +3,8 @@ title: "基於模型的強化學習（Model-based reinforcement learning）"
 aliases: [model-based RL, MBRL, 模型式強化學習]
 updated: 2026-11-24
 areas: [reinforcement-learning, world-model]
-sources: [2018-world-models, 2019-planet, 2020-dreamer]
-translated_from: "fb9108239022"
+sources: [2018-world-models, 2019-planet, 2020-dreamer, 2021-dreamerv2]
+translated_from: "027dbb082e57"
 ---
 
 ## 一句話定義
@@ -29,6 +29,10 @@ translated_from: "fb9108239022"
 
 [Dreamer](../sources/2020-dreamer.md) 採用動態學習、行為學習與環境互動這套經典的代理人結構，而行為是在世界模型的潛在空間中學習 (p.2)。它主張世界模型能在過去經驗之間內插，並提供多步報酬的解析梯度，這是線上或用經驗回放訓練的無模型 actor-critic 做不到的 (p.1)。它用 500 萬環境步，就超越無模型的 D4PG 在 1 億步後的最終表現 (p.6, Fig. 6)。
 
+### Mastering Atari with Discrete World Models（2021）
+
+[DreamerV2](../sources/2021-dreamerv2.md) 指出 Atari 向來需要無模型演算法才能達到人類水準，過去的 Atari 世界模型都沒有競爭力 (p.2)。它與兩個基於模型的 Atari 代理人比較：在像素空間預測畫面再用來訓練 PPO 的 SimPLe，以及學習任務專屬的獎勵與價值預測、用於樹搜尋而不建模影像的 MuZero (pp.10-11, Table 3)。MuZero 很強，但用一張 GPU 訓練一個 Atari 代理人需要超過 2 個月，DreamerV2 只需 10 天 (p.11)。作者把 DreamerV2 視為基於模型的強化學習能在最具競爭性的評測上勝過頂尖無模型演算法的證明 (p.11)。
+
 ### 來源之間的比較
 
 - [World Models](../sources/2018-world-models.md) 事先用模型訓練策略；做決定時，控制器根據模型的隱藏狀態直接反應，不往前規劃 (p.6)。
@@ -36,7 +40,8 @@ translated_from: "fb9108239022"
 - 兩篇都警告純確定性的模型容易被利用：[World Models](../sources/2018-world-models.md) 是被控制器利用 (p.9)，[PlaNet](../sources/2019-planet.md) 是被規劃器利用 (p.4, Fig. 2)。
 - [Dreamer](../sources/2020-dreamer.md) 回到像 World Models 一樣事先訓練策略，但改用梯度而非演化，並加上能看見想像視野之外的價值模型 (p.5)。
 - Dreamer 指出像 PlaNet 那樣只在固定視野內規劃，在需要長期功勞分配的任務上很短視 (p.7, Fig. 7)。PlaNet 自己也把缺少價值函數列為限制（見 PlaNet 頁），所以這是說法一致，不是衝突。
-- PlaNet 與 Dreamer 都引用 World Models，Dreamer 也建立在 PlaNet 之上；這段並列比較是本 Wiki 的整理。
+- [DreamerV2](../sources/2021-dreamerv2.md) 保留 Dreamer 在想像中學習策略的方式，並證明它能在先前來源未達到的 Atari 上勝出 (p.2)。
+- PlaNet、Dreamer 與 DreamerV2 都引用 World Models，每一篇也都建立在前一篇之上；這段並列比較是本 Wiki 的整理。
 
 ## 相關概念
 

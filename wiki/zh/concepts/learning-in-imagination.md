@@ -3,8 +3,8 @@ title: "在想像中學習（Learning in imagination）"
 aliases: [夢境訓練, 在夢裡學習, 幻覺環境, 潛在想像, latent imagination]
 updated: 2026-11-24
 areas: [world-model, reinforcement-learning]
-sources: [2018-world-models, 2020-dreamer]
-translated_from: "babbaeb7f858"
+sources: [2018-world-models, 2020-dreamer, 2021-dreamerv2]
+translated_from: "3f8d8dac63d8"
 ---
 
 ## 一句話定義
@@ -27,13 +27,18 @@ translated_from: "babbaeb7f858"
 
 [Dreamer](../sources/2020-dreamer.md) 完全靠潛在想像學習行為：想像軌跡從真實過去序列的狀態出發，由世界模型與策略往前推演，不產生影像 (p.3)。動作模型與價值模型在這些軌跡上訓練，動作模型則用穿過想像動態的解析梯度改進 (p.5)。因為潛在狀態很小，可以平行想像數千條軌跡 (p.2)。學習行為時，世界模型保持固定 (p.5)。
 
+### Mastering Atari with Discrete World Models（2021）
+
+[DreamerV2](../sources/2021-dreamerv2.md) 完全在另外訓練的世界模型裡學習行為，並藉此在 Atari 上達到人類水準 (p.2)。因為學習行為時不預測影像，它能在一張 GPU 上平行模擬 2500 條潛在軌跡 (p.4)。在 2 億環境步中，策略從 4680 億個想像狀態學習，約為真實輸入的 10,000 倍 (p.6)。作者把這次成功視為世界模型準確表示環境的證據 (p.2)。
+
 ### 來源之間的比較
 
 - [World Models](../sources/2018-world-models.md) 在想像中用 CMA-ES 訓練控制器，只需要每次 rollout 的最終獎勵 (p.12)。
 - [Dreamer](../sources/2020-dreamer.md) 則把價值梯度穿過想像軌跡反向傳播，並把 World Models 描述為在想像中演化線性控制器 (p.7)。
 - 在 [World Models](../sources/2018-world-models.md) 中，代理人只在一個由隨機策略資料建成的夢境裡訓練一次，然後部署 (p.7)。
 - [Dreamer](../sources/2020-dreamer.md) 則持續交替：在想像中訓練行為，以及在真實環境中行動、擴充用來訓練世界模型的資料 (p.2)。
-- 只有 World Models 明確討論模型被利用的問題；Dreamer 沒有回報類似的失敗。這個差異是本 Wiki 的觀察，不是任何一篇論文的主張。
+- [DreamerV2](../sources/2021-dreamerv2.md) 顯示只在想像中學習，也能在過去世界模型沒有競爭力的 Atari 上達到人類水準 (p.2)。
+- 只有 World Models 明確討論模型被利用的問題；Dreamer 與 DreamerV2 都沒有回報類似的失敗。這個差異是本 Wiki 的觀察，不是任何一篇論文的主張。
 
 ## 相關概念
 

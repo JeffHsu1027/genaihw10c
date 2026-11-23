@@ -12,7 +12,7 @@ areas: [world-model, reinforcement-learning]
 status: to-read
 concepts: [actor-critic, learning-in-imagination, world-model, model-based-reinforcement-learning, recurrent-state-space-model, latent-overshooting, latent-space-planning, variational-autoencoder]
 topics: [world-models]
-translated_from: "83302b3932c2"
+translated_from: "d78b6141421b"
 ---
 
 ## 一句話總結
@@ -37,6 +37,10 @@ Dreamer 先從影像學出[世界模型](../concepts/world-model.md)，再完全
 
 附錄中的實作細節：Dreamer 沿用 World Models 的卷積編碼器與解碼器以及 PlaNet 的 RSSM，其他函數都是三層各 300 個單元、使用 ELU 激活的全連接層 (p.14)。潛在分布是 30 維的對角高斯分布 (p.14)。每批有 50 段長度 50 的序列，Adam 的學習率在世界模型為 `6e-4`，價值與動作模型為 `8e-5` (p.14)。想像視野為 15，折扣為 0.99，λ 為 0.95 (p.14)。KL 項不縮放，但與 PlaNet 一樣低於 3 個 free nats 時截斷 (p.14)。訓練從 5 個隨機回合開始，每 100 次訓練步就收集一個回合，探索雜訊為 Normal(0, 0.3)，動作重複為 2 (p.14)。潛在超前預測、熵獎勵與目標網路都不需要 (p.14)。每次訓練使用一張 V100 GPU 與 10 個 CPU 核心，每一百萬環境步約需 3 小時，相較之下 PlaNet 需要 11 小時，D4PG 達到相近表現需要 24 小時 (p.8)。
 
+> **後續變更：** [DreamerV2](2021-dreamerv2.md) 把高斯潛在變數換成 32 個各有 32 類的類別變數，在 55 個 Atari 遊戲中有 42 個因此變好 (p.9)。
+
+> **後續變更：** [DreamerV2](2021-dreamerv2.md) 以 KL 平衡取代 free nats (p.18)。
+
 ## 主要結果
 
 - 評測使用 DeepMind Control Suite 的 20 個視覺控制任務，觀測為 64x64x3 影像，動作重複為 2，所有任務使用相同超參數 (p.8)。
@@ -53,6 +57,9 @@ Dreamer 先從影像學出[世界模型](../concepts/world-model.md)，再完全
 
 - Dreamer 的效果取決於表示學習的目標；只預測獎勵會失敗，作者預期在視覺更複雜的環境需要更好的表示學習 (p.9)。
 - 在 Atari、DeepMind Lab 這類離散動作領域，完全透過世界模型學習的代理人還沒有競爭力 (p.16)。
+
+> **後續變更：** [DreamerV2](2021-dreamerv2.md) 在 55 個 Atari 遊戲、2 億步後達到人類水準，並勝過 IQN 與 Rainbow (p.7, Table 1)。
+
 - 行為只從想像的軌跡學習，且學習時世界模型固定不動，因此行為最多只能和模型的預測一樣好 (p.5)。
 - 動作重複的評估使用較早的超參數設定，且只有 2 個隨機種子 (p.19, Fig. 12)。
 
@@ -70,6 +77,7 @@ Dreamer 先從影像學出[世界模型](../concepts/world-model.md)，再完全
 ## 與其他來源的關係
 
 - [Learning Latent Dynamics for Planning from Pixels](2019-planet.md)：Dreamer 學習與 PlaNet 相同的世界模型，但用學到的動作模型取代線上規劃來選擇動作 (p.8)。為了公平比較，它以相同的動作重複重新執行 PlaNet (p.8)，並指出 PlaNet 在需要長期規劃的任務上很短視 (p.7, Fig. 7)。
+- [Mastering Atari with Discrete World Models](2021-dreamerv2.md)（DreamerV2，2021）是本篇的直接後繼，它把本篇稱為 DreamerV1。它保留整體代理人架構，但改用類別潛在變數、KL 平衡，並在 Atari 上以 Reinforce 梯度訓練 actor。
 - [World Models](2018-world-models.md)：Dreamer 把 World Models 描述為以兩階段學習潛在動態、在想像中演化出線性控制器 (p.7)，並沿用它的卷積編碼器與解碼器 (p.14)。
 
 ## 背景資料

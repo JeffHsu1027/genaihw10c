@@ -36,6 +36,10 @@ Policies or planners that only maximize rewards within a fixed imagination horiz
 
 Implementation details from the appendix: Dreamer reuses the convolutional encoder and decoder of World Models and the RSSM of PlaNet, and every other function is three dense layers of 300 units with ELU activations (p.14). The latent distributions are 30-dimensional diagonal Gaussians (p.14). Batches contain 50 sequences of length 50, and Adam uses learning rates of `6e-4` for the world model and `8e-5` for the value and action models (p.14). The imagination horizon is 15, with a discount of 0.99 and λ of 0.95 (p.14). The KL term is not scaled but is clipped below 3 free nats, as in PlaNet (p.14). Training starts from 5 random episodes and alternates 100 training steps with collecting one episode, using Normal(0, 0.3) exploration noise and an action repeat of 2 (p.14). Latent overshooting, an entropy bonus and target networks were not needed (p.14). Each run uses one V100 GPU and 10 CPU cores and takes about 3 hours per million environment steps, compared with 11 hours for PlaNet and 24 hours for D4PG to reach similar performance (p.8).
 
+> **Superseded:** [DreamerV2](2021-dreamerv2.md) replaces the Gaussian latents with 32 categorical variables of 32 classes each, which helps on 42 of 55 Atari games (p.9).
+
+> **Superseded:** [DreamerV2](2021-dreamerv2.md) replaces the free nats with KL balancing (p.18).
+
 ## Key results
 
 - The benchmark is 20 visual control tasks from the DeepMind Control Suite with 64x64x3 image observations, an action repeat of 2, and the same hyperparameters for all tasks (p.8).
@@ -52,6 +56,9 @@ Implementation details from the appendix: Dreamer reuses the convolutional encod
 
 - How well Dreamer works depends on the representation learning objective; reward prediction alone fails, and the authors expect better representation learning to be needed for visually more complex environments (p.9).
 - In domains with discrete actions such as Atari and DeepMind Lab, agents that learn purely through world models are not yet competitive (p.16).
+
+> **Superseded:** [DreamerV2](2021-dreamerv2.md) reaches human-level performance on 55 Atari games after 200 million steps and beats IQN and Rainbow (p.7, Table 1).
+
 - Behaviors are learned only from imagined trajectories while the world model is held fixed, so they can only be as good as the model's predictions (p.5).
 - The evaluation of the action repeat used an earlier hyperparameter setting and only 2 seeds (p.19, Fig. 12).
 
@@ -69,6 +76,7 @@ Implementation details from the appendix: Dreamer reuses the convolutional encod
 ## Relation to other sources
 
 - [Learning Latent Dynamics for Planning from Pixels](2019-planet.md): Dreamer learns the same world model as PlaNet but chooses actions with a learned action model instead of online planning (p.8). It re-runs PlaNet with the same action repeat for a fair comparison (p.8), and reports it as shortsighted on long-horizon tasks (p.7, Fig. 7).
+- [Mastering Atari with Discrete World Models](2021-dreamerv2.md) (DreamerV2, 2021) is the direct successor of this paper, which it calls DreamerV1. It keeps the overall agent but switches to categorical latents, KL balancing and, for Atari, Reinforce gradients for the actor.
 - [World Models](2018-world-models.md): Dreamer describes World Models as learning latent dynamics in a two-stage process to evolve linear controllers in imagination (p.7), and reuses its convolutional encoder and decoder (p.14).
 
 ## Background

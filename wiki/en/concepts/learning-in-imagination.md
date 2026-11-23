@@ -3,7 +3,7 @@ title: "Learning in imagination"
 aliases: [dream training, learning inside a dream, hallucinated environment, latent imagination]
 updated: 2026-11-24
 areas: [world-model, reinforcement-learning]
-sources: [2018-world-models, 2020-dreamer]
+sources: [2018-world-models, 2020-dreamer, 2021-dreamerv2]
 ---
 
 ## One-line definition
@@ -26,13 +26,18 @@ If a world model can predict observations, rewards and the end of an episode, it
 
 [Dreamer](../sources/2020-dreamer.md) learns behaviors purely by latent imagination: imagined trajectories start from states of real past sequences and are rolled forward by the world model and the policy, without generating images (p.3). An action model and a value model are trained on these trajectories, and the action model is improved with analytic gradients through the imagined dynamics (p.5). Because the latent states are small, thousands of trajectories can be imagined in parallel (p.2). The world model is kept fixed while behaviors are learned (p.5).
 
+### Mastering Atari with Discrete World Models (2021)
+
+[DreamerV2](../sources/2021-dreamerv2.md) learns behaviors purely within a separately trained world model and reaches human-level Atari performance this way (p.2). Because no images are predicted during behavior learning, it simulates 2500 latent trajectories in parallel on one GPU (p.4). Over 200 million environment steps, the policy learns from 468 billion imagined states, about 10,000 times more than the real inputs (p.6). The authors take this success as evidence that the world model represents the environment accurately (p.2).
+
 ### Comparing the sources
 
 - [World Models](../sources/2018-world-models.md) trains its controller in imagination with CMA-ES, which only needs the final reward of each rollout (p.12).
 - [Dreamer](../sources/2020-dreamer.md) instead backpropagates value gradients through the imagined trajectories, and describes World Models as evolving linear controllers in imagination (p.7).
 - In [World Models](../sources/2018-world-models.md), the agent is trained once inside a dream built from random-policy data and then deployed (p.7).
 - [Dreamer](../sources/2020-dreamer.md) keeps alternating between imagination, which trains the behavior, and acting in the real environment, which grows the data that trains the world model (p.2).
-- Model exploitation is discussed explicitly only in World Models; Dreamer does not report a comparable failure, and this difference is this Wiki's observation, not a claim of either paper.
+- [DreamerV2](../sources/2021-dreamerv2.md) shows that learning only in imagination can reach human-level results on Atari, where world models had not been competitive before (p.2).
+- Model exploitation is discussed explicitly only in World Models; Dreamer and DreamerV2 do not report a comparable failure, and this difference is this Wiki's observation, not a claim of any of the papers.
 
 ## Related concepts
 

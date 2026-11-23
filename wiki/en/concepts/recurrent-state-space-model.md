@@ -3,7 +3,7 @@ title: "Recurrent state-space model"
 aliases: [RSSM]
 updated: 2026-11-24
 areas: [world-model]
-sources: [2019-planet, 2020-dreamer]
+sources: [2019-planet, 2020-dreamer, 2021-dreamerv2]
 ---
 
 ## One-line definition
@@ -26,10 +26,15 @@ A purely deterministic recurrent model remembers well but can only predict a sin
 
 [Dreamer](../sources/2020-dreamer.md) implements its transition model as the RSSM of PlaNet, and builds the representation model by combining the RSSM with a CNN applied to the image (p.6). Its latent distributions are 30-dimensional diagonal Gaussians, as in PlaNet (p.14). Given only the actions after five context frames, the RSSM predicts 45 steps ahead accurately enough for Dreamer to learn behaviors in its latent space (p.5, Fig. 5).
 
+### Mastering Atari with Discrete World Models (2021)
+
+[DreamerV2](../sources/2021-dreamerv2.md) keeps the RSSM structure: a GRU computes the deterministic recurrent state, a posterior stochastic state sees the current image, and a prior stochastic state predicts it without the image (pp.2-3). The stochastic state, however, becomes a vector of 32 categorical variables with 32 classes each instead of a Gaussian (p.3, Fig. 2). The RSSM uses 600 units (p.19), and adding layer normalization to its GRU gave little or no benefit (p.18).
+
 ### Comparing the sources
 
 - [PlaNet](../sources/2019-planet.md) introduces the RSSM and uses it for planning (p.4).
 - [Dreamer](../sources/2020-dreamer.md) reuses it unchanged for policy learning (p.6). The same model therefore supports two different ways of choosing actions; Dreamer builds directly on PlaNet, and this summary is this Wiki's own.
+- [DreamerV2](../sources/2021-dreamerv2.md) keeps the deterministic and stochastic paths but swaps the Gaussian stochastic state for categorical variables, which helps on most Atari games (p.9).
 
 ## Related concepts
 
@@ -37,6 +42,8 @@ A purely deterministic recurrent model remembers well but can only predict a sin
 - [Variational autoencoder](variational-autoencoder.md): the RSSM is trained like a sequential VAE.
 - [Latent overshooting](latent-overshooting.md): an extra objective for training such models on multi-step predictions.
 - [Mixture density RNN](mixture-density-rnn.md): another way to add randomness to a recurrent model; it samples the output, while the RSSM samples part of the state.
+- [Categorical latents](categorical-latents.md): the discrete stochastic state used in DreamerV2.
+- [KL balancing](kl-balancing.md): a way to train the RSSM prior.
 
 ## Background
 

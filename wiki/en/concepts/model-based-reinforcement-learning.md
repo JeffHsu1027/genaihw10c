@@ -3,7 +3,7 @@ title: "Model-based reinforcement learning"
 aliases: [model-based RL, MBRL]
 updated: 2026-11-24
 areas: [reinforcement-learning, world-model]
-sources: [2018-world-models, 2019-planet, 2020-dreamer]
+sources: [2018-world-models, 2019-planet, 2020-dreamer, 2021-dreamerv2]
 ---
 
 ## One-line definition
@@ -28,6 +28,10 @@ Model-free methods learn a policy or a value function directly from trial and er
 
 [Dreamer](../sources/2020-dreamer.md) follows the classical agent structure of dynamics learning, behavior learning and environment interaction, with behavior learned inside the latent space of the world model (p.2). It argues that world models can interpolate past experience and offer analytic gradients of multi-step returns, which model-free actor-critics trained online or by experience replay cannot (p.1). With 5 million environment steps, it exceeds the final performance that the model-free D4PG reaches after 100 million steps (p.6, Fig. 6).
 
+### Mastering Atari with Discrete World Models (2021)
+
+[DreamerV2](../sources/2021-dreamerv2.md) notes that Atari had historically required model-free algorithms to reach human-level performance, and that earlier world models of Atari were not competitive (p.2). It compares itself with two model-based Atari agents: SimPLe, which predicts frames in pixel space and trains PPO on them, and MuZero, which learns task-specific reward and value predictions for tree search without modeling images (pp.10-11, Table 3). MuZero is powerful but would need more than 2 months to train one Atari agent on a GPU, while DreamerV2 needs 10 days (p.11). The authors present DreamerV2 as proof that model-based RL can beat top model-free algorithms on the most competitive benchmarks (p.11).
+
 ### Comparing the sources
 
 - [World Models](../sources/2018-world-models.md) uses its model to train a policy ahead of time; at decision time the controller reacts to the model's hidden state without planning ahead (p.6).
@@ -35,7 +39,8 @@ Model-free methods learn a policy or a value function directly from trial and er
 - Both warn that a purely deterministic model is easy to exploit: [World Models](../sources/2018-world-models.md) for its controller (p.9) and [PlaNet](../sources/2019-planet.md) for its planner (p.4, Fig. 2).
 - [Dreamer](../sources/2020-dreamer.md) returns to training a policy ahead of time, like World Models, but with gradients instead of evolution and with a value model that looks beyond the imagination horizon (p.5).
 - Dreamer reports that planning only within a fixed horizon, as PlaNet does, is shortsighted on tasks that need long-horizon credit assignment (p.7, Fig. 7). PlaNet itself pointed to the missing value function as a limitation (see the PlaNet page), so this is agreement rather than conflict.
-- PlaNet and Dreamer cite World Models, and Dreamer builds on PlaNet; this side-by-side comparison is this Wiki's own summary.
+- [DreamerV2](../sources/2021-dreamerv2.md) keeps Dreamer's policy learning in imagination and shows it can win on Atari, a benchmark the earlier sources did not reach (p.2).
+- PlaNet, Dreamer and DreamerV2 cite World Models, and each later paper builds on the previous one; this side-by-side comparison is this Wiki's own summary.
 
 ## Related concepts
 

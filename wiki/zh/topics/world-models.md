@@ -2,9 +2,9 @@
 title: "世界模型（World models）"
 area: world-model
 updated: 2026-11-24
-sources: [2018-world-models, 2019-planet, 2020-dreamer]
-concepts: [world-model, model-based-reinforcement-learning, variational-autoencoder, mixture-density-rnn, recurrent-state-space-model, learning-in-imagination, latent-space-planning, latent-overshooting, actor-critic]
-translated_from: "70ca3af96f97"
+sources: [2018-world-models, 2019-planet, 2020-dreamer, 2021-dreamerv2]
+concepts: [world-model, model-based-reinforcement-learning, variational-autoencoder, mixture-density-rnn, recurrent-state-space-model, learning-in-imagination, latent-space-planning, latent-overshooting, actor-critic, categorical-latents, kl-balancing]
+translated_from: "1227f9477c0a"
 ---
 
 ## 概述
@@ -16,6 +16,7 @@ translated_from: "70ca3af96f97"
 - 2018：[World Models](../sources/2018-world-models.md) 把代理人拆成大型非監督式世界模型與小型控制器，並證明完全在模型夢境中訓練的策略可以在真實遊戲中運作 (p.7)。
 - 2019：[PlaNet](../sources/2019-planet.md) 學出同時具有確定性與隨機部分的遞迴狀態空間模型，每個動作都在潛在空間中線上規劃，以平均約少 200 倍的回合達到強大無模型方法的表現 (p.2)。
 - 2020：[Dreamer](../sources/2020-dreamer.md) 保留 PlaNet 的世界模型，但完全在想像中用 actor-critic 學習行為，價值模型能看見視野之外，在 20 個任務的平均上勝過 PlaNet 與無模型的 D4PG (p.6, Fig. 6)。
+- 2021：[DreamerV2](../sources/2021-dreamerv2.md) 改用類別潛在變數與 KL 平衡，成為第一個完全在另外訓練的世界模型裡學習、就在 Atari 達到人類水準的代理人 (p.1)。
 
 ## 來源
 
@@ -24,6 +25,7 @@ translated_from: "70ca3af96f97"
 | 2018 | [World Models](../sources/2018-world-models.md) | 已讀 | 由 VAE 加 MDN-RNN 組成的世界模型，搭配演化訓練的小型控制器；策略可以在模型的夢境中訓練。 |
 | 2019 | [Learning Latent Dynamics for Planning from Pixels (PlaNet)](../sources/2019-planet.md) | 未讀 | 純粹基於模型的代理人，在學到的遞迴狀態空間模型中用 CEM 規劃。 |
 | 2020 | [Dream to Control (Dreamer)](../sources/2020-dreamer.md) | 未讀 | 完全在 PlaNet 世界模型的潛在想像中學習 actor-critic，並把價值梯度穿過動態模型。 |
+| 2021 | [Mastering Atari with Discrete World Models (DreamerV2)](../sources/2021-dreamerv2.md) | 未讀 | 加上類別潛在變數與 KL 平衡的 Dreamer；只在世界模型裡學習就達到 Atari 人類水準。 |
 
 ## 關鍵概念
 
@@ -36,6 +38,8 @@ translated_from: "70ca3af96f97"
 - [潛在空間規劃（Latent space planning）](../concepts/latent-space-planning.md)：在模型裡搜尋動作序列來選擇動作。
 - [潛在超前預測（Latent overshooting）](../concepts/latent-overshooting.md)：用多步預測訓練潛在模型。
 - [Actor-critic（演員－評論家）](../concepts/actor-critic.md)：同時學習策略與估計未來獎勵的價值函數。
+- [類別潛在變數（Categorical latents）](../concepts/categorical-latents.md)：用離散選擇而非高斯分布描述潛在狀態。
+- [KL 平衡（KL balancing）](../concepts/kl-balancing.md)：訓練潛在模型時，先驗更新得比後驗快。
 
 ## 術語表
 
@@ -53,6 +57,10 @@ translated_from: "70ca3af96f97"
 - **想像視野（imagination horizon）**：代理人想像時用世界模型往前推演的步數。
 - **λ-return**：一種價值目標值，混合「先相信若干步真實或想像的獎勵、再依賴價值函數」的各種估計。
 - **重參數化（reparameterization）**：把隨機樣本寫成雜訊的固定函數，讓梯度能穿過抽樣步驟。
+- **Straight-through 估計（straight-through estimator）**：反向傳遞時把抽樣步驟當成恆等函數，讓梯度能穿過離散樣本。
+- **Reinforce 梯度（Reinforce gradient）**：依抽樣動作的好壞提高其機率的策略梯度；無偏但雜訊大。
+- **Sticky actions**：Atari 的一種評測設定，會隨機重複上一個動作，讓代理人無法死背固定的動作序列。
+- **人類正規化分數（human-normalized score）**：把遊戲分數換算成以參考人類玩家或人類世界紀錄為一的尺度。
 
 ## 未解問題
 
@@ -64,6 +72,11 @@ translated_from: "70ca3af96f97"
 
 - 世界模型應該用什麼目標訓練？[Dreamer](../sources/2020-dreamer.md) 發現像素重建最好、只預測獎勵不夠，並預期視覺複雜的環境需要更好的表示學習 (p.9)。
 - 完全透過世界模型學習的代理人，能否在 Atari 這類離散動作領域具有競爭力？[Dreamer](../sources/2020-dreamer.md) 在那裡學到成功的行為，但還沒有競爭力 (p.16)。
+
+> **後續變更：** [DreamerV2](../sources/2021-dreamerv2.md) 在 55 個 Atari 遊戲上達到人類水準 (p.7, Table 1)。
+
+- 類別潛在變數為什麼比高斯好？[DreamerV2](../sources/2021-dreamerv2.md) 只提出假設 (p.9)。
+- 以重建為基礎的世界模型，要如何掌握小而重要的物體？[DreamerV2](../sources/2021-dreamerv2.md) 在 Video Pinball 上失敗，因為球只有一個像素 (p.8)。
 
 ## 背景資料
 
