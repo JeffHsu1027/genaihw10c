@@ -134,9 +134,13 @@ def g2():
         sfm, sbody = split_fm(sp.read_text(encoding="utf-8"))
         allowed_concepts = set(re.findall(r"\(\.\./concepts/([a-z0-9-]+)\.md\)", sbody))
         max_page = int(sfm.get("pages") or 0)
-        text = card.read_text(encoding="utf-8").replace("\r\n", "\n")
-        blocks = re.split(r"\n(?=## C\d+\s*\n)", text)
-        claims = [b for b in blocks if re.match(r"## C\d+\s*\n", b)]
+        text = card.read_text(encoding="utf-8-sig").replace("\r\n", "\n")
+        heads = list(re.finditer(r"(?m)^## C\d+[ \t]*$", text))
+        claims = [text[h.start():(heads[k + 1].start() if k + 1 < len(heads) else len(text))]
+                  for k, h in enumerate(heads)]
+        stray = re.findall(r"(?m)^## (?!C\d+[ \t]*$).*$", text)
+        for s in stray:
+            r.err(name, f"無法辨識的小節標題（主張要寫成 ## C<n>）：{s}")
         if not claims:
             r.err(name, "沒有任何 ## C<n> 主張")
         for b in claims:
@@ -175,6 +179,9 @@ def g2():
                 if max_page and hi > max_page:
                     r.err(where, f"頁碼 {hi} 超過 {slug} 的 pages: {max_page}")
             q = plain(quote.group(1))
+            if len(q) < 12:
+                r.err(where, f"Wiki 原文太短（{len(q)} 字），至少要 12 個字才能確認出處")
+                continue
             hit = [l for l in page_lines(tp) if q in l]
             if not hit:
                 r.err(where, f"Wiki 原文沒有逐字出現在 {kind}/{target}.md：「{q[:40]}…」")
