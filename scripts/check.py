@@ -85,7 +85,7 @@ PLACEHOLDERS = {
 
 CJK = re.compile(r"[　-〿㐀-䶿一-鿿豈-﫿＀-￯]")
 REF_ANY = re.compile(r"\(pp?\.[^)]*\)")
-REF_OK = re.compile(r"\((?:p\.\d+|pp\.\d+-\d+)(?:, (?:Fig\.|Table|Eq\.|Alg\.) ?[A-Z]?\d+[a-z]?)?\)")
+REF_OK = re.compile(r"\((?:p\.\d+|pp\.\d+-\d+)(?:, (?:Fig\.|Table|Eq\.|Alg\.) ?(?:[A-Z]\.?)?\d+[a-z]?)?\)")
 SOURCE_LINK = re.compile(r"\]\((?:[^)]*/)?(\d{4}-[a-z0-9-]+)\.md")
 MD_LINK = re.compile(r"!?\[([^\]]*)\]\(([^)\s]+)(?:\s+\"[^\"]*\")?\)")
 AUTO_LINK = re.compile(r"<(https?://[^>\s]+)>")

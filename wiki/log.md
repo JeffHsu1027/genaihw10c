@@ -206,3 +206,9 @@
   - 待確認（論文內部不一致，無法由 Wiki 解決）：Dreamer p.9 任務數 19 或 20；DreamerV2 discount 0.999（p.2）與 0.995（p.19）；DreamerV3 想像 horizon 16（p.5）與 15（p.21）。
   - 建議可補的論文：Genie（Dreamer 4 與 WHAM 都引用）、MuZero（DreamerV2、DreamerV3 引用）、IRIS 或 DIAMOND（transformer／擴散世界模型），以及預定的第 8、9 篇。
   - 規則缺口：附錄圖號如 `Fig. A.2` 不符合出處格式，目前只能標頁碼。
+
+## [2026-11-24] rules | 出處格式接受附錄圖表編號
+
+- 依上一筆 lint 的規則缺口，擁有者同意（「Apply all」）。
+- `scripts/check.py` 的 `REF_OK`：圖、表、公式、演算法編號允許「大寫字母＋可選的點」前綴，例如 `(p.7, Fig. A.2)`、`(p.7, Table A1)`。原有寫法不受影響。
+- `AGENTS.md`、範本不變。既有只標頁碼的附錄圖出處不回頭修改。
