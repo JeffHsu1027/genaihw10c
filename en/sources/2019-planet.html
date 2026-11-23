@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="source-hash" content="d82cdcdd8e2c">
+<title>Learning Latent Dynamics for Planning from Pixels · Paper Wiki</title>
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="site-name" href="../index.html">Paper Wiki</a>
+  <a class="lang-switch" href="../../zh/sources/2019-planet.html" hreflang="zh-Hant">中文</a>
+</header>
+<main class="page page-source">
+  <p class="page-kind"><span class="tag tag-source">Source</span></p>
+  <h1>Learning Latent Dynamics for Planning from Pixels</h1>
+  <p class="meta">Danijar Hafner et al. · 2019 · ICML 2019 (arXiv:1811.04551) · <a href="https://arxiv.org/abs/1811.04551">Paper</a></p>
+  <p class="meta"><span class="status status-read">Read</span> · <a href="../topics/world-models.html">World models</a></p>
+  <article class="content">
+<h2>One-line summary</h2>
+<p>PlaNet (Deep Planning Network) is a purely <a href="../concepts/model-based-reinforcement-learning.html">model-based</a> agent that learns a latent <a href="../concepts/world-model.html">world model</a> from images and chooses every action by fast online planning in latent space, without a policy or value network (p.1).</p>
+<h2>Research question</h2>
+<p>Can a dynamics model learned from pixels be accurate enough to plan with, on control tasks harder than those previously solved by planning with learned models (p.1)? Such models are hard to learn because of model errors, errors that accumulate over multi-step predictions, the need to capture several possible futures, and overconfident predictions outside the training distribution (p.1).</p>
+<h2>Method</h2>
+<ul>
+<li><strong>Setting</strong>: each task is treated as a partially observable Markov decision process, because a single image does not reveal the full state of the environment (p.2).</li>
+<li><strong>Model</strong>: PlaNet learns a transition model, an observation model, a reward model, and an encoder that infers a belief over the current hidden state from past images and actions (p.3). The observation model provides a rich training signal but is not used for planning (p.3).</li>
+<li><strong><a href="../concepts/recurrent-state-space-model.html">Recurrent state-space model</a> (RSSM)</strong>: the latent state is split into a deterministic part carried by an RNN and a stochastic part sampled from a Gaussian (p.4, Eq. 4). A purely deterministic RNN cannot capture several possible futures and lets the planner exploit model errors, while a purely stochastic model has trouble remembering information over many steps (p.4, Fig. 2). The authors' key finding is that "both stochastic and deterministic paths in the transition model are crucial for successful planning" (p.3).</li>
+<li><strong>Training objective</strong>: the model, including the encoder in the style of a <a href="../concepts/variational-autoencoder.html">variational autoencoder</a>, is trained with a variational bound made of a reconstruction term and a KL term between the encoder's posterior and the transition prior (p.4, Eq. 3).</li>
+<li><strong><a href="../concepts/latent-overshooting.html">Latent overshooting</a></strong>: a generalized objective that also trains multi-step predictions of every distance directly in latent space, without decoding extra images (p.5).</li>
+<li><strong><a href="../concepts/latent-space-planning.html">Planning</a></strong>: at every step, the cross entropy method (CEM) searches for the best action sequence under the model, and only the first action is executed, as in model-predictive control (p.3). Each candidate sequence is scored by rolling the model forward in latent space and summing the predicted rewards, so no images are generated during planning (p.3).</li>
+<li><strong>Data collection</strong>: starting from a few random seed episodes, PlaNet alternates between training the model and collecting a new episode by planning with small Gaussian exploration noise; each chosen action is repeated several times (p.3).</li>
+</ul>
+<blockquote class="note note-explainer">
+<p><strong>Explainer:</strong> Instead of learning reflexes, PlaNet thinks before every move: it imagines many possible action plans inside its model, keeps the most promising ones, refines them, and then takes only the first step of the best plan.</p>
+</blockquote>
+<p>Implementation details from the appendix: the deterministic path is a GRU with 200 units, other functions are two fully connected layers of 200 units, and the stochastic state is a 30-dimensional diagonal Gaussian (p.12). Images are 64x64x3 pixels with the bit depth reduced to 5 bits (p.12). Training uses Adam with a learning rate of <code>1e-3</code> on batches of 50 sequence chunks of length 50 (p.12). The KL term is not penalized below 3 free nats (p.12). CEM uses a horizon of 12, 10 iterations, 1000 candidates, and refits to the best 100 (p.12). Training starts from 5 seed episodes and adds an episode every 100 update steps; the action repeat is between 2 and 8 depending on the task (p.12). Training takes 10 to 20 hours on a single V100 GPU (p.6).</p>
+<h2>Key results</h2>
+<ul>
+<li>The benchmark is six image-based DeepMind Control Suite tasks: cartpole swingup, reacher easy, cheetah run, finger spin, cup catch and walker walk, all seen as 64x64x3 images (p.6).</li>
+<li>Within 100 episodes, PlaNet outperforms A3C trained from proprioceptive states for 100,000 episodes on all tasks (p.6).</li>
+<li>After 500 episodes, PlaNet performs similarly to D4PG trained from images for 100,000 episodes, except on finger spin (p.6).</li>
+<li>Final scores of PlaNet after 1,000 episodes versus D4PG after 100,000 episodes: cartpole 821 vs 862, reacher 832 vs 967, cheetah 662 vs 524, finger 700 vs 985, cup 930 vs 980, walker 951 vs 968 (p.7, Table 1).</li>
+<li>On cheetah running, PlaNet exceeds the final performance of D4PG by a relative 26% (p.6). The data efficiency gain over D4PG ranges from a factor of 40 to more than 500 depending on the task (p.7, Table 1), about 200 times fewer episodes on average (p.2).</li>
+<li>Model ablation: removing either path hurts on every task; the deterministic part helps the model remember, and without the stochastic part the agent does not learn at all (p.6, Fig. 4).</li>
+<li>Agent ablation: collecting data online by planning helps on all tasks and is necessary for cartpole, finger and walker, and refining plans with CEM beats picking the best of 1000 random sequences (p.6, Fig. 5).</li>
+<li>A single agent trained on all six tasks, without being told which task it faces, solves all of them while learning more slowly (p.6).</li>
+<li>Latent overshooting substantially helps a different model (DRNN) but slightly reduces the performance of the RSSM, so the final agent does not need it (p.14, Fig. 8).</li>
+<li>The RSSM produces pixel-accurate open-loop video predictions for 50 steps into the future on the cheetah task (p.18, Fig. 10).</li>
+</ul>
+<h2>Limitations and open questions</h2>
+<ul>
+<li>The planner only sees rewards up to its planning horizon; the authors suggest learning a value function to account for rewards beyond it (p.8).</li>
+<li>The action repeat is fixed by hand; learning temporal abstraction, possibly with hierarchical models, is left for future work (p.8).</li>
+<li>Planning evaluates thousands of action sequences at every step, which is why everything has to stay in latent space (p.3). Gradient-based planning could make the agent more efficient (p.8).</li>
+<li>The model is trained by reconstructing images; learning representations without reconstruction could help in visually more diverse tasks (p.8).</li>
+<li>Final performance stays below D4PG on finger spin (700 vs 985) and reacher (832 vs 967) (p.7, Table 1).</li>
+<li>One of the two proposed techniques, latent overshooting, is not needed by the final agent (p.5).</li>
+</ul>
+<h2>Related concepts</h2>
+<ul>
+<li><a href="../concepts/model-based-reinforcement-learning.html">Model-based reinforcement learning</a>: PlaNet is a purely model-based agent.</li>
+<li><a href="../concepts/world-model.html">World model</a>: PlaNet's latent dynamics model.</li>
+<li><a href="../concepts/recurrent-state-space-model.html">Recurrent state-space model</a>: the model architecture proposed here.</li>
+<li><a href="../concepts/latent-overshooting.html">Latent overshooting</a>: the multi-step objective proposed here.</li>
+<li><a href="../concepts/latent-space-planning.html">Latent space planning</a>: how PlaNet chooses actions.</li>
+<li><a href="../concepts/variational-autoencoder.html">Variational autoencoder</a>: the RSSM is trained like a sequential VAE.</li>
+</ul>
+<h2>Relation to other sources</h2>
+<ul>
+<li><a href="2018-world-models.html">World Models</a>: PlaNet reuses the convolutional encoder and deconvolutional decoder of World Models (p.12) and lists World Models among hybrid agents that learn a policy from imagined experience (p.17). Where World Models trains a small controller inside its dream, PlaNet has no policy at all and replans with the model at every step (p.3). David Ha is an author of both papers (p.1).</li>
+</ul>
+<h2>Background</h2>
+<ul>
+<li><a href="https://danijar.com/planet">PlaNet project page</a>: code and videos of the trained agents, linked from the paper.</li>
+</ul>
+  </article>
+</main>
+<footer class="site-footer"><a href="../index.html">Back to home</a></footer>
+</body>
+</html>

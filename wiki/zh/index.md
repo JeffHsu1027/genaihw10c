@@ -1,6 +1,6 @@
 ---
 title: 目錄
-translated_from: "9ee910fef0ec"
+translated_from: "35dafc191f4a"
 ---
 
 # 目錄
@@ -11,16 +11,24 @@ translated_from: "9ee910fef0ec"
 
 - [世界模型（World models）](topics/world-models.md) — 主題入口：讓代理人能預測與練習的學習型模擬器。
 - [World Models](sources/2018-world-models.md) — 由 VAE 加 MDN-RNN 組成的世界模型，搭配演化訓練的小型控制器，部分訓練在自己的夢境中進行。
+- [Learning Latent Dynamics for Planning from Pixels](sources/2019-planet.md) — PlaNet：在遞迴狀態空間模型中用 CEM 規劃的純粹基於模型的代理人。
+- [潛在超前預測（Latent overshooting）](concepts/latent-overshooting.md) — 在潛在空間用多步預測訓練潛在模型。
+- [潛在空間規劃（Latent space planning）](concepts/latent-space-planning.md) — 在學到的潛在模型裡搜尋動作序列來選擇動作。
 - [在想像中學習（Learning in imagination）](concepts/learning-in-imagination.md) — 用世界模型產生的經驗訓練策略。
 - [混合密度遞迴神經網路（Mixture density RNN）](concepts/mixture-density-rnn.md) — 預測高斯混合分布的遞迴網路。
+- [基於模型的強化學習（Model-based reinforcement learning）](concepts/model-based-reinforcement-learning.md) — 會學習或使用環境模型的強化學習。
+- [遞迴狀態空間模型（Recurrent state-space model）](concepts/recurrent-state-space-model.md) — 具有確定性記憶與隨機狀態的潛在動態模型。
 - [變分自編碼器（Variational autoencoder）](concepts/variational-autoencoder.md) — 把輸入編碼成小而隨機的潛在向量，再解碼回來。
 - [世界模型（World model）](concepts/world-model.md) — 預測環境如何變化的學習模型。
 
 ## 強化學習
 
 - [World Models](sources/2018-world-models.md) — 由 VAE 加 MDN-RNN 組成的世界模型，搭配演化訓練的小型控制器，部分訓練在自己的夢境中進行。
+- [Learning Latent Dynamics for Planning from Pixels](sources/2019-planet.md) — PlaNet：在遞迴狀態空間模型中用 CEM 規劃的純粹基於模型的代理人。
 - [演化策略（Evolution strategies）](concepts/evolution-strategies.md) — 不用梯度、對一群候選解做最佳化。
+- [潛在空間規劃（Latent space planning）](concepts/latent-space-planning.md) — 在學到的潛在模型裡搜尋動作序列來選擇動作。
 - [在想像中學習（Learning in imagination）](concepts/learning-in-imagination.md) — 用世界模型產生的經驗訓練策略。
+- [基於模型的強化學習（Model-based reinforcement learning）](concepts/model-based-reinforcement-learning.md) — 會學習或使用環境模型的強化學習。
 - [世界模型（World model）](concepts/world-model.md) — 預測環境如何變化的學習模型。
 
 ## 遊戲 AI

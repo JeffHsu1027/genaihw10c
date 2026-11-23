@@ -3,8 +3,8 @@ title: "變分自編碼器（Variational autoencoder）"
 aliases: [VAE, ConvVAE, 卷積變分自編碼器]
 updated: 2026-11-24
 areas: [world-model]
-sources: [2018-world-models]
-translated_from: "714a8c9c10c4"
+sources: [2018-world-models, 2019-planet]
+translated_from: "404b94a3a7bb"
 ---
 
 ## 一句話定義
@@ -23,10 +23,24 @@ translated_from: "714a8c9c10c4"
 
 [World Models](../sources/2018-world-models.md) 用卷積 VAE 當作 V 模型，把每張畫面壓縮成潛在向量 z (p.3)。畫面先縮成 64x64 像素，再經過四層卷積層；Car Racing 的 z 是 32 維，Doom 是 64 維 (p.13)。VAE 以隨機策略收集的資料、用 L2 重建損失加上 KL 損失訓練一個 epoch (p.13)。作者指出，高斯先驗也讓世界模型對 M 產生的不合理潛在向量更穩健 (p.13)。因為 V 的訓練不看獎勵，它可能保留與任務無關的細節，卻漏掉有關的部分 (p.12)。
 
+### Learning Latent Dynamics for Planning from Pixels（2019）
+
+[PlaNet](../sources/2019-planet.md) 把它的遞迴狀態空間模型描述為一種序列 VAE 或非線性卡爾曼濾波器 (p.3)。它沿用 World Models 的卷積編碼器與反卷積解碼器 (p.12)，但編碼器是從整段觀測與動作的歷史推斷潛在狀態，而不是只看單張畫面 (p.3)。KL 項低於 3 個 free nats 時不予懲罰 (p.12)。
+
+### 來源之間的比較
+
+- [World Models](../sources/2018-world-models.md) 先單獨、逐張畫面訓練 VAE，再訓練動態模型；作者認為這比端到端訓練實際 (p.4)。
+- [PlaNet](../sources/2019-planet.md) 用同一個變分目標一起訓練編碼器、解碼器與轉移模型 (p.4, Eq. 3)。
+
+> **解說（Explainer）：** 一起訓練時，壓縮後的畫面描述不只要能把畫面畫回來，也要容易從前一步預測出來。
+
+- PlaNet 沿用了 World Models 的網路（見 PlaNet 來源頁）；這段比較是本 Wiki 的整理。
+
 ## 相關概念
 
 - [世界模型（World model）](world-model.md)：VAE 是世界模型中負責壓縮的一半。
 - [混合密度遞迴神經網路（Mixture density RNN）](mixture-density-rnn.md)：預測由 VAE 定義的下一個潛在向量。
+- [遞迴狀態空間模型（Recurrent state-space model）](recurrent-state-space-model.md)：把 VAE 的想法延伸到序列。
 
 ## 背景資料
 

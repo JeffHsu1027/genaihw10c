@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="source-hash" content="ef75c0d2bc0d">
+<title>Latent overshooting · Paper Wiki</title>
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="site-name" href="../index.html">Paper Wiki</a>
+  <a class="lang-switch" href="../../zh/concepts/latent-overshooting.html" hreflang="zh-Hant">中文</a>
+</header>
+<main class="page page-concept">
+  <p class="page-kind"><span class="tag tag-concept">Concept</span></p>
+  <h1>Latent overshooting</h1>
+  <p class="meta">overshooting, multi-step latent objective · 1 source</p>
+  <article class="content">
+<h2>One-line definition</h2>
+<p>A training objective for latent sequence models that, besides one-step predictions, also trains multi-step predictions by pulling them toward the states inferred from real observations, entirely in latent space.</p>
+<h2>Explanation</h2>
+<p>Standard variational training only teaches the transition model to predict one step ahead. With limited capacity, the best one-step model is not necessarily the best multi-step model, yet planning needs accurate predictions far ahead. Overshooting rolls the transition model forward several steps from an earlier state and pulls each predicted state toward the state inferred from the actual observations. Doing this in latent space avoids decoding extra images, which would be expensive.</p>
+<h2>What each source says</h2>
+<h3>Learning Latent Dynamics for Planning from Pixels (2019)</h3>
+<p><a href="../sources/2019-planet.html">PlaNet</a> proposes latent overshooting as a generalization of the standard variational bound that trains predictions of every distance up to a maximum, with a weight for each distance (pp.5-6, Eq. 7). It contrasts this with observation overshooting, which decodes every multi-step prediction into an image and is usually too expensive in image domains (p.5, Fig. 3). Gradients are stopped at the posterior for longer distances, so the predictions move toward the informed posteriors but not the other way around (p.6). In the experiments, latent overshooting substantially improves a model called DRNN but slightly reduces the performance of the RSSM (p.14, Fig. 8). The final PlaNet agent therefore does not use it (p.12).</p>
+<h2>Related concepts</h2>
+<ul>
+<li><a href="recurrent-state-space-model.html">Recurrent state-space model</a>: the model that turned out not to need overshooting.</li>
+<li><a href="latent-space-planning.html">Latent space planning</a>: the reason multi-step predictions matter.</li>
+</ul>
+<h2>Background</h2>
+<p>(None yet)</p>
+  </article>
+</main>
+<footer class="site-footer"><a href="../index.html">Back to home</a></footer>
+</body>
+</html>

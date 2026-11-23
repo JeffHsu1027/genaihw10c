@@ -5,14 +5,14 @@ year: 2018
 venue: "arXiv:1803.10122"
 url: "https://arxiv.org/abs/1803.10122"
 raw: "raw/world modelv4.pdf"
-pages: 22
+pages: 21
 added: 2026-11-24
 updated: 2026-11-24
 areas: [world-model, reinforcement-learning]
 status: read
-concepts: [world-model, variational-autoencoder, mixture-density-rnn, evolution-strategies, learning-in-imagination]
+concepts: [world-model, variational-autoencoder, mixture-density-rnn, evolution-strategies, learning-in-imagination, model-based-reinforcement-learning]
 topics: [world-models]
-translated_from: "5b22f47d89b0"
+translated_from: "73dc53f89cbb"
 ---
 
 ## 一句話總結
@@ -66,10 +66,11 @@ Car Racing 的流程是：收集 10,000 次隨機策略的 rollout，訓練 V、
 - [混合密度遞迴神經網路](../concepts/mixture-density-rnn.md)：M 元件。
 - [演化策略](../concepts/evolution-strategies.md)：訓練 C 的方法（CMA-ES）。
 - [在想像中學習](../concepts/learning-in-imagination.md)：在夢境中訓練 C。
+- [基於模型的強化學習](../concepts/model-based-reinforcement-learning.md)：本篇所屬的更大研究方向。
 
 ## 與其他來源的關係
 
-目前沒有直接相關的來源。
+- [Learning Latent Dynamics for Planning from Pixels](2019-planet.md)（PlaNet，2019）引用本篇、沿用本篇的卷積編碼器與解碼器，並把本篇列為從想像經驗學習策略的混合式代理人。PlaNet 不在夢境中訓練控制器，而是每一步都用學到的模型規劃。David Ha 是兩篇論文的共同作者。
 
 ## 背景資料
 

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="source-hash" content="eb80e6c1b298">
+<meta name="source-hash" content="304d70343e71">
 <title>World model · Paper Wiki</title>
 <link rel="stylesheet" href="../../assets/style.css">
 </head>
@@ -15,7 +15,7 @@
 <main class="page page-concept">
   <p class="page-kind"><span class="tag tag-concept">Concept</span></p>
   <h1>World model</h1>
-  <p class="meta">dynamics model, environment model, predictive model of the environment · 1 source</p>
+  <p class="meta">dynamics model, environment model, predictive model of the environment · 2 sources</p>
   <article class="content">
 <h2>One-line definition</h2>
 <p>A learned model of an environment that predicts what will happen next, usually given the current state and an action.</p>
@@ -27,10 +27,22 @@
 <h2>What each source says</h2>
 <h3>World Models (2018)</h3>
 <p><a href="../sources/2018-world-models.html">World Models</a> builds the world model from two parts: a VAE that compresses each frame and an MDN-RNN that predicts the next compressed frame (p.2, Fig. 4). The world model is trained without rewards, and only the small controller sees the reward (p.5). The paper uses the world model in both ways: its hidden state gives the controller a sense of the future in Car Racing (p.5), and in VizDoom it fully replaces the real game during training (p.7).</p>
+<h3>Learning Latent Dynamics for Planning from Pixels (2019)</h3>
+<p><a href="../sources/2019-planet.html">PlaNet</a> calls its world model a latent dynamics model: a transition model, an observation model, a reward model and an encoder, built as a recurrent state-space model (p.3). Because the model also predicts rewards, the planner can score action sequences purely in latent space without generating images (p.3). The model is trained on data that the agent keeps collecting by planning with the partially trained model, not only on random data (p.3).</p>
+<h3>Comparing the sources</h3>
+<ul>
+<li>Both learn a compressed latent state from pixels and a transition model over it: <a href="../sources/2018-world-models.html">World Models</a> with a VAE and an MDN-RNN (p.2, Fig. 4), <a href="../sources/2019-planet.html">PlaNet</a> with a recurrent state-space model (p.4, Eq. 4).</li>
+<li><a href="../sources/2018-world-models.html">World Models</a> trains its model once on random-policy data, and in Car Racing the model never sees rewards (p.5).</li>
+<li><a href="../sources/2019-planet.html">PlaNet</a> predicts rewards with the model and keeps retraining it on data collected by its own plans (p.3).</li>
+<li>Both warn that a purely deterministic model is easy to exploit: <a href="../sources/2018-world-models.html">World Models</a> for its controller (p.9) and <a href="../sources/2019-planet.html">PlaNet</a> for its planner (p.4, Fig. 2). This is agreement, not conflict.</li>
+<li>PlaNet cites World Models (see the PlaNet source page); this side-by-side comparison is this Wiki's own summary.</li>
+</ul>
 <h2>Related concepts</h2>
 <ul>
 <li><a href="variational-autoencoder.html">Variational autoencoder</a>: compresses observations for the world model.</li>
 <li><a href="mixture-density-rnn.html">Mixture density RNN</a>: predicts the next state as a probability distribution.</li>
+<li><a href="recurrent-state-space-model.html">Recurrent state-space model</a>: a world model design with deterministic and stochastic state.</li>
+<li><a href="model-based-reinforcement-learning.html">Model-based reinforcement learning</a>: reinforcement learning that uses a world model.</li>
 <li><a href="learning-in-imagination.html">Learning in imagination</a>: training an agent inside a world model.</li>
 </ul>
 <h2>Background</h2>

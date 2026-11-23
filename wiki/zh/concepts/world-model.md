@@ -3,8 +3,8 @@ title: "世界模型（World model）"
 aliases: [動態模型, 環境模型, dynamics model, environment model]
 updated: 2026-11-24
 areas: [world-model, reinforcement-learning]
-sources: [2018-world-models]
-translated_from: "5965c140fe21"
+sources: [2018-world-models, 2019-planet]
+translated_from: "cc524bfa8579"
 ---
 
 ## 一句話定義
@@ -23,10 +23,24 @@ translated_from: "5965c140fe21"
 
 [World Models](../sources/2018-world-models.md) 用兩個部分組成世界模型：壓縮每張畫面的 VAE，以及預測下一張壓縮畫面的 MDN-RNN (p.2, Fig. 4)。世界模型的訓練不使用獎勵，只有小型控制器看得到獎勵 (p.5)。這篇論文兩種用法都用上了：在 Car Racing 中，世界模型的隱藏狀態讓控制器對未來有所掌握 (p.5)；在 VizDoom 中，它在訓練時完全取代了真實遊戲 (p.7)。
 
+### Learning Latent Dynamics for Planning from Pixels（2019）
+
+[PlaNet](../sources/2019-planet.md) 把它的世界模型稱為潛在動態模型：由轉移模型、觀測模型、獎勵模型與編碼器組成，架構是遞迴狀態空間模型 (p.3)。因為模型也預測獎勵，規劃器可以完全在潛在空間中為動作序列評分，不必產生影像 (p.3)。模型的訓練資料是代理人持續用尚未訓練完的模型規劃所收集的，而不只是隨機資料 (p.3)。
+
+### 來源之間的比較
+
+- 兩篇都從像素學出壓縮的潛在狀態與其上的轉移模型：[World Models](../sources/2018-world-models.md) 用 VAE 加 MDN-RNN (p.2, Fig. 4)，[PlaNet](../sources/2019-planet.md) 用遞迴狀態空間模型 (p.4, Eq. 4)。
+- [World Models](../sources/2018-world-models.md) 只用隨機策略的資料訓練一次模型，而且在 Car Racing 中模型完全看不到獎勵 (p.5)。
+- [PlaNet](../sources/2019-planet.md) 讓模型預測獎勵，並持續用自己規劃收集的資料重新訓練模型 (p.3)。
+- 兩篇都警告純確定性的模型容易被利用：[World Models](../sources/2018-world-models.md) 是被控制器利用 (p.9)，[PlaNet](../sources/2019-planet.md) 是被規劃器利用 (p.4, Fig. 2)。這是兩篇說法一致，不是衝突。
+- PlaNet 有引用 World Models（見 PlaNet 來源頁）；這段並列比較是本 Wiki 的整理。
+
 ## 相關概念
 
 - [變分自編碼器（Variational autoencoder）](variational-autoencoder.md)：為世界模型壓縮觀測。
 - [混合密度遞迴神經網路（Mixture density RNN）](mixture-density-rnn.md)：以機率分布預測下一個狀態。
+- [遞迴狀態空間模型（Recurrent state-space model）](recurrent-state-space-model.md)：同時具有確定性與隨機狀態的世界模型設計。
+- [基於模型的強化學習（Model-based reinforcement learning）](model-based-reinforcement-learning.md)：使用世界模型的強化學習。
 - [在想像中學習（Learning in imagination）](learning-in-imagination.md)：在世界模型裡訓練代理人。
 
 ## 背景資料

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="source-hash" content="5ec897efa445">
+<meta name="source-hash" content="d2609269cf6a">
 <title>World Models · 論文 Wiki</title>
 <link rel="stylesheet" href="../../assets/style.css">
 </head>
@@ -62,9 +62,12 @@
 <li><a href="../concepts/mixture-density-rnn.html">混合密度遞迴神經網路</a>：M 元件。</li>
 <li><a href="../concepts/evolution-strategies.html">演化策略</a>：訓練 C 的方法（CMA-ES）。</li>
 <li><a href="../concepts/learning-in-imagination.html">在想像中學習</a>：在夢境中訓練 C。</li>
+<li><a href="../concepts/model-based-reinforcement-learning.html">基於模型的強化學習</a>：本篇所屬的更大研究方向。</li>
 </ul>
 <h2>與其他來源的關係</h2>
-<p>目前沒有直接相關的來源。</p>
+<ul>
+<li><a href="2019-planet.html">Learning Latent Dynamics for Planning from Pixels</a>（PlaNet，2019）引用本篇、沿用本篇的卷積編碼器與解碼器，並把本篇列為從想像經驗學習策略的混合式代理人。PlaNet 不在夢境中訓練控制器，而是每一步都用學到的模型規劃。David Ha 是兩篇論文的共同作者。</li>
+</ul>
 <h2>背景資料</h2>
 <ul>
 <li><a href="https://worldmodels.github.io">論文的互動版本</a>：作者製作的網頁版，可以直接操作 VAE 與夢境環境的示範。</li>

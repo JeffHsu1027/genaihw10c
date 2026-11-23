@@ -3,7 +3,7 @@ title: "Variational autoencoder"
 aliases: [VAE, ConvVAE, convolutional variational autoencoder]
 updated: 2026-11-24
 areas: [world-model]
-sources: [2018-world-models]
+sources: [2018-world-models, 2019-planet]
 ---
 
 ## One-line definition
@@ -22,10 +22,24 @@ The encoder outputs the mean and spread of a Gaussian distribution, a latent vec
 
 [World Models](../sources/2018-world-models.md) uses a convolutional VAE as the V model to compress each frame into a latent vector z (p.3). Frames are resized to 64x64 pixels and passed through four convolutional layers; z has 32 dimensions in Car Racing and 64 in Doom (p.13). The VAE is trained for one epoch on random-policy data with an L2 reconstruction loss plus a KL loss (p.13). The authors note that the Gaussian prior also makes the world model more robust to unrealistic latent vectors produced by M (p.13). Because V is trained without rewards, it can keep task-irrelevant details and miss relevant ones (p.12).
 
+### Learning Latent Dynamics for Planning from Pixels (2019)
+
+[PlaNet](../sources/2019-planet.md) describes its recurrent state-space model as a kind of sequential VAE or non-linear Kalman filter (p.3). It reuses the convolutional encoder and deconvolutional decoder of World Models (p.12), but its encoder infers the latent state from the whole history of observations and actions, not from a single frame (p.3). The KL term is not penalized below 3 free nats (p.12).
+
+### Comparing the sources
+
+- [World Models](../sources/2018-world-models.md) trains the VAE on its own, frame by frame, before the dynamics model, which the authors found more practical than end-to-end training (p.4).
+- [PlaNet](../sources/2019-planet.md) trains the encoder, decoder and transition model together with one variational objective (p.4, Eq. 3).
+
+> **Explainer:** When everything is trained together, the compressed picture is shaped not only to redraw the frame but also to be easy to predict from the previous step.
+
+- PlaNet reuses the World Models networks (see the PlaNet source page); this comparison is this Wiki's own summary.
+
 ## Related concepts
 
 - [World model](world-model.md): the VAE is the compression half of the world model.
 - [Mixture density RNN](mixture-density-rnn.md): predicts the next latent vector that the VAE defines.
+- [Recurrent state-space model](recurrent-state-space-model.md): extends the VAE idea to sequences.
 
 ## Background
 

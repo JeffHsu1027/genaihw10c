@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="source-hash" content="3917893c1ef7">
+<meta name="source-hash" content="233ea4b101f5">
 <title>World Models · Paper Wiki</title>
 <link rel="stylesheet" href="../../assets/style.css">
 </head>
@@ -62,9 +62,12 @@
 <li><a href="../concepts/mixture-density-rnn.html">Mixture density RNN</a>: the M component.</li>
 <li><a href="../concepts/evolution-strategies.html">Evolution strategies</a>: how C is trained (CMA-ES).</li>
 <li><a href="../concepts/learning-in-imagination.html">Learning in imagination</a>: training C inside the dream.</li>
+<li><a href="../concepts/model-based-reinforcement-learning.html">Model-based reinforcement learning</a>: the broader family this paper belongs to.</li>
 </ul>
 <h2>Relation to other sources</h2>
-<p>No directly related sources yet.</p>
+<ul>
+<li><a href="2019-planet.html">Learning Latent Dynamics for Planning from Pixels</a> (PlaNet, 2019) cites this paper, reuses its convolutional encoder and decoder, and counts it among hybrid agents that learn a policy from imagined experience. Instead of training a controller inside a dream, PlaNet plans with its learned model at every step. David Ha is an author of both papers.</li>
+</ul>
 <h2>Background</h2>
 <ul>
 <li><a href="https://worldmodels.github.io">Interactive version of the paper</a>: the authors' web version, with live demos of the VAE and of the dream environments.</li>

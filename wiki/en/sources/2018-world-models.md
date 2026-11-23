@@ -5,12 +5,12 @@ year: 2018
 venue: "arXiv:1803.10122"
 url: "https://arxiv.org/abs/1803.10122"
 raw: "raw/world modelv4.pdf"
-pages: 22
+pages: 21
 added: 2026-11-24
 updated: 2026-11-24
 areas: [world-model, reinforcement-learning]
 status: read
-concepts: [world-model, variational-autoencoder, mixture-density-rnn, evolution-strategies, learning-in-imagination]
+concepts: [world-model, variational-autoencoder, mixture-density-rnn, evolution-strategies, learning-in-imagination, model-based-reinforcement-learning]
 topics: [world-models]
 ---
 
@@ -65,10 +65,11 @@ Training details from the appendix: the VAE is trained for one epoch with an L2 
 - [Mixture density RNN](../concepts/mixture-density-rnn.md): the M component.
 - [Evolution strategies](../concepts/evolution-strategies.md): how C is trained (CMA-ES).
 - [Learning in imagination](../concepts/learning-in-imagination.md): training C inside the dream.
+- [Model-based reinforcement learning](../concepts/model-based-reinforcement-learning.md): the broader family this paper belongs to.
 
 ## Relation to other sources
 
-No directly related sources yet.
+- [Learning Latent Dynamics for Planning from Pixels](2019-planet.md) (PlaNet, 2019) cites this paper, reuses its convolutional encoder and decoder, and counts it among hybrid agents that learn a policy from imagined experience. Instead of training a controller inside a dream, PlaNet plans with its learned model at every step. David Ha is an author of both papers.
 
 ## Background
 

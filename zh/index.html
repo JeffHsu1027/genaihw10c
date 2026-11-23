@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="source-hash" content="5fd2b58d545b">
+<meta name="source-hash" content="be51e6145a1d">
 <title>論文 Wiki</title>
 <link rel="stylesheet" href="../assets/style.css">
 </head>
@@ -18,23 +18,31 @@
 <section class="area" id="world-model">
 <h2>世界模型</h2>
 <h3>主題</h3>
-<div class="cards"><a class="card card-topic" href="topics/world-models.html"><span class="tag tag-topic">主題</span><h4>世界模型（World models）</h4><p class="card-meta">1 個來源</p><p>世界模型是學出來的模擬器：讓代理人能預測環境會如何回應自己的行動。</p></a></div>
+<div class="cards"><a class="card card-topic" href="topics/world-models.html"><span class="tag tag-topic">主題</span><h4>世界模型（World models）</h4><p class="card-meta">2 個來源</p><p>世界模型是學出來的模擬器：讓代理人能預測環境會如何回應自己的行動。</p></a></div>
 <h3>來源</h3>
-<div class="cards"><a class="card card-source" href="sources/2018-world-models.html"><span class="tag tag-source">來源</span> <span class="status status-read">已讀</span><h4>World Models</h4><p class="card-meta">David Ha, Jürgen Schmidhuber · 2018</p><p>把代理人（agent）拆成兩部分：一個大型的世界模型，不靠獎勵就學會壓縮並預測自己看到的畫面；以及一個很小的控制器，根據世界模型提供的特徵行動。</p></a></div>
+<div class="cards"><a class="card card-source" href="sources/2018-world-models.html"><span class="tag tag-source">來源</span> <span class="status status-read">已讀</span><h4>World Models</h4><p class="card-meta">David Ha, Jürgen Schmidhuber · 2018</p><p>把代理人（agent）拆成兩部分：一個大型的世界模型，不靠獎勵就學會壓縮並預測自己看到的畫面；以及一個很小的控制器，根據世界模型提供的特徵行動。</p></a>
+<a class="card card-source" href="sources/2019-planet.html"><span class="tag tag-source">來源</span> <span class="status status-read">已讀</span><h4>Learning Latent Dynamics for Planning from Pixels</h4><p class="card-meta">Danijar Hafner et al. · 2019</p><p>PlaNet（Deep Planning Network）是一個純粹基於模型的代理人：從影像學出潛在的世界模型，每一個動作都靠在潛在空間中快速的線上規劃來決定，不使用策略網路或價值網路。</p></a></div>
 <h3>概念</h3>
-<div class="cards"><a class="card card-concept" href="concepts/world-model.html"><span class="tag tag-concept">概念</span><h4>世界模型（World model）</h4><p class="card-meta">1 個來源</p><p>一個從經驗中學到的環境模型，用來預測接下來會發生什麼，通常以目前的狀態與動作為條件。</p></a>
+<div class="cards"><a class="card card-concept" href="concepts/world-model.html"><span class="tag tag-concept">概念</span><h4>世界模型（World model）</h4><p class="card-meta">2 個來源</p><p>一個從經驗中學到的環境模型，用來預測接下來會發生什麼，通常以目前的狀態與動作為條件。</p></a>
 <a class="card card-concept" href="concepts/learning-in-imagination.html"><span class="tag tag-concept">概念</span><h4>在想像中學習（Learning in imagination）</h4><p class="card-meta">1 個來源</p><p>用學到的世界模型所產生的經驗來訓練代理人的策略，而不是用真實環境產生的經驗。</p></a>
+<a class="card card-concept" href="concepts/model-based-reinforcement-learning.html"><span class="tag tag-concept">概念</span><h4>基於模型的強化學習（Model-based reinforcement learning）</h4><p class="card-meta">2 個來源</p><p>會學習或使用「環境如何回應動作」的模型，並用這個模型來決定如何行動或學習如何行動的強化學習。</p></a>
 <a class="card card-concept" href="concepts/mixture-density-rnn.html"><span class="tag tag-concept">概念</span><h4>混合密度遞迴神經網路（Mixture density RNN）</h4><p class="card-meta">1 個來源</p><p>一種遞迴神經網路，輸出層給出高斯混合分布的參數，因此預測的是下一個值的機率分布，而不是單一數值。</p></a>
-<a class="card card-concept" href="concepts/variational-autoencoder.html"><span class="tag tag-concept">概念</span><h4>變分自編碼器（Variational autoencoder）</h4><p class="card-meta">1 個來源</p><p>一種神經網路，把輸入編碼成一個小而帶有隨機性的潛在向量，並學會把這個向量解碼回原本的輸入。</p></a></div>
+<a class="card card-concept" href="concepts/latent-space-planning.html"><span class="tag tag-concept">概念</span><h4>潛在空間規劃（Latent space planning）</h4><p class="card-meta">1 個來源</p><p>在學到的潛在動態模型裡搜尋候選動作序列、以預測的獎勵評分來選擇動作，過程中不產生觀測畫面。</p></a>
+<a class="card card-concept" href="concepts/latent-overshooting.html"><span class="tag tag-concept">概念</span><h4>潛在超前預測（Latent overshooting）</h4><p class="card-meta">1 個來源</p><p>潛在序列模型的一種訓練目標：除了一步預測之外，也訓練多步預測，做法是在潛在空間中把預測拉向由真實觀測推斷出的狀態。</p></a>
+<a class="card card-concept" href="concepts/variational-autoencoder.html"><span class="tag tag-concept">概念</span><h4>變分自編碼器（Variational autoencoder）</h4><p class="card-meta">2 個來源</p><p>一種神經網路，把輸入編碼成一個小而帶有隨機性的潛在向量，並學會把這個向量解碼回原本的輸入。</p></a>
+<a class="card card-concept" href="concepts/recurrent-state-space-model.html"><span class="tag tag-concept">概念</span><h4>遞迴狀態空間模型（Recurrent state-space model）</h4><p class="card-meta">1 個來源</p><p>一種潛在動態模型，狀態分成兩部分：由遞迴網路往前傳遞的確定性部分，以及每一步抽樣的隨機部分。</p></a></div>
 </section>
 <section class="area" id="reinforcement-learning">
 <h2>強化學習</h2>
 <h3>來源</h3>
-<div class="cards"><a class="card card-source" href="sources/2018-world-models.html"><span class="tag tag-source">來源</span> <span class="status status-read">已讀</span><h4>World Models</h4><p class="card-meta">David Ha, Jürgen Schmidhuber · 2018</p><p>把代理人（agent）拆成兩部分：一個大型的世界模型，不靠獎勵就學會壓縮並預測自己看到的畫面；以及一個很小的控制器，根據世界模型提供的特徵行動。</p></a></div>
+<div class="cards"><a class="card card-source" href="sources/2018-world-models.html"><span class="tag tag-source">來源</span> <span class="status status-read">已讀</span><h4>World Models</h4><p class="card-meta">David Ha, Jürgen Schmidhuber · 2018</p><p>把代理人（agent）拆成兩部分：一個大型的世界模型，不靠獎勵就學會壓縮並預測自己看到的畫面；以及一個很小的控制器，根據世界模型提供的特徵行動。</p></a>
+<a class="card card-source" href="sources/2019-planet.html"><span class="tag tag-source">來源</span> <span class="status status-read">已讀</span><h4>Learning Latent Dynamics for Planning from Pixels</h4><p class="card-meta">Danijar Hafner et al. · 2019</p><p>PlaNet（Deep Planning Network）是一個純粹基於模型的代理人：從影像學出潛在的世界模型，每一個動作都靠在潛在空間中快速的線上規劃來決定，不使用策略網路或價值網路。</p></a></div>
 <h3>概念</h3>
-<div class="cards"><a class="card card-concept" href="concepts/world-model.html"><span class="tag tag-concept">概念</span><h4>世界模型（World model）</h4><p class="card-meta">1 個來源</p><p>一個從經驗中學到的環境模型，用來預測接下來會發生什麼，通常以目前的狀態與動作為條件。</p></a>
+<div class="cards"><a class="card card-concept" href="concepts/world-model.html"><span class="tag tag-concept">概念</span><h4>世界模型（World model）</h4><p class="card-meta">2 個來源</p><p>一個從經驗中學到的環境模型，用來預測接下來會發生什麼，通常以目前的狀態與動作為條件。</p></a>
 <a class="card card-concept" href="concepts/learning-in-imagination.html"><span class="tag tag-concept">概念</span><h4>在想像中學習（Learning in imagination）</h4><p class="card-meta">1 個來源</p><p>用學到的世界模型所產生的經驗來訓練代理人的策略，而不是用真實環境產生的經驗。</p></a>
-<a class="card card-concept" href="concepts/evolution-strategies.html"><span class="tag tag-concept">概念</span><h4>演化策略（Evolution strategies）</h4><p class="card-meta">1 個來源</p><p>一類黑箱最佳化方法：對一群候選解反覆抽樣、評分、保留較好的，過程中不需要計算梯度。</p></a></div>
+<a class="card card-concept" href="concepts/model-based-reinforcement-learning.html"><span class="tag tag-concept">概念</span><h4>基於模型的強化學習（Model-based reinforcement learning）</h4><p class="card-meta">2 個來源</p><p>會學習或使用「環境如何回應動作」的模型，並用這個模型來決定如何行動或學習如何行動的強化學習。</p></a>
+<a class="card card-concept" href="concepts/evolution-strategies.html"><span class="tag tag-concept">概念</span><h4>演化策略（Evolution strategies）</h4><p class="card-meta">1 個來源</p><p>一類黑箱最佳化方法：對一群候選解反覆抽樣、評分、保留較好的，過程中不需要計算梯度。</p></a>
+<a class="card card-concept" href="concepts/latent-space-planning.html"><span class="tag tag-concept">概念</span><h4>潛在空間規劃（Latent space planning）</h4><p class="card-meta">1 個來源</p><p>在學到的潛在動態模型裡搜尋候選動作序列、以預測的獎勵評分來選擇動作，過程中不產生觀測畫面。</p></a></div>
 </section>
 </main>
 <footer class="site-footer"><a href="../index.html">選擇語言</a></footer>

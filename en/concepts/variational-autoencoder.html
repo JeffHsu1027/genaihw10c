@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="source-hash" content="012cfc8e44dd">
+<meta name="source-hash" content="44d5148a35ac">
 <title>Variational autoencoder · Paper Wiki</title>
 <link rel="stylesheet" href="../../assets/style.css">
 </head>
@@ -15,7 +15,7 @@
 <main class="page page-concept">
   <p class="page-kind"><span class="tag tag-concept">Concept</span></p>
   <h1>Variational autoencoder</h1>
-  <p class="meta">VAE, ConvVAE, convolutional variational autoencoder · 1 source</p>
+  <p class="meta">VAE, ConvVAE, convolutional variational autoencoder · 2 sources</p>
   <article class="content">
 <h2>One-line definition</h2>
 <p>A neural network that encodes an input into a small random latent vector and learns to decode that vector back into the input.</p>
@@ -27,10 +27,24 @@
 <h2>What each source says</h2>
 <h3>World Models (2018)</h3>
 <p><a href="../sources/2018-world-models.html">World Models</a> uses a convolutional VAE as the V model to compress each frame into a latent vector z (p.3). Frames are resized to 64x64 pixels and passed through four convolutional layers; z has 32 dimensions in Car Racing and 64 in Doom (p.13). The VAE is trained for one epoch on random-policy data with an L2 reconstruction loss plus a KL loss (p.13). The authors note that the Gaussian prior also makes the world model more robust to unrealistic latent vectors produced by M (p.13). Because V is trained without rewards, it can keep task-irrelevant details and miss relevant ones (p.12).</p>
+<h3>Learning Latent Dynamics for Planning from Pixels (2019)</h3>
+<p><a href="../sources/2019-planet.html">PlaNet</a> describes its recurrent state-space model as a kind of sequential VAE or non-linear Kalman filter (p.3). It reuses the convolutional encoder and deconvolutional decoder of World Models (p.12), but its encoder infers the latent state from the whole history of observations and actions, not from a single frame (p.3). The KL term is not penalized below 3 free nats (p.12).</p>
+<h3>Comparing the sources</h3>
+<ul>
+<li><a href="../sources/2018-world-models.html">World Models</a> trains the VAE on its own, frame by frame, before the dynamics model, which the authors found more practical than end-to-end training (p.4).</li>
+<li><a href="../sources/2019-planet.html">PlaNet</a> trains the encoder, decoder and transition model together with one variational objective (p.4, Eq. 3).</li>
+</ul>
+<blockquote class="note note-explainer">
+<p><strong>Explainer:</strong> When everything is trained together, the compressed picture is shaped not only to redraw the frame but also to be easy to predict from the previous step.</p>
+</blockquote>
+<ul>
+<li>PlaNet reuses the World Models networks (see the PlaNet source page); this comparison is this Wiki's own summary.</li>
+</ul>
 <h2>Related concepts</h2>
 <ul>
 <li><a href="world-model.html">World model</a>: the VAE is the compression half of the world model.</li>
 <li><a href="mixture-density-rnn.html">Mixture density RNN</a>: predicts the next latent vector that the VAE defines.</li>
+<li><a href="recurrent-state-space-model.html">Recurrent state-space model</a>: extends the VAE idea to sequences.</li>
 </ul>
 <h2>Background</h2>
 <p>(None yet)</p>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="source-hash" content="72871bfc2762">
+<title>Latent space planning · Paper Wiki</title>
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="site-name" href="../index.html">Paper Wiki</a>
+  <a class="lang-switch" href="../../zh/concepts/latent-space-planning.html" hreflang="zh-Hant">中文</a>
+</header>
+<main class="page page-concept">
+  <p class="page-kind"><span class="tag tag-concept">Concept</span></p>
+  <h1>Latent space planning</h1>
+  <p class="meta">planning in latent space, online planning, model-predictive control, MPC, CEM planning · 1 source</p>
+  <article class="content">
+<h2>One-line definition</h2>
+<p>Choosing actions by searching over candidate action sequences inside a learned latent dynamics model and scoring them by predicted rewards, without generating observations.</p>
+<h2>Explanation</h2>
+<p>At each step, the agent infers its current latent state, imagines the outcome of many candidate action sequences with the model, and picks the sequence with the highest predicted return. In model-predictive control, only the first action is executed and the search is repeated after the next observation, so the plan can adapt to what actually happens. The cross entropy method is a common search procedure: sample sequences, keep the best ones, refit the sampling distribution to them, and repeat. Planning in the latent space is fast because no images need to be produced.</p>
+<blockquote class="note note-explainer">
+<p><strong>Explainer:</strong> It is like a chess player who looks a few moves ahead before every move, then thinks again after seeing the opponent's reply.</p>
+</blockquote>
+<h2>What each source says</h2>
+<h3>Learning Latent Dynamics for Planning from Pixels (2019)</h3>
+<p><a href="../sources/2019-planet.html">PlaNet</a> plans with CEM inside its model and replans at every step, as in model-predictive control (p.3). After each new observation the search starts again from a zero-mean, unit-variance belief over action sequences, to avoid local optima (p.3). It scores each candidate with a single sampled trajectory, which leaves more of the compute budget for evaluating many different sequences (p.3). The settings are a horizon of 12, 10 iterations, 1000 candidates, and refitting to the best 100 (p.12). Iterative refinement with CEM beats choosing the best of 1000 random sequences on all tasks (p.6, Fig. 5). With the true simulator on cheetah, a horizon of 6 is too short and the best horizon is near 8, while much longer horizons hurt because the search space grows (p.20, Fig. 12). Because PlaNet has no value function, rewards beyond the horizon are ignored, and the authors suggest learning one (p.8).</p>
+<h2>Related concepts</h2>
+<ul>
+<li><a href="model-based-reinforcement-learning.html">Model-based reinforcement learning</a>: planning is one way to use a learned model.</li>
+<li><a href="recurrent-state-space-model.html">Recurrent state-space model</a>: the model PlaNet plans with.</li>
+<li><a href="learning-in-imagination.html">Learning in imagination</a>: the other way to use a model; it trains a policy on imagined experience ahead of time, while planning searches at decision time.</li>
+</ul>
+<h2>Background</h2>
+<p>(None yet)</p>
+  </article>
+</main>
+<footer class="site-footer"><a href="../index.html">Back to home</a></footer>
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="source-hash" content="f9aa0a8fe3ee">
+<meta name="source-hash" content="994ef367f6ae">
 <title>變分自編碼器（Variational autoencoder） · 論文 Wiki</title>
 <link rel="stylesheet" href="../../assets/style.css">
 </head>
@@ -15,7 +15,7 @@
 <main class="page page-concept">
   <p class="page-kind"><span class="tag tag-concept">概念</span></p>
   <h1>變分自編碼器（Variational autoencoder）</h1>
-  <p class="meta">VAE, ConvVAE, 卷積變分自編碼器 · 1 個來源</p>
+  <p class="meta">VAE, ConvVAE, 卷積變分自編碼器 · 2 個來源</p>
   <article class="content">
 <h2>一句話定義</h2>
 <p>一種神經網路，把輸入編碼成一個小而帶有隨機性的潛在向量，並學會把這個向量解碼回原本的輸入。</p>
@@ -27,10 +27,24 @@
 <h2>各來源怎麼說</h2>
 <h3>World Models（2018）</h3>
 <p><a href="../sources/2018-world-models.html">World Models</a> 用卷積 VAE 當作 V 模型，把每張畫面壓縮成潛在向量 z (p.3)。畫面先縮成 64x64 像素，再經過四層卷積層；Car Racing 的 z 是 32 維，Doom 是 64 維 (p.13)。VAE 以隨機策略收集的資料、用 L2 重建損失加上 KL 損失訓練一個 epoch (p.13)。作者指出，高斯先驗也讓世界模型對 M 產生的不合理潛在向量更穩健 (p.13)。因為 V 的訓練不看獎勵，它可能保留與任務無關的細節，卻漏掉有關的部分 (p.12)。</p>
+<h3>Learning Latent Dynamics for Planning from Pixels（2019）</h3>
+<p><a href="../sources/2019-planet.html">PlaNet</a> 把它的遞迴狀態空間模型描述為一種序列 VAE 或非線性卡爾曼濾波器 (p.3)。它沿用 World Models 的卷積編碼器與反卷積解碼器 (p.12)，但編碼器是從整段觀測與動作的歷史推斷潛在狀態，而不是只看單張畫面 (p.3)。KL 項低於 3 個 free nats 時不予懲罰 (p.12)。</p>
+<h3>來源之間的比較</h3>
+<ul>
+<li><a href="../sources/2018-world-models.html">World Models</a> 先單獨、逐張畫面訓練 VAE，再訓練動態模型；作者認為這比端到端訓練實際 (p.4)。</li>
+<li><a href="../sources/2019-planet.html">PlaNet</a> 用同一個變分目標一起訓練編碼器、解碼器與轉移模型 (p.4, Eq. 3)。</li>
+</ul>
+<blockquote class="note note-explainer">
+<p><strong>解說（Explainer）：</strong> 一起訓練時，壓縮後的畫面描述不只要能把畫面畫回來，也要容易從前一步預測出來。</p>
+</blockquote>
+<ul>
+<li>PlaNet 沿用了 World Models 的網路（見 PlaNet 來源頁）；這段比較是本 Wiki 的整理。</li>
+</ul>
 <h2>相關概念</h2>
 <ul>
 <li><a href="world-model.html">世界模型（World model）</a>：VAE 是世界模型中負責壓縮的一半。</li>
 <li><a href="mixture-density-rnn.html">混合密度遞迴神經網路（Mixture density RNN）</a>：預測由 VAE 定義的下一個潛在向量。</li>
+<li><a href="recurrent-state-space-model.html">遞迴狀態空間模型（Recurrent state-space model）</a>：把 VAE 的想法延伸到序列。</li>
 </ul>
 <h2>背景資料</h2>
 <p>（尚無）</p>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="source-hash" content="1c80a0c02b7d">
+<title>Model-based reinforcement learning · Paper Wiki</title>
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="site-name" href="../index.html">Paper Wiki</a>
+  <a class="lang-switch" href="../../zh/concepts/model-based-reinforcement-learning.html" hreflang="zh-Hant">中文</a>
+</header>
+<main class="page page-concept">
+  <p class="page-kind"><span class="tag tag-concept">Concept</span></p>
+  <h1>Model-based reinforcement learning</h1>
+  <p class="meta">model-based RL, MBRL · 2 sources</p>
+  <article class="content">
+<h2>One-line definition</h2>
+<p>Reinforcement learning that learns or uses a model of how the environment responds to actions, and uses that model to decide how to act or to learn how to act.</p>
+<h2>Explanation</h2>
+<p>Model-free methods learn a policy or a value function directly from trial and error. Model-based methods first learn a dynamics model and then use it, either to plan at decision time or to generate extra experience for training a policy. A good model can make learning much more data efficient and may transfer to new tasks in the same environment. Errors in the model, however, can mislead the agent, and learning accurate models from images is difficult.</p>
+<h2>What each source says</h2>
+<h3>World Models (2018)</h3>
+<p><a href="../sources/2018-world-models.html">World Models</a> learns a world model without rewards and then trains a small controller that uses the model, first as a source of features (p.5) and then as a complete replacement for the environment (p.7). The paper presents itself as a simplified demonstration of RNN-based world model and controller ideas from a series of papers between 1990 and 2015 (p.2).</p>
+<h3>Learning Latent Dynamics for Planning from Pixels (2019)</h3>
+<p><a href="../sources/2019-planet.html">PlaNet</a> is purely model-based: it has no policy or value network and chooses every action by planning with its learned model (p.3). The paper lists the benefits it expects from planning with learned models: a richer training signal, no need to propagate rewards through Bellman backups, better performance from more search compute, and dynamics that can transfer to other tasks (p.1). It reaches the performance of strong model-free agents with about 200 times fewer episodes on average (p.2).</p>
+<h3>Comparing the sources</h3>
+<ul>
+<li><a href="../sources/2018-world-models.html">World Models</a> uses its model to train a policy ahead of time; at decision time the controller reacts to the model's hidden state without planning ahead (p.6).</li>
+<li><a href="../sources/2019-planet.html">PlaNet</a> has no policy and uses its model only at decision time, by searching over action sequences (p.3).</li>
+<li>Both warn that a purely deterministic model is easy to exploit: <a href="../sources/2018-world-models.html">World Models</a> for its controller (p.9) and <a href="../sources/2019-planet.html">PlaNet</a> for its planner (p.4, Fig. 2).</li>
+<li>PlaNet cites World Models as a hybrid agent that learns from imagined experience; this side-by-side comparison is this Wiki's own summary.</li>
+</ul>
+<h2>Related concepts</h2>
+<ul>
+<li><a href="world-model.html">World model</a>: the model that model-based methods learn.</li>
+<li><a href="latent-space-planning.html">Latent space planning</a>: using the model at decision time.</li>
+<li><a href="learning-in-imagination.html">Learning in imagination</a>: using the model to train a policy.</li>
+</ul>
+<h2>Background</h2>
+<p>(None yet)</p>
+  </article>
+</main>
+<footer class="site-footer"><a href="../index.html">Back to home</a></footer>
+</body>
+</html>

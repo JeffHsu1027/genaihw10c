@@ -62,3 +62,23 @@
 - 規則：每個階段性步驟在 build、check 通過後自動 commit；commit 前確認沒有 PDF 與機密；push 只在擁有者明確說「push」時執行；不可 force push 或改寫歷史。
 - 依擁有者指示，把目前尚未 commit 的工作分成兩個 commit：規則與工具、World Models ingest。
 
+## [2026-11-24] ingest | Learning Latent Dynamics for Planning from Pixels
+
+- 閱讀範圍：PDF 第 1–20 頁全文（正文 pp.1-8、參考文獻 pp.9-11、附錄 A–J pp.12-20）。`status: read`（擁有者確認），檔名用正式發表年份 `2019-planet`（ICML 2019）。
+- 新增來源頁：`2019-planet`（areas：world-model、reinforcement-learning；pages: 20）。
+- 新增概念頁（4 個）：
+  - `recurrent-state-space-model`（把握度高：核心貢獻，p.4）
+  - `latent-overshooting`（高：核心貢獻，但最終代理人未使用，pp.5、12、14）
+  - `latent-space-planning`（中：CEM＋MPC 是核心方法，名稱由本 Wiki 取，別名含 MPC、CEM planning）
+  - `model-based-reinforcement-learning`（高：上次延後，現有 World Models 與 PlaNet 兩篇來源）
+- 更新既有頁面：
+  - `world-model`：新增 PlaNet 小節與「來源之間的比較」（把握度中：PlaNet 用 dynamics model 一詞，已是本頁別名）。兩篇都指出純確定性模型容易被利用（WM p.9、PlaNet p.4），標為一致而非衝突。
+  - `variational-autoencoder`：新增 PlaNet 小節與比較（高：PlaNet 自稱 sequential VAE，p.3；沿用 World Models 的網路，p.12）。
+  - `2018-world-models`：`Relation to other sources` 補上 PlaNet（高：PlaNet 引用本篇，pp.7、12、17）；`concepts` 加入 `model-based-reinforcement-learning`；**更正 `pages` 為 21**（上次由文字切頁數多算一頁，這次以 form feed 數確認）。
+  - `world-models` 主題頁：Timeline、Sources、Key concepts、Key terms（POMDP、MPC、CEM、action repeat）、Open questions。
+- 刻意不連結：`learning-in-imagination`（PlaNet 不在想像中訓練策略，只在決策時評估動作序列；差異寫在 `latent-space-planning` 的相關概念）；`mixture-density-rnn`（PlaNet 用單一高斯與 GRU）；`evolution-strategies`（CEM 雖是族群式最佳化，但最佳化的是動作序列而非權重）。
+- 取代與衝突：無。
+- `raw/README.md`：填入公開連結（arXiv 1811.04551）與來源頁。
+- 規則不清楚之處：出處格式不允許 `Algorithm`，原寫的 `(p.3, Algorithm 1)` 改為 `(p.3)`。
+- `build.py` 產生 24 個頁面，`check.py` 全部通過。
+
